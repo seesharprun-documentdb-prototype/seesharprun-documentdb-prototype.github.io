@@ -172,27 +172,7 @@ export default function Blogs() {
           </article>
         </div>  
       </div>
-      {/* Footer */}
-      <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="text-center text-sm text-gray-400">
-            <p className="mb-2">
-              Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-            </p>
-            <p>
-              For web site terms of use, trademark policy and other project policies please see{" "}
-              <a 
-                href="https://lfprojects.org" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-blue-400 hover:text-blue-300 underline"
-              >
-                https://lfprojects.org
-              </a>
-            </p>
-          </div>
-        </div>
-      </footer>
+      
     </div>
   )
 }
