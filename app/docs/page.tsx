@@ -171,27 +171,7 @@ export default function Docs() {
                       To use pg_documentdb_api, you need to have pg_documentdb_core installed and configured in your PostgreSQL environment. Once set up, you can leverage the APIs provided by pg_documentdb_api to perform various document operations.
                     </p>
                   </div>
-                  {/* Footer */}
-                  <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                      <div className="text-center text-sm text-gray-400">
-                        <p className="mb-2">
-                          Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-                        </p>
-                        <p>
-                          For web site terms of use, trademark policy and other project policies please see{" "}
-                          <a 
-                            href="https://lfprojects.org" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            https://lfprojects.org
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                  </footer>
+                  
                 </div>
               ) : selectedPostgresItem === 'Functions' ? (
                   <div className="space-y-8">
@@ -300,27 +280,7 @@ export default function Docs() {
                         </div>
                       </div>
                     </div>
-                    {/* Footer */}
-                    <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-                      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                        <div className="text-center text-sm text-gray-400">
-                          <p className="mb-2">
-                            Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-                          </p>
-                          <p>
-                            For web site terms of use, trademark policy and other project policies please see{" "}
-                            <a 
-                              href="https://lfprojects.org" 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="text-blue-400 hover:text-blue-300 underline"
-                            >
-                              https://lfprojects.org
-                            </a>
-                          </p>
-                        </div>
-                      </div>
-                    </footer>
+                    
                   </div>
                 ) : (
                 /* Sample content for other items */
@@ -699,27 +659,7 @@ docker image rm -f ghcr.io/microsoft/documentdb/documentdb-local:latest || echo 
                       </li>
                     </ul>
                   </div>
-                  {/* Footer */}
-                  <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                      <div className="text-center text-sm text-gray-400">
-                        <p className="mb-2">
-                          Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-                        </p>
-                        <p>
-                          For web site terms of use, trademark policy and other project policies please see{" "}
-                          <a 
-                            href="https://lfprojects.org" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            https://lfprojects.org
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                  </footer>
+                  
                 </div>
               ) : 
                 selectedGettingStartedItem === 'MongoDB Shell Quick Start' ? (
@@ -1144,27 +1084,7 @@ db.users.stats().indexSizes`}
                         </li>
                       </ul>
                     </div>
-                    {/* Footer */}
-                    <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-                      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                        <div className="text-center text-sm text-gray-400">
-                          <p className="mb-2">
-                            Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-                          </p>
-                          <p>
-                            For web site terms of use, trademark policy and other project policies please see{" "}
-                            <a 
-                              href="https://lfprojects.org" 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="text-blue-400 hover:text-blue-300 underline"
-                            >
-                              https://lfprojects.org
-                            </a>
-                          </p>
-                        </div>
-                      </div>
-                    </footer>
+                    
                   </div>
                 ) : 
                 selectedGettingStartedItem === 'Python Setup Guide' ? (
@@ -1608,27 +1528,7 @@ if __name__ == '__main__':
                         </li>
                       </ul>
                     </div>
-                    {/* Footer */}
-                    <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-                      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                        <div className="text-center text-sm text-gray-400">
-                          <p className="mb-2">
-                            Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-                          </p>
-                          <p>
-                            For web site terms of use, trademark policy and other project policies please see{" "}
-                            <a 
-                              href="https://lfprojects.org" 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="text-blue-400 hover:text-blue-300 underline"
-                            >
-                              https://lfprojects.org
-                            </a>
-                          </p>
-                        </div>
-                      </div>
-                    </footer>
+                    
                   </div>
                 ) :
                 selectedGettingStartedItem === 'Node.js Setup Guide' ? (
@@ -1951,27 +1851,7 @@ async function connect() {
                         </li>
                       </ul>
                     </div>
-                    {/* Footer */}
-                    <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-                      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                        <div className="text-center text-sm text-gray-400">
-                          <p className="mb-2">
-                            Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-                          </p>
-                          <p>
-                            For web site terms of use, trademark policy and other project policies please see{" "}
-                            <a 
-                              href="https://lfprojects.org" 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="text-blue-400 hover:text-blue-300 underline"
-                            >
-                              https://lfprojects.org
-                            </a>
-                          </p>
-                        </div>
-                      </div>
-                    </footer>
+                    
                   </div>
                 ) :
                 (
@@ -2094,27 +1974,7 @@ async function connect() {
                       </button>
                     ))}
                   </div>
-                  {/* Footer */}
-                  <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                      <div className="text-center text-sm text-gray-400">
-                        <p className="mb-2">
-                          Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-                        </p>
-                        <p>
-                          For web site terms of use, trademark policy and other project policies please see{" "}
-                          <a 
-                            href="https://lfprojects.org" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            https://lfprojects.org
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                  </footer>
+                  
                 </div>
               ) : selectedOperator === 'Aggregation' ? (
                 <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
@@ -2137,27 +1997,7 @@ async function connect() {
                       </button>
                     ))}
                   </div>
-                  {/* Footer */}
-                  <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                      <div className="text-center text-sm text-gray-400">
-                        <p className="mb-2">
-                          Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-                        </p>
-                        <p>
-                          For web site terms of use, trademark policy and other project policies please see{" "}
-                          <a 
-                            href="https://lfprojects.org" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            https://lfprojects.org
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                  </footer>
+                  
                 </div>
               ) : selectedOperator === 'Arithmetic Expressions' ? (
                 <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
@@ -2184,27 +2024,7 @@ async function connect() {
                       </button>
                     ))}
                   </div>
-                  {/* Footer */}
-                  <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                      <div className="text-center text-sm text-gray-400">
-                        <p className="mb-2">
-                          Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-                        </p>
-                        <p>
-                          For web site terms of use, trademark policy and other project policies please see{" "}
-                          <a 
-                            href="https://lfprojects.org" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            https://lfprojects.org
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                  </footer>
+                  
                 </div>
               ) : selectedOperator === 'Array Expressions' ? (
                 <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
@@ -2237,27 +2057,7 @@ async function connect() {
                       </button>
                     ))}
                   </div>
-                  {/* Footer */}
-                  <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                      <div className="text-center text-sm text-gray-400">
-                        <p className="mb-2">
-                          Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-                        </p>
-                        <p>
-                          For web site terms of use, trademark policy and other project policies please see{" "}
-                          <a 
-                            href="https://lfprojects.org" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            https://lfprojects.org
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                  </footer>
+                  
                 </div>
               ) : selectedOperator === 'Array Query' ? (
                 <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
@@ -2278,27 +2078,7 @@ async function connect() {
                       </button>
                     ))}
                   </div>
-                  {/* Footer */}
-                  <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                      <div className="text-center text-sm text-gray-400">
-                        <p className="mb-2">
-                          Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-                        </p>
-                        <p>
-                          For web site terms of use, trademark policy and other project policies please see{" "}
-                          <a 
-                            href="https://lfprojects.org" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            https://lfprojects.org
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                  </footer>
+                  
                 </div>
               ) : selectedOperator === 'Array Update' ? (
                 <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
@@ -2324,27 +2104,7 @@ async function connect() {
                       </button>
                     ))}
                   </div>
-                  {/* Footer */}
-                  <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                      <div className="text-center text-sm text-gray-400">
-                        <p className="mb-2">
-                          Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-                        </p>
-                        <p>
-                          For web site terms of use, trademark policy and other project policies please see{" "}
-                          <a 
-                            href="https://lfprojects.org" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            https://lfprojects.org
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                  </footer>
+                  
                 </div>
               ) : selectedOperator === 'Bitwise Operators' ? (
                 <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
@@ -2366,27 +2126,7 @@ async function connect() {
                       </button>
                     ))}
                   </div>
-                  {/* Footer */}
-                  <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                      <div className="text-center text-sm text-gray-400">
-                        <p className="mb-2">
-                          Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-                        </p>
-                        <p>
-                          For web site terms of use, trademark policy and other project policies please see{" "}
-                          <a 
-                            href="https://lfprojects.org" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            https://lfprojects.org
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                  </footer>
+                  
                 </div>
               ) : selectedOperator === 'Bitwise Query' ? (
                 <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
@@ -2408,27 +2148,7 @@ async function connect() {
                       </button>
                     ))}
                   </div>
-                  {/* Footer */}
-                  <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                      <div className="text-center text-sm text-gray-400">
-                        <p className="mb-2">
-                          Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-                        </p>
-                        <p>
-                          For web site terms of use, trademark policy and other project policies please see{" "}
-                          <a 
-                            href="https://lfprojects.org" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            https://lfprojects.org
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                  </footer>
+                  
                 </div>
               ) : selectedOperator === 'Bitwise Update' ? (
                 <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
@@ -2447,27 +2167,7 @@ async function connect() {
                       </button>
                     ))}
                   </div>
-                  {/* Footer */}
-                  <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                      <div className="text-center text-sm text-gray-400">
-                        <p className="mb-2">
-                          Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-                        </p>
-                        <p>
-                          For web site terms of use, trademark policy and other project policies please see{" "}
-                          <a 
-                            href="https://lfprojects.org" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            https://lfprojects.org
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                  </footer>
+                  
                 </div>
               ) : selectedOperator === 'Comparison Query' ? (
                 <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
@@ -2493,27 +2193,7 @@ async function connect() {
                       </button>
                     ))}
                   </div>
-                  {/* Footer */}
-                  <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                      <div className="text-center text-sm text-gray-400">
-                        <p className="mb-2">
-                          Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-                        </p>
-                        <p>
-                          For web site terms of use, trademark policy and other project policies please see{" "}
-                          <a 
-                            href="https://lfprojects.org" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            https://lfprojects.org
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                  </footer>
+                  
                 </div>
               ) : selectedOperator === 'Conditional Expressions' ? (
                 <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
@@ -2534,27 +2214,7 @@ async function connect() {
                       </button>
                     ))}
                   </div>
-                  {/* Footer */}
-                  <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                      <div className="text-center text-sm text-gray-400">
-                        <p className="mb-2">
-                          Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-                        </p>
-                        <p>
-                          For web site terms of use, trademark policy and other project policies please see{" "}
-                          <a 
-                            href="https://lfprojects.org" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            https://lfprojects.org
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                  </footer>
+                  
                 </div>
               ) : selectedOperator === 'Date Expressions' ? (
                 <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
@@ -2576,27 +2236,7 @@ async function connect() {
                       </button>
                     ))}
                   </div>
-                  {/* Footer */}
-                  <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                      <div className="text-center text-sm text-gray-400">
-                        <p className="mb-2">
-                          Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-                        </p>
-                        <p>
-                          For web site terms of use, trademark policy and other project policies please see{" "}
-                          <a 
-                            href="https://lfprojects.org" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            https://lfprojects.org
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                  </footer>
+                  
                 </div>
               ) : selectedOperator === 'Data Size' ? (
                 <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
@@ -2616,27 +2256,7 @@ async function connect() {
                       </button>
                     ))}
                   </div>
-                  {/* Footer */}
-                  <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                      <div className="text-center text-sm text-gray-400">
-                        <p className="mb-2">
-                          Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-                        </p>
-                        <p>
-                          For web site terms of use, trademark policy and other project policies please see{" "}
-                          <a 
-                            href="https://lfprojects.org" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            https://lfprojects.org
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                  </footer>
+                  
                 </div>
               ) : selectedOperator === 'Evaluation Query' ? (
                 <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
@@ -2655,27 +2275,7 @@ async function connect() {
                       </button>
                     ))}
                   </div>
-                  {/* Footer */}
-                  <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                      <div className="text-center text-sm text-gray-400">
-                        <p className="mb-2">
-                          Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-                        </p>
-                        <p>
-                          For web site terms of use, trademark policy and other project policies please see{" "}
-                          <a 
-                            href="https://lfprojects.org" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            https://lfprojects.org
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                  </footer>
+                  
                 </div>
               ) : selectedOperator === 'Geospatial' ? (
                 <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
@@ -2704,27 +2304,7 @@ async function connect() {
                       </button>
                     ))}
                   </div>
-                  {/* Footer */}
-                  <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                      <div className="text-center text-sm text-gray-400">
-                        <p className="mb-2">
-                          Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-                        </p>
-                        <p>
-                          For web site terms of use, trademark policy and other project policies please see{" "}
-                          <a 
-                            href="https://lfprojects.org" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            https://lfprojects.org
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                  </footer>
+                  
                 </div>
               ) : selectedOperator === 'Logical Query' ? (
                 <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
@@ -2746,27 +2326,7 @@ async function connect() {
                       </button>
                     ))}
                   </div>
-                  {/* Footer */}
-                  <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                      <div className="text-center text-sm text-gray-400">
-                        <p className="mb-2">
-                          Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-                        </p>
-                        <p>
-                          For web site terms of use, trademark policy and other project policies please see{" "}
-                          <a 
-                            href="https://lfprojects.org" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            https://lfprojects.org
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                  </footer>
+                  
                 </div>
               ) : selectedOperator === 'Miscellaneous' ? (
                 <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
@@ -2786,27 +2346,7 @@ async function connect() {
                       </button>
                     ))}
                   </div>
-                  {/* Footer */}
-                  <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                      <div className="text-center text-sm text-gray-400">
-                        <p className="mb-2">
-                          Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-                        </p>
-                        <p>
-                          For web site terms of use, trademark policy and other project policies please see{" "}
-                          <a 
-                            href="https://lfprojects.org" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            https://lfprojects.org
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                  </footer>
+                  
                 </div>
               ) : selectedOperator === 'Object Expressions' ? (
                 <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
@@ -2827,27 +2367,7 @@ async function connect() {
                       </button>
                     ))}
                   </div>
-                  {/* Footer */}
-                  <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                      <div className="text-center text-sm text-gray-400">
-                        <p className="mb-2">
-                          Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-                        </p>
-                        <p>
-                          For web site terms of use, trademark policy and other project policies please see{" "}
-                          <a 
-                            href="https://lfprojects.org" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            https://lfprojects.org
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                  </footer>
+                  
                 </div>
               ) : selectedOperator === 'Projection' ? (
                 <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
@@ -2868,27 +2388,7 @@ async function connect() {
                       </button>
                     ))}
                   </div>
-                  {/* Footer */}
-                  <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                      <div className="text-center text-sm text-gray-400">
-                        <p className="mb-2">
-                          Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-                        </p>
-                        <p>
-                          For web site terms of use, trademark policy and other project policies please see{" "}
-                          <a 
-                            href="https://lfprojects.org" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            https://lfprojects.org
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                  </footer>
+                  
                 </div>
               ) : selectedOperator === 'Variable Expression' ? (
                 <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
@@ -2907,27 +2407,7 @@ async function connect() {
                       </button>
                     ))}
                   </div>
-                  {/* Footer */}
-                  <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                      <div className="text-center text-sm text-gray-400">
-                        <p className="mb-2">
-                          Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-                        </p>
-                        <p>
-                          For web site terms of use, trademark policy and other project policies please see{" "}
-                          <a 
-                            href="https://lfprojects.org" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            https://lfprojects.org
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                  </footer>
+                  
                 </div>
               ) : (
                 /* Sample content for other operators */
@@ -3093,27 +2573,7 @@ if (currentPage === 'architecture') {
             </div>
           </div>
         </div>
-        {/* Footer */}
-        <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <div className="text-center text-sm text-gray-400">
-              <p className="mb-2">
-                Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-              </p>
-              <p>
-                For web site terms of use, trademark policy and other project policies please see{" "}
-                <a 
-                  href="https://lfprojects.org" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-blue-400 hover:text-blue-300 underline"
-                >
-                  https://lfprojects.org
-                </a>
-              </p>
-            </div>
-          </div>
-        </footer>
+        
       </div>
     );
   }
@@ -3232,27 +2692,7 @@ if (currentPage === 'architecture') {
           </div>
         </div>
       </div>
-      {/* Footer */}
-      <footer className="border-t border-neutral-700/50 bg-neutral-800/30 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="text-center text-sm text-gray-400">
-            <p className="mb-2">
-              Copyright DocumentDB a Series of LF Projects, LLC and its contributors
-            </p>
-            <p>
-              For web site terms of use, trademark policy and other project policies please see{" "}
-              <a 
-                href="https://lfprojects.org" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-blue-400 hover:text-blue-300 underline"
-              >
-                https://lfprojects.org
-              </a>
-            </p>
-          </div>
-        </div>
-      </footer>
+      
     </div>
   );
 }
