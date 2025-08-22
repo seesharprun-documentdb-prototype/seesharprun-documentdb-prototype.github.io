@@ -39,7 +39,9 @@ export default function Home() {
               Our Mission
             </h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Built on the principles of transparency, freedom, and standardization
+              Built on the principles of transparency, freedom, and
+              standardization, our mission is to build a MongoDB compatible open
+              source document database that is built on PostgreSQL
             </p>
           </div>
 
