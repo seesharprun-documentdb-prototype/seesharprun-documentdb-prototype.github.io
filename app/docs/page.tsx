@@ -2837,7 +2837,7 @@ async function connect() {
                     ))}
                   </div>
                 </div>
-              ) : selectedOperator === "Conditional Expressions" ? (
+              ) : selectedOperator === "Conditional Expression" ? (
                 <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
                   <h3 className="text-xl font-semibold text-white mb-4">
                     Conditional Expression Operators
@@ -2855,7 +2855,7 @@ async function connect() {
                     ))}
                   </div>
                 </div>
-              ) : selectedOperator === "Date Expressions" ? (
+              ) : selectedOperator === "Date Expression" ? (
                 <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
                   <h3 className="text-xl font-semibold text-white mb-4">
                     Date Expression Operators
@@ -3062,7 +3062,7 @@ async function connect() {
                     ))}
                   </div>
                 </div>
-              ) : selectedOperator === "Object Expressions" ? (
+              ) : selectedOperator === "Object Expression" ? (
                 <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
                   <h3 className="text-xl font-semibold text-white mb-4">
                     Object Expression Operators
