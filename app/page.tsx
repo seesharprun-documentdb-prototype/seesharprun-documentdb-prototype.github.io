@@ -267,18 +267,7 @@ export default function Home() {
 
               <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 items-center">
               {/* Amazon DocumentDB */}
-              <div className="group relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-xl blur-lg group-hover:blur-xl transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
-                <div className="relative flex flex-col items-center justify-center p-8 bg-neutral-800/80 backdrop-blur-sm rounded-xl border border-neutral-700/50 hover:border-orange-500/50 transition-all duration-300 group-hover:transform group-hover:scale-105">
-                  <div className="w-20 h-20 flex items-center justify-center mb-4">
-                    <img src="/images/AWS Logo.png" alt="Amazon Web Services" className="w-12 h-12 group-hover:scale-110 transition-transform" />
-                  </div>
-                  <div className="text-center">
-                    <h3 className="text-sm font-bold text-white group-hover:text-orange-300 transition-colors mb-1">Amazon</h3>
-                    <p className="text-xs text-gray-400 group-hover:text-gray-300 transition-colors">DocumentDB</p>
-                  </div>
-                </div>
-              </div>
+              
 
               {/* YugabyteDB */}
               <div className="group relative">
