@@ -39,9 +39,9 @@ export default function Home() {
               Our Mission
             </h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Built on the principles of transparency, freedom, and
+              Built on the principles of transparency, developer freedom, and
               standardization, our mission is to build a MongoDB compatible open
-              source document database that is built on PostgreSQL
+              source document database based on PostgreSQL
             </p>
           </div>
 
@@ -53,9 +53,9 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-white mb-4">Visibility</h3>
+              <h3 className="text-xl font-semibold text-white mb-4">Transparency</h3>
               <p className="text-gray-400">
-                We want to ensure developers have full visibility into the underlying architecture of the engine
+                We want to ensure developers have full transparency into the underlying architecture of the engine
               </p>
             </div>
 
