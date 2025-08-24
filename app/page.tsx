@@ -100,7 +100,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* The Register Article */}
-            <a 
+            <a
               href="https://www.theregister.com/2025/01/27/microsoft_builds_open_source_document/"
               target="_blank"
               rel="noopener noreferrer"
@@ -109,26 +109,35 @@ export default function Home() {
               <div className="bg-neutral-800 rounded-lg shadow-lg p-4 hover:shadow-xl hover:bg-neutral-700 transition-all duration-300 border border-neutral-700 h-full">
                 <div className="flex flex-col items-center text-center">
                   <div className="w-12 h-12 bg-red-600 rounded-lg flex items-center justify-center mb-4">
-                    <svg className="w-10 h-4" viewBox="0 0 120 20" fill="none">
-                      <rect width="120" height="20" fill="#DC2626" rx="2"/>
-                      <text x="60" y="14" fontFamily="Arial, sans-serif" fontSize="20" fontWeight="bold" fill="white" textAnchor="middle">
-                        The Register
-                      </text>
-                    </svg>
+                    <img
+                      src="/images/The Register Logo v2.png"
+                      alt="The Register"
+                      className="w-12 h-4 group-hover:scale-110 transition-transform"
+                    />
                   </div>
-                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-500/20 text-red-400 mb-3">
+                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-600/20 text-red-500 mb-3">
                     The Register
                   </span>
-                  <h3 className="text-sm font-semibold text-white mb-2 group-hover:text-red-400 transition-colors line-clamp-3">
+                  <h3 className="text-sm font-semibold text-white mb-2 group-hover:text-red-500 transition-colors line-clamp-3">
                     Microsoft builds open source document database
                   </h3>
                   <p className="text-gray-400 text-xs mb-3 line-clamp-2">
                     PostgreSQL-powered platform
                   </p>
-                  <div className="flex items-center text-red-400 group-hover:text-red-300 transition-colors mt-auto">
+                  <div className="flex items-center text-red-500 group-hover:text-red-400 transition-colors mt-auto">
                     <span className="text-xs font-medium">Read</span>
-                    <svg className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    <svg
+                      className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
                     </svg>
                   </div>
                 </div>
@@ -136,7 +145,7 @@ export default function Home() {
             </a>
 
             {/* Hacker News Discussion */}
-            <a 
+            <a
               href="https://news.ycombinator.com/item?id=42807210"
               target="_blank"
               rel="noopener noreferrer"
@@ -146,8 +155,16 @@ export default function Home() {
                 <div className="flex flex-col items-center text-center">
                   <div className="w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center mb-4">
                     <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none">
-                      <rect width="24" height="24" fill="#FF6600" rx="2"/>
-                      <text x="12" y="16" fontFamily="Verdana, sans-serif" fontSize="12" fontWeight="bold" fill="white" textAnchor="middle">
+                      <rect width="24" height="24" fill="#FF6600" rx="2" />
+                      <text
+                        x="12"
+                        y="16"
+                        fontFamily="Verdana, sans-serif"
+                        fontSize="12"
+                        fontWeight="bold"
+                        fill="white"
+                        textAnchor="middle"
+                      >
                         Y
                       </text>
                     </svg>
@@ -163,8 +180,18 @@ export default function Home() {
                   </p>
                   <div className="flex items-center text-orange-400 group-hover:text-orange-300 transition-colors mt-auto">
                     <span className="text-xs font-medium">Join</span>
-                    <svg className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    <svg
+                      className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
                     </svg>
                   </div>
                 </div>
@@ -172,7 +199,7 @@ export default function Home() {
             </a>
 
             {/* Phoronix Article */}
-            <a 
+            <a
               href="https://www.phoronix.com/news/Microsoft-OpenSource-DocumentDB"
               target="_blank"
               rel="noopener noreferrer"
@@ -180,27 +207,36 @@ export default function Home() {
             >
               <div className="bg-neutral-800 rounded-lg shadow-lg p-4 hover:shadow-xl hover:bg-neutral-700 transition-all duration-300 border border-neutral-700 h-full">
                 <div className="flex flex-col items-center text-center">
-                  <div className="w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center mb-4">
-                    <svg className="w-10 h-3" viewBox="0 0 80 12" fill="none">
-                      <rect width="80" height="12" fill="#2D3748" rx="1"/>
-                      <text x="40" y="9" fontFamily="Arial, sans-serif" fontSize="21" fontWeight="normal" fill="white" textAnchor="middle">
-                        phoronix
-                      </text>
-                    </svg>
+                  <div className="w-12 h-12 bg-green-800 rounded-lg flex items-center justify-center mb-4">
+                    <img
+                      src="/images/Phoronix Logo.jpg"
+                      alt="Phoronix"
+                      className="w-7 h-6 group-hover:scale-110 transition-transform"
+                    />
                   </div>
-                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-400 mb-3">
+                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400 mb-3">
                     Phoronix
                   </span>
-                  <h3 className="text-sm font-semibold text-white mb-2 group-hover:text-blue-400 transition-colors line-clamp-3">
+                  <h3 className="text-sm font-semibold text-white mb-2 group-hover:text-green-400 transition-colors line-clamp-3">
                     Microsoft Announces Open-Source DocumentDB
                   </h3>
                   <p className="text-gray-400 text-xs mb-3 line-clamp-2">
                     NoSQL database on PostgreSQL
                   </p>
-                  <div className="flex items-center text-blue-400 group-hover:text-blue-300 transition-colors mt-auto">
+                  <div className="flex items-center text-green-400 group-hover:text-green-300 transition-colors mt-auto">
                     <span className="text-xs font-medium">Read</span>
-                    <svg className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    <svg
+                      className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
                     </svg>
                   </div>
                 </div>
@@ -208,7 +244,7 @@ export default function Home() {
             </a>
 
             {/* Business Wire Article */}
-            <a 
+            <a
               href="https://www.businesswire.com/news/home/20250520124276/en/YugabyteDB-Extends-Support-for-Document-Databases-With-Postgres-Extension-DocumentDB"
               target="_blank"
               rel="noopener noreferrer"
@@ -217,12 +253,11 @@ export default function Home() {
               <div className="bg-neutral-800 rounded-lg shadow-lg p-4 hover:shadow-xl hover:bg-neutral-700 transition-all duration-300 border border-neutral-700 h-full">
                 <div className="flex flex-col items-center text-center">
                   <div className="w-12 h-12 bg-blue-700 rounded-lg flex items-center justify-center mb-4">
-                    <svg className="w-9 h-5" viewBox="0 0 54 20" fill="none">
-                      <circle cx="27" cy="10" r="10" fill="#1E40AF"/>
-                      <text x="27" y="7" fontFamily="Arial, sans-serif" fontSize="18" fontWeight="bold" fill="white" textAnchor="middle">
-                        bw
-                      </text>
-                    </svg>
+                    <img
+                      src="/images/BusinessWire.png"
+                      alt="Business Wire"
+                      className="w-9 h-7 group-hover:scale-110 transition-transform"
+                    />
                   </div>
                   <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-indigo-500/20 text-indigo-400 mb-3">
                     Business Wire
@@ -235,8 +270,18 @@ export default function Home() {
                   </p>
                   <div className="flex items-center text-indigo-400 group-hover:text-indigo-300 transition-colors mt-auto">
                     <span className="text-xs font-medium">Read</span>
-                    <svg className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    <svg
+                      className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
                     </svg>
                   </div>
                 </div>
