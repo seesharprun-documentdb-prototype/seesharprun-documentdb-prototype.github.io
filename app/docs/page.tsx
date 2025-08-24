@@ -795,31 +795,6 @@ docker image rm -f ghcr.io/microsoft/documentdb/documentdb-local:latest || echo 
                       </div>
                     </div>
                   </div>
-
-                  {/* Next Steps */}
-                  <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                    <h3 className="text-2xl font-semibold text-white mb-4">
-                      Next Steps
-                    </h3>
-                    <ul className="space-y-3 text-gray-300">
-                      <li className="flex items-start">
-                        <span className="text-blue-400 mr-3 mt-1">•</span>
-                        <span>
-                          Connect your application using the Python quickstart
-                          <button
-                            onClick={() =>
-                              setSelectedGettingStartedItem(
-                                "Python Setup Guide",
-                              )
-                            }
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            
-                          </button>
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
                 </div>
               ) : selectedGettingStartedItem === "MongoDB Shell Quick Start" ? (
                 <div className="space-y-8">
