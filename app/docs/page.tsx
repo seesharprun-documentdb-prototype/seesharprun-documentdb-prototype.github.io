@@ -2548,7 +2548,7 @@ async function connect() {
                 </h2>
                 <div className="w-24 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 rounded-full mb-6"></div>
                 <p className="text-gray-400 text-lg">
-                  Supported operators for {selectedOperator} operators. Detailed
+                  List of supported {selectedOperator} operators. Detailed
                   usage samples coming soon!
                 </p>
               </div>
