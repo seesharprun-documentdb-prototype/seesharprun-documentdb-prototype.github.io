@@ -2828,7 +2828,7 @@ async function connect() {
               ) : selectedOperator === "Boolean Expression" ? (
                   <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
                     <h3 className="text-xl font-semibold text-white mb-4">
-                      Bitwise Update Operators
+                      Boolean Expression Operators
                     </h3>
                     <div className="grid gap-3">
                       {["$and", "$not", "$or"].map((operator) => (
@@ -2949,7 +2949,7 @@ async function connect() {
               ) : selectedOperator === "Element Query" ? (
                   <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
                     <h3 className="text-xl font-semibold text-white mb-4">
-                      Data Size Operators
+                      Element Query Operators
                     </h3>
                     <div className="grid gap-3">
                       {["$exists", "$type"].map((operator) => (
@@ -2985,7 +2985,7 @@ async function connect() {
               ) : selectedOperator === "Field Update" ? (
                   <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
                     <h3 className="text-xl font-semibold text-white mb-4">
-                      Evaluation Query Operators
+                      Field Update Operators
                     </h3>
                     <div className="grid gap-3">
                       {[
@@ -3137,7 +3137,7 @@ async function connect() {
               ) : selectedOperator === "Timestamp Expression" ? (
                   <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
                     <h3 className="text-xl font-semibold text-white mb-4">
-                      Projection Operators
+                      Timestamp Expression Operators
                     </h3>
                     <div className="grid gap-3">
                       {["$tsSecond", "$tsIncrement"].map((operator) => (
@@ -3155,7 +3155,7 @@ async function connect() {
                 ) : selectedOperator === "Set Expression" ? (
                   <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
                     <h3 className="text-xl font-semibold text-white mb-4">
-                      Projection Operators
+                      Set Expression Operators
                     </h3>
                     <div className="grid gap-3">
                       {[
@@ -3199,7 +3199,7 @@ async function connect() {
               ) : selectedOperator === "Window" ? (
                   <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
                     <h3 className="text-xl font-semibold text-white mb-4">
-                      Variable Expression Operators
+                      Window Operators
                     </h3>
                     <div className="grid gap-3">
                       {[
