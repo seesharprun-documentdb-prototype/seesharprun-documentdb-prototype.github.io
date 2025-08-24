@@ -796,65 +796,6 @@ docker image rm -f ghcr.io/microsoft/documentdb/documentdb-local:latest || echo 
                     </div>
                   </div>
 
-                  {/* Debugging and Troubleshooting */}
-                  <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                    <h3 className="text-2xl font-semibold text-white mb-6">
-                      Debugging and Troubleshooting
-                    </h3>
-
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-2">
-                          1. Common issues and solutions
-                        </h4>
-                      </div>
-
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-2">
-                          2. Using the extension logs
-                        </h4>
-                      </div>
-
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          3. Getting support
-                        </h4>
-                        <ul className="space-y-2 text-gray-300">
-                          <li className="flex items-start">
-                            <span className="text-blue-400 mr-3 mt-1">•</span>
-                            <span>
-                              Visit our{" "}
-                              <a
-                                href="https://github.com/microsoft/vscode-documentdb"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-blue-400 hover:text-blue-300 underline"
-                              >
-                                GitHub repository
-                              </a>
-                            </span>
-                          </li>
-                          <li className="flex items-start">
-                            <span className="text-blue-400 mr-3 mt-1">•</span>
-                            <span>
-                              Join the community discussions on{" "}
-                              <a
-                                href="#"
-                                className="text-blue-400 hover:text-blue-300 underline"
-                              >
-                                Discord
-                              </a>
-                            </span>
-                          </li>
-                          <li className="flex items-start">
-                            <span className="text-blue-400 mr-3 mt-1">•</span>
-                            <span>Check documentation</span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
                   {/* Next Steps */}
                   <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
                     <h3 className="text-2xl font-semibold text-white mb-4">
@@ -873,7 +814,7 @@ docker image rm -f ghcr.io/microsoft/documentdb/documentdb-local:latest || echo 
                             }
                             className="text-blue-400 hover:text-blue-300 underline"
                           >
-                            Language Guides
+                            
                           </button>
                         </span>
                       </li>
