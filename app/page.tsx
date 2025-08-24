@@ -307,63 +307,146 @@ export default function Home() {
               Our Contributors
             </h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Collaborating with industry leaders to advance the document database ecosystem
+              Collaborating with industry leaders to advance the document
+              database ecosystem
             </p>
             <div className="mt-6 w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
           </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 items-center">
-              {/* Amazon DocumentDB */}
-              
-
-              {/* YugabyteDB */}
-              <div className="group relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl blur-lg group-hover:blur-xl transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
-                <div className="relative flex flex-col items-center justify-center p-8 bg-neutral-800/80 backdrop-blur-sm rounded-xl border border-neutral-700/50 hover:border-blue-500/50 transition-all duration-300 group-hover:transform group-hover:scale-105">
-                  <div className="w-20 h-20 flex items-center justify-center mb-4">
-                    <img src="/images/YugabyteLogo.png" alt="YugabyteDB" className="w-9 h-9 group-hover:scale-110 transition-transform" />
-                  </div>
-                  <div className="text-center">
-                    <h3 className="text-sm font-bold text-white group-hover:text-blue-300 transition-colors mb-1">YugabyteDB</h3>
-                    <p className="text-xs text-gray-400 group-hover:text-gray-300 transition-colors">Distributed SQL</p>
-                  </div>
+          <div className="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-5 gap-4 items-center">
+            {/* Microsoft Azure */}
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl blur-lg group-hover:blur-xl transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
+              <div className="relative flex flex-col items-center justify-center p-8 bg-neutral-800/80 backdrop-blur-sm rounded-xl border border-neutral-700/50 hover:border-blue-500/50 transition-all duration-300 group-hover:transform group-hover:scale-105">
+                <div className="w-20 h-20 flex items-center justify-center mb-4">
+                  <img
+                    src="/images/AzureLogo.png"
+                    alt="Microsoft Azure"
+                    className="w-12 h-12 group-hover:scale-110 transition-transform"
+                  />
+                </div>
+                <div className="text-center">
+                  <h3 className="text-sm font-bold text-white group-hover:text-blue-300 transition-colors mb-1">
+                    Microsoft
+                  </h3>
                 </div>
               </div>
+            </div>
 
-
-
-                {/* Microsoft Azure */}
-                <div className="group relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl blur-lg group-hover:blur-xl transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
-                  <div className="relative flex flex-col items-center justify-center p-8 bg-neutral-800/80 backdrop-blur-sm rounded-xl border border-neutral-700/50 hover:border-blue-500/50 transition-all duration-300 group-hover:transform group-hover:scale-105">
-                    <div className="w-20 h-20 flex items-center justify-center mb-4">
-                      <img src="/images/AzureLogo.png" alt="Microsoft Azure" className="w-12 h-12 group-hover:scale-110 transition-transform" />
-                    </div>
-                    <div className="text-center">
-                      <h3 className="text-sm font-bold text-white group-hover:text-blue-300 transition-colors mb-1">Microsoft</h3>
-                      <p className="text-xs text-gray-400 group-hover:text-gray-300 transition-colors">Azure</p>
-                    </div>
-                  </div>
+            {/* Amazon DocumentDB */}
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-xl blur-lg group-hover:blur-xl transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
+              <div className="relative flex flex-col items-center justify-center p-8 bg-neutral-800/80 backdrop-blur-sm rounded-xl border border-neutral-700/50 hover:border-orange-500/50 transition-all duration-300 group-hover:transform group-hover:scale-105">
+                <div className="w-20 h-20 flex items-center justify-center mb-4">
+                  <img
+                    src="/images/AWS Logo.png"
+                    alt="Amazon Web Services"
+                    className="w-12 h-12 group-hover:scale-110 transition-transform"
+                  />
                 </div>
+                <div className="text-center">
+                  <h3 className="text-sm font-bold text-white group-hover:text-orange-300 transition-colors mb-1">
+                    Amazon
+                  </h3>
+                </div>
+              </div>
+            </div>
+
+            {/* Rippling */}
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl blur-lg group-hover:blur-xl transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
+              <div className="relative flex flex-col items-center justify-center p-8 bg-neutral-800/80 backdrop-blur-sm rounded-xl border border-neutral-700/50 hover:border-blue-500/50 transition-all duration-300 group-hover:transform group-hover:scale-105">
+                <div className="w-60 h-20 flex items-center justify-center mb-4">
+                  <img
+                    src="/images/Rippling Logo no background.png"
+                    alt="Rippling"
+                    className="w-12 h-12 group-hover:scale-110 transition-transform"
+                  />
+                </div>
+                <div className="text-center">
+                  <h3 className="text-sm font-bold text-white group-hover:text-blue-300 transition-colors mb-1">
+                    Rippling
+                  </h3>
+                </div>
+              </div>
+            </div>
+
+            {/* YugabyteDB */}
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl blur-lg group-hover:blur-xl transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
+              <div className="relative flex flex-col items-center justify-center p-8 bg-neutral-800/80 backdrop-blur-sm rounded-xl border border-neutral-700/50 hover:border-blue-500/50 transition-all duration-300 group-hover:transform group-hover:scale-105">
+                <div className="w-20 h-20 flex items-center justify-center mb-4">
+                  <img
+                    src="/images/YugabyteLogo.png"
+                    alt="YugabyteDB"
+                    className="w-9 h-9 group-hover:scale-110 transition-transform"
+                  />
+                </div>
+                <div className="text-center">
+                  <h3 className="text-sm font-bold text-white group-hover:text-blue-300 transition-colors mb-1">
+                    YugabyteDB
+                  </h3>
+                </div>
+              </div>
+            </div>
+
+            {/* AB InBev */}
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl blur-lg group-hover:blur-xl transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
+              <div className="relative flex flex-col items-center justify-center p-8 bg-neutral-800/80 backdrop-blur-sm rounded-xl border border-neutral-700/50 hover:border-blue-500/50 transition-all duration-300 group-hover:transform group-hover:scale-105">
+                <div className="w-21 h-20 flex items-center justify-center mb-4">
+                  <img
+                    src="/images/AB InBev transparent logo.png"
+                    alt="AB InBev"
+                    className="w-15 h-12 group-hover:scale-110 transition-transform"
+                  />
+                </div>
+                <div className="text-center">
+                  <h3 className="text-sm font-bold text-white group-hover:text-blue-300 transition-colors mb-1">
+                    AB InBev
+                  </h3>
+                </div>
+              </div>
+            </div>
           </div>
-
-
 
           {/* Artistic connection lines */}
           <div className="hidden lg:block absolute inset-0 pointer-events-none">
             <svg className="w-full h-full opacity-20" viewBox="0 0 800 400">
-              <path d="M150 200 Q400 100 650 200" stroke="url(#gradient1)" strokeWidth="1" fill="none"/>
-              <path d="M150 200 Q400 300 650 200" stroke="url(#gradient2)" strokeWidth="1" fill="none"/>
+              <path
+                d="M150 200 Q400 100 650 200"
+                stroke="url(#gradient1)"
+                strokeWidth="1"
+                fill="none"
+              />
+              <path
+                d="M150 200 Q400 300 650 200"
+                stroke="url(#gradient2)"
+                strokeWidth="1"
+                fill="none"
+              />
               <defs>
-                <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#3B82F6" stopOpacity="0"/>
-                  <stop offset="50%" stopColor="#8B5CF6" stopOpacity="1"/>
-                  <stop offset="100%" stopColor="#EF4444" stopOpacity="0"/>
+                <linearGradient
+                  id="gradient1"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="0%"
+                >
+                  <stop offset="0%" stopColor="#3B82F6" stopOpacity="0" />
+                  <stop offset="50%" stopColor="#8B5CF6" stopOpacity="1" />
+                  <stop offset="100%" stopColor="#EF4444" stopOpacity="0" />
                 </linearGradient>
-                <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#10B981" stopOpacity="0"/>
-                  <stop offset="50%" stopColor="#F59E0B" stopOpacity="1"/>
-                  <stop offset="100%" stopColor="#8B5CF6" stopOpacity="0"/>
+                <linearGradient
+                  id="gradient2"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="0%"
+                >
+                  <stop offset="0%" stopColor="#10B981" stopOpacity="0" />
+                  <stop offset="50%" stopColor="#F59E0B" stopOpacity="1" />
+                  <stop offset="100%" stopColor="#8B5CF6" stopOpacity="0" />
                 </linearGradient>
               </defs>
             </svg>
