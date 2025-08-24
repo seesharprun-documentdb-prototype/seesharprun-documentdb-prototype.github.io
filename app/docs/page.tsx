@@ -1063,102 +1063,7 @@ db.users.createIndex({ email: 1 })
 
 // Compound index
 db.users.createIndex({ name: 1, email: 1 })
-
-// Text index
-db.articles.createIndex({ content: "text" })
-
-// Geospatial index
-db.places.createIndex({ location: "2dsphere" })
-
-// Vector index
-db.products.createIndex({ 
-  embedding: "vector",
-  vectorOptions: { dimensions: 384 }
-})`}
-                          </pre>
-                        </div>
-                      </div>
-
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          3. Index strategies
-                        </h4>
-                        <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
-                          <pre className="text-green-400 font-mono text-sm">
-                            {`// Unique index
-db.users.createIndex({ email: 1 }, { unique: true })
-
-// Partial index
-db.orders.createIndex(
-  { orderDate: 1 },
-  { partialFilterExpression: { status: "active" } }
-)`}
-                          </pre>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Advanced Features */}
-                  <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                    <h3 className="text-2xl font-semibold text-white mb-6">
-                      Advanced Features
-                    </h3>
-
-                    <div className="space-y-6">
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          1. Aggregation pipeline
-                        </h4>
-                        <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
-                          <pre className="text-green-400 font-mono text-sm">
-                            {`db.orders.aggregate([
-{ $match: { status: "completed" } },
-{ $group: {
-    _id: "$customer",
-    total: { $sum: "$amount" },
-    count: { $sum: 1 }
-  }},
-  { $sort: { total: -1 } }
-])`}
-                          </pre>
-                        </div>
-                      </div>
-
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          2. Vector search operations
-                        </h4>
-                        <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
-                          <pre className="text-green-400 font-mono text-sm">
-                            {`db.products.find({
-$vectorSearch: {
-    queryVector: [0.1, 0.2, 0.3],
-    path: "embedding",
-    numCandidates: 100,
-    limit: 10
-  }
-})`}
-                          </pre>
-                        </div>
-                      </div>
-
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          3. Geospatial queries
-                        </h4>
-                        <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
-                          <pre className="text-green-400 font-mono text-sm">
-                            {`db.places.find({
-location: {
-  $near: {
-    $geometry: {
-      type: "Point",
-      coordinates: [-73.9667, 40.78]
-    },
-    $maxDistance: 1000
-  }
-}})`}
+`}
                           </pre>
                         </div>
                       </div>
@@ -1174,22 +1079,7 @@ location: {
                     <div className="space-y-6">
                       <div>
                         <h4 className="text-lg font-medium text-white mb-3">
-                          1. Server status commands
-                        </h4>
-                        <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
-                          <pre className="text-green-400 font-mono text-sm">
-                            {`// Get server status
-db.serverStatus()
-
-// Get server information
-db.runCommand({ buildInfo: 1 })`}
-                          </pre>
-                        </div>
-                      </div>
-
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          2. Database statistics
+                          1. Database statistics
                         </h4>
                         <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
                           <pre className="text-green-400 font-mono text-sm">
@@ -1204,7 +1094,7 @@ db.users.stats()`}
 
                       <div>
                         <h4 className="text-lg font-medium text-white mb-3">
-                          3. Collection statistics
+                          2. Collection statistics
                         </h4>
                         <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
                           <pre className="text-green-400 font-mono text-sm">
@@ -1213,70 +1103,6 @@ db.users.dataSize()
 
 // Get index sizes
 db.users.stats().indexSizes`}
-                          </pre>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Best Practices */}
-                  <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                    <h3 className="text-2xl font-semibold text-white mb-6">
-                      Best Practices
-                    </h3>
-
-                    <div className="space-y-6">
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          1. Connection management
-                        </h4>
-                        <ul className="space-y-2 text-gray-300">
-                          <li className="flex items-start">
-                            <span className="text-purple-400 mr-3 mt-1">-</span>
-                            <span>Use connection pooling</span>
-                          </li>
-                          <li className="flex items-start">
-                            <span className="text-purple-400 mr-3 mt-1">-</span>
-                            <span>Set appropriate timeouts</span>
-                          </li>
-                          <li className="flex items-start">
-                            <span className="text-purple-400 mr-3 mt-1">-</span>
-                            <span>Handle reconnection logic</span>
-                          </li>
-                        </ul>
-                      </div>
-
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          2. Query optimization
-                        </h4>
-                        <ul className="space-y-2 text-gray-300">
-                          <li className="flex items-start">
-                            <span className="text-purple-400 mr-3 mt-1">-</span>
-                            <span>Use explain() for query analysis</span>
-                          </li>
-                          <li className="flex items-start">
-                            <span className="text-purple-400 mr-3 mt-1">-</span>
-                            <span>Create appropriate indexes</span>
-                          </li>
-                          <li className="flex items-start">
-                            <span className="text-purple-400 mr-3 mt-1">-</span>
-                            <span>Monitor query performance</span>
-                          </li>
-                        </ul>
-                      </div>
-
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          3. Error handling
-                        </h4>
-                        <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
-                          <pre className="text-green-400 font-mono text-sm">
-                            {`try {
-    db.users.insertOne({ _id: 1, name: "Test" })
-  } catch (error) {
-  print("Error:", error.message)
-}`}
                           </pre>
                         </div>
                       </div>
