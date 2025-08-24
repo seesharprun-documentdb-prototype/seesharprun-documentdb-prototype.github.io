@@ -120,7 +120,9 @@ export default function Docs() {
                 <div className="w-24 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 rounded-full mb-6"></div>
                 {selectedPostgresItem !== "Components" && (
                   <p className="text-gray-400 text-lg">
-                    Supported operators for {selectedOperator} operators. Detailed usage samples coming soon!
+                    Comprehensive documentation for PostgreSQL extension{" "}
+                    {selectedPostgresItem.toLowerCase()} and their usage
+                    patterns.
                   </p>
                 )}
               </div>
@@ -2546,9 +2548,8 @@ async function connect() {
                 </h2>
                 <div className="w-24 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 rounded-full mb-6"></div>
                 <p className="text-gray-400 text-lg">
-                  Comprehensive documentation for{" "}
-                  {selectedOperator.toLowerCase()} operators and their usage
-                  patterns.
+                  Supported operators for {selectedOperator} operators. Detailed
+                  usage samples coming soon!
                 </p>
               </div>
 
