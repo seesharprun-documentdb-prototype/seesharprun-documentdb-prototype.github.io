@@ -11,13 +11,13 @@ export default function Docs() {
   );
 
   const operatorCategories = [
-    "Accumulators",
+    "Accumulator",
     "Aggregation",
-    "Arithmetic Expressions",
-    "Array Expressions",
+    "Arithmetic Expression",
+    "Array Expression",
     "Array Query",
     "Array Update",
-    "Bitwise Operators",
+    "Bitwise Operator",
     "Bitwise Query",
     "Bitwise Update",
     "Boolean Expression",
@@ -36,7 +36,7 @@ export default function Docs() {
     "Timestamp Expression",
     "Set Expression",
     "Variable Expression",
-    "Window Operators"
+    "Window"
   ];
 
   const postgresMenuItems = ["Components", "Functions"];
@@ -2554,7 +2554,7 @@ async function connect() {
               </div>
 
               {/* Content based on selected operator */}
-              {selectedOperator === "Accumulators" ? (
+              {selectedOperator === "Accumulator" ? (
                 <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
                   <h3 className="text-xl font-semibold text-white mb-4">
                     Accumulator Operators
@@ -2597,7 +2597,42 @@ async function connect() {
                     Aggregation Operators
                   </h3>
                   <div className="grid gap-3">
-                    {["$count", "$facet", "$geoNear", "$lookup", "$match"].map(
+                    {[
+                        "$addFields",
+                        "$bucket",
+                        "$changeStreams",
+                        "$collstats",
+                        "$convert",
+                        "$count",
+                        "$densify",
+                        "documents",
+                        "$facet", 
+                        "$fill",  
+                        "$geoNear", 
+                        "$group",
+                        "$indexStats",
+                        "$isNumber",
+                        "$lookup", 
+                        "$match",
+                        "$merge",
+                        "$out",
+                        "$redact",
+                        "$replaceWith",
+                        "$sample",
+                        "$set",
+                        "$skip",
+                        "$sort",
+                        "$sortByCount",
+                        "$toBool",
+                        "$toDate",
+                        "$toDecimal",
+                        "$toDouble",
+                        "$toInt",
+                        "$toLong",
+                        "$toObjectId",
+                        "$toString",
+                        "$unset",
+                        "$unwind"].map(
                       (operator) => (
                         <button
                           key={operator}
@@ -2611,7 +2646,7 @@ async function connect() {
                     )}
                   </div>
                 </div>
-              ) : selectedOperator === "Arithmetic Expressions" ? (
+              ) : selectedOperator === "Arithmetic Expression" ? (
                 <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
                   <h3 className="text-xl font-semibold text-white mb-4">
                     Arithmetic Expression Operators
@@ -2646,7 +2681,7 @@ async function connect() {
                     ))}
                   </div>
                 </div>
-              ) : selectedOperator === "Array Expressions" ? (
+              ) : selectedOperator === "Array Expression" ? (
                 <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
                   <h3 className="text-xl font-semibold text-white mb-4">
                     Array Expression Operators
@@ -2729,7 +2764,7 @@ async function connect() {
                     ))}
                   </div>
                 </div>
-              ) : selectedOperator === "Bitwise Operators" ? (
+              ) : selectedOperator === "Bitwise Operator" ? (
                 <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
                   <h3 className="text-xl font-semibold text-white mb-4">
                     Bitwise Operators
@@ -3161,7 +3196,7 @@ async function connect() {
                     ))}
                   </div>
                 </div>
-              ) : selectedOperator === "Window Operators" ? (
+              ) : selectedOperator === "Window" ? (
                   <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
                     <h3 className="text-xl font-semibold text-white mb-4">
                       Variable Expression Operators
