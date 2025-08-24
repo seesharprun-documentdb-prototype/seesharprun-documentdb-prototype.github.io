@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export default function Docs() {
   const [currentPage, setCurrentPage] = useState("main");
-  const [selectedOperator, setSelectedOperator] = useState("Accumulators");
+  const [selectedOperator, setSelectedOperator] = useState("Accumulator");
   const [selectedPostgresItem, setSelectedPostgresItem] =
     useState("Components");
   const [selectedGettingStartedItem, setSelectedGettingStartedItem] = useState(
