@@ -267,39 +267,50 @@ export default function Home() {
             <div className="mt-6 w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
           </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 items-center">
-              {/* Amazon DocumentDB */}
-              
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 items-center">
+            {/* Amazon DocumentDB */}
 
-              {/* YugabyteDB */}
-              <div className="group relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl blur-lg group-hover:blur-xl transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
-                <div className="relative flex flex-col items-center justify-center p-8 bg-neutral-800/80 backdrop-blur-sm rounded-xl border border-neutral-700/50 hover:border-blue-500/50 transition-all duration-300 group-hover:transform group-hover:scale-105">
-                  <div className="w-20 h-20 flex items-center justify-center mb-4">
-                    <img src="/images/YugabyteLogo.png" alt="YugabyteDB" className="w-9 h-9 group-hover:scale-110 transition-transform" />
-                  </div>
-                  <div className="text-center">
-                    <h3 className="text-sm font-bold text-white group-hover:text-blue-300 transition-colors mb-1">YugabyteDB</h3>
-                    <p className="text-xs text-gray-400 group-hover:text-gray-300 transition-colors">Distributed SQL</p>
-                  </div>
+            {/* YugabyteDB */}
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl blur-lg group-hover:blur-xl transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
+              <div className="relative flex flex-col items-center justify-center p-8 bg-neutral-800/80 backdrop-blur-sm rounded-xl border border-neutral-700/50 hover:border-blue-500/50 transition-all duration-300 group-hover:transform group-hover:scale-105">
+                <div className="w-20 h-20 flex items-center justify-center mb-4">
+                  <img src="/images/YugabyteLogo.png" alt="YugabyteDB" className="w-9 h-9 group-hover:scale-110 transition-transform" />
+                </div>
+                <div className="text-center">
+                  <h3 className="text-sm font-bold text-white group-hover:text-blue-300 transition-colors mb-1">YugabyteDB</h3>
+                  <p className="text-xs text-gray-400 group-hover:text-gray-300 transition-colors">Distributed SQL</p>
                 </div>
               </div>
+            </div>
 
-
-
-                {/* Microsoft Azure */}
-                <div className="group relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl blur-lg group-hover:blur-xl transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
-                  <div className="relative flex flex-col items-center justify-center p-8 bg-neutral-800/80 backdrop-blur-sm rounded-xl border border-neutral-700/50 hover:border-blue-500/50 transition-all duration-300 group-hover:transform group-hover:scale-105">
-                    <div className="w-20 h-20 flex items-center justify-center mb-4">
-                      <img src="/images/AzureLogo.png" alt="Microsoft Azure" className="w-12 h-12 group-hover:scale-110 transition-transform" />
-                    </div>
-                    <div className="text-center">
-                      <h3 className="text-sm font-bold text-white group-hover:text-blue-300 transition-colors mb-1">Microsoft</h3>
-                      <p className="text-xs text-gray-400 group-hover:text-gray-300 transition-colors">Azure</p>
-                    </div>
-                  </div>
+            {/* Microsoft Azure */}
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl blur-lg group-hover:blur-xl transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
+              <div className="relative flex flex-col items-center justify-center p-8 bg-neutral-800/80 backdrop-blur-sm rounded-xl border border-neutral-700/50 hover:border-blue-500/50 transition-all duration-300 group-hover:transform group-hover:scale-105">
+                <div className="w-20 h-20 flex items-center justify-center mb-4">
+                  <img src="/images/AzureLogo.png" alt="Microsoft Azure" className="w-12 h-12 group-hover:scale-110 transition-transform" />
                 </div>
+                <div className="text-center">
+                  <h3 className="text-sm font-bold text-white group-hover:text-blue-300 transition-colors mb-1">Microsoft</h3>
+                  <p className="text-xs text-gray-400 group-hover:text-gray-300 transition-colors">Azure</p>
+                </div>
+              </div>
+            </div>
+
+            {/* FerretDB */}
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl blur-lg group-hover:blur-xl transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
+              <div className="relative flex flex-col items-center justify-center p-8 bg-neutral-800/80 backdrop-blur-sm rounded-xl border border-neutral-700/50 hover:border-blue-500/50 transition-all duration-300 group-hover:transform group-hover:scale-105">
+                <div className="w-20 h-20 flex items-center justify-center mb-4">
+                  <img src="/images/FerretDBLogo.png" alt="FerretDB" className="w-12 h-12 group-hover:scale-110 transition-transform" />
+                </div>
+                <div className="text-center">
+                  <h3 className="text-sm font-bold text-white group-hover:text-blue-300 transition-colors mb-1">FerretDB</h3>
+                  <p className="text-xs text-gray-400 group-hover:text-gray-300 transition-colors">Open-source document database</p>
+                </div>
+              </div>
+            </div>
           </div>
 
 
