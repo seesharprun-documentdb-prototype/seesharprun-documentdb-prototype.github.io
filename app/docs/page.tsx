@@ -1432,8 +1432,7 @@ db.users.stats().indexSizes`}
                   {/* Introduction */}
                   <div className="mb-8">
                     <p className="text-gray-300 text-lg leading-relaxed">
-                      Learn how to set up and use DocumentDB with Python using
-                      the official MongoDB Python driver (PyMongo).
+                      Learn how to set up and use DocumentDB with Python using the MongoDB Python driver (PyMongo).
                     </p>
                   </div>
 
@@ -1453,66 +1452,50 @@ db.users.stats().indexSizes`}
                       </li>
                       <li className="flex items-start">
                         <span className="text-blue-400 mr-3 mt-1">•</span>
-                        <span>
-                          DocumentDB installed and running (see Pre-built
-                          Packages)
-                        </span>
+                        <span>Docker</span>
                       </li>
                       <li className="flex items-start">
                         <span className="text-blue-400 mr-3 mt-1">•</span>
-                        <span>Basic Python knowledge</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-blue-400 mr-3 mt-1">•</span>
-                        <span>Git installed (for cloning the repository)</span>
+                        <span>Git (for cloning the repository)</span>
                       </li>
                     </ul>
                   </div>
 
-                  {/* Installation */}
+                  {/* Step 1: Install Python */}
                   <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
                     <h3 className="text-2xl font-semibold text-white mb-6">
-                      Installation
+                      Step 1: Install Python
                     </h3>
 
-                    <div className="space-y-6">
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          1. Installing the MongoDB Python driver
-                        </h4>
-                        <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
-                          <pre className="text-green-400 font-mono text-sm">
-                            {`pip install pymongo`}
-                          </pre>
-                        </div>
-                      </div>
-
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          2. Optional dependencies
-                        </h4>
-                        <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
-                          <pre className="text-green-400 font-mono text-sm">
-                            {`pip install dnspython  # For connection string support`}
-                          </pre>
-                        </div>
-                      </div>
+                    <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
+                      <pre className="text-green-400 font-mono text-sm">
+                {`pip install pymongo`}
+                      </pre>
                     </div>
                   </div>
 
-                  {/* Project Setup */}
+                  {/* Step 2: Install optional dependencies */}
                   <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
                     <h3 className="text-2xl font-semibold text-white mb-6">
-                      Project Setup (skip if already done)
+                      Step 2: Install optional dependencies
                     </h3>
 
-                    <div>
-                      <h4 className="text-lg font-medium text-white mb-3">
-                        1. Setting up DocumentDB with Docker
-                      </h4>
-                      <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30 mb-4">
-                        <pre className="text-green-400 font-mono text-sm overflow-x-auto">
-                          {`# Pull the latest DocumentDB Docker image
+                    <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
+                      <pre className="text-green-400 font-mono text-sm">
+                {`pip install dnspython`}
+                      </pre>
+                    </div>
+                  </div>
+
+                  {/* Step 3: Setup DocumentDB using Docker */}
+                  <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
+                    <h3 className="text-2xl font-semibold text-white mb-6">
+                      Step 3: Setup DocumentDB using Docker
+                    </h3>
+
+                    <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30 mb-4">
+                      <pre className="text-green-400 font-mono text-sm overflow-x-auto">
+                {`# Pull the latest DocumentDB Docker image
 docker pull ghcr.io/microsoft/documentdb/documentdb-local:latest
 
 # Tag the image for convenience
@@ -1521,418 +1504,156 @@ docker tag ghcr.io/microsoft/documentdb/documentdb-local:latest documentdb
 # Run the container with your chosen username and password
 docker run -dt -p 10260:10260 --name documentdb-container documentdb --username <YOUR_USERNAME> --password <YOUR_PASSWORD>
 docker image rm -f ghcr.io/microsoft/documentdb/documentdb-local:latest || echo "No existing documentdb image to remove"`}
-                        </pre>
-                      </div>
-                      <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4 mb-4">
-                        <p className="text-blue-200 text-sm">
-                          <span className="font-medium">Note:</span> Replace{" "}
-                          <code className="bg-blue-900/30 px-1 rounded">
-                            &lt;YOUR_USERNAME&gt;
-                          </code>{" "}
-                          and{" "}
-                          <code className="bg-blue-900/30 px-1 rounded">
-                            &lt;YOUR_PASSWORD&gt;
-                          </code>{" "}
-                          with your desired credentials. You must set these when
-                          creating the container for authentication to work.
-                        </p>
-                      </div>
-                      <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4">
-                        <p className="text-blue-200 text-sm">
-                          <span className="font-medium">Port Note:</span> Port{" "}
-                          <code className="bg-blue-900/30 px-1 rounded">
-                            10260
-                          </code>{" "}
-                          is used by default in these instructions to avoid
-                          conflicts with other local database services. You can
-                          use port{" "}
-                          <code className="bg-blue-900/30 px-1 rounded">
-                            27017
-                          </code>{" "}
-                          (the standard MongoDB port) or any other available
-                          port if you prefer. If you do, be sure to update the
-                          port number in both your{" "}
-                          <code className="bg-blue-900/30 px-1 rounded">
-                            docker run
-                          </code>{" "}
-                          command and your connection string accordingly.
-                        </p>
-                      </div>
+                      </pre>
+                    </div>
+
+                    <div className="bg-orange-900/20 border border-orange-500/30 rounded-lg p-4 mb-4">
+                      <p className="text-orange-200 text-sm">
+                        <span className="font-medium">Note:</span> During the transition to the Linux Foundation, Docker images may still be hosted on Microsoft's container registry. These will be migrated to the new DocumentDB organization as the transition completes.
+                      </p>
+                    </div>
+
+                    <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4 mb-4">
+                      <p className="text-blue-200 text-sm">
+                        <span className="font-medium">Note:</span> Replace{" "}
+                        <code className="bg-blue-900/30 px-1 rounded">
+                          &lt;YOUR_USERNAME&gt;
+                        </code>{" "}
+                        and{" "}
+                        <code className="bg-blue-900/30 px-1 rounded">
+                          &lt;YOUR_PASSWORD&gt;
+                        </code>{" "}
+                        with your desired credentials. You must set these when creating the container for authentication to work.
+                      </p>
+                    </div>
+
+                    <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4">
+                      <p className="text-blue-200 text-sm">
+                        <span className="font-medium">Port Note:</span> Port{" "}
+                        <code className="bg-blue-900/30 px-1 rounded">
+                          10260
+                        </code>{" "}
+                        is used by default in these instructions to avoid conflicts with other local database services. You can use port{" "}
+                        <code className="bg-blue-900/30 px-1 rounded">
+                          27017
+                        </code>{" "}
+                        (the standard MongoDB port) or any other available port if you prefer. If you do, be sure to update the port number in both your{" "}
+                        <code className="bg-blue-900/30 px-1 rounded">
+                          docker run
+                        </code>{" "}
+                        command and your connection string accordingly.
+                      </p>
                     </div>
                   </div>
 
-                  {/* Connecting to DocumentDB */}
+                  {/* Step 4: Initialize the pymongo client */}
                   <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
                     <h3 className="text-2xl font-semibold text-white mb-6">
-                      Connecting to DocumentDB
+                      Step 4: Initialize the pymongo client with the credentials from the previous step
                     </h3>
 
-                    <div className="space-y-6">
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          1. Basic Connection
-                        </h4>
-                        <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
-                          <pre className="text-green-400 font-mono text-sm">
-                            {`import pymongo
-import sys
+                    <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
+                      <pre className="text-green-400 font-mono text-sm">
+                {`import pymongo
+from pymongo import MongoClient
 
 # Create a MongoDB client and open a connection to DocumentDB
 client = pymongo.MongoClient(
-  'mongodb://localhost:27017'
-)
-
-# Specify the database to be used
-db = client.sample_database
-
-# Specify the collection
-collection = db.sample_collection`}
-                          </pre>
-                        </div>
-                      </div>
-
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          2. Connection with Authentication
-                        </h4>
-                        <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
-                          <pre className="text-green-400 font-mono text-sm">
-                            {`# With username and password
-client = pymongo.MongoClient(
-  'mongodb://username:password@localhost:27017'
-)`}
-                          </pre>
-                        </div>
-                      </div>
-
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          3. Connection with Options
-                        </h4>
-                        <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
-                          <pre className="text-green-400 font-mono text-sm">
-                            {`# With additional options
-client = pymongo.MongoClient(
-  'mongodb://localhost:27017',
-   maxPoolSize=50,
-   retryWrites=False,
-   w='majority'
-)`}
-                          </pre>
-                        </div>
-                      </div>
+    'mongodb://<YOUR_USERNAME>:<YOUR_PASSWORD>@localhost:10260/?tls=true&tlsAllowInvalidCertificates=true'
+                )`}
+                      </pre>
                     </div>
                   </div>
 
-                  {/* Basic Operations */}
+                  {/* Step 5: Create a database and collection */}
                   <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
                     <h3 className="text-2xl font-semibold text-white mb-6">
-                      Basic Operations
+                      Step 5: Create a database and collection
                     </h3>
 
-                    <div className="space-y-6">
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          1. Creating collections
-                        </h4>
-                        <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
-                          <pre className="text-green-400 font-mono text-sm">
-                            {`# Create a new collection
-db.create_collection('users')
-
-# Create a collection with options
-db.create_collection('logs')`}
-                          </pre>
-                        </div>
-                      </div>
-
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          2. Document operations
-                        </h4>
-                        <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
-                          <pre className="text-green-400 font-mono text-sm">
-                            {`# Insert a single document
-collection.insert_one({
-  'name': 'John Doe',
-  'email': 'john@example.com',
-  'created_at': datetime.utcnow()
-})
-
-# Insert multiple documents
-collection.insert_many([
-  {'name': 'Jane Smith', 'email': 'jane@example.com'},
-  {'name': 'Bob Johnson', 'email': 'bob@example.com'}
-])
-
-# Find documents
-result = collection.find({'name': 'John Doe'})
-
-# Find with projection
-result = collection.find(
-    {'email': {'$regex': '@example.com$'}},
-    {'name': 1, 'email': 1, '_id': 0}
-)
-
-# Update a document
-collection.update_one(
-    {'name': 'John Doe'},
-    {'$set': {'status': 'active'}}
-)
-
-# Delete documents
-collection.delete_one({'name': 'John Doe'})`}
-                          </pre>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Working with BSON Types */}
-                  <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                    <h3 className="text-2xl font-semibold text-white mb-6">
-                      Working with BSON Types
-                    </h3>
-
-                    <div className="space-y-6">
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          1. ObjectId
-                        </h4>
-                        <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
-                          <pre className="text-green-400 font-mono text-sm">
-                            {`from bson import ObjectId
-
-# Find by ObjectId
-doc = collection.find_one({'_id': ObjectId('...')})`}
-                          </pre>
-                        </div>
-                      </div>
-
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          2. DateTime
-                        </h4>
-                        <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
-                          <pre className="text-green-400 font-mono text-sm">
-                            {`from datetime import datetime
-
-# Insert with timestamp
-collection.insert_one({
-    'name': 'Event',
-    'timestamp': datetime.utcnow()
-})`}
-                          </pre>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Advanced Features */}
-                  <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                    <h3 className="text-2xl font-semibold text-white mb-6">
-                      Advanced Features
-                    </h3>
-
-                    <div className="space-y-6">
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          1. Bulk operations
-                        </h4>
-                        <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
-                          <pre className="text-green-400 font-mono text-sm">
-                            {`# Initialize bulk operations
-bulk = collection.initialize_ordered_bulk_op()
-
-# Add operations
-bulk.find({'status': 'pending'}).update({'$set': {'status': 'processed'}})
-bulk.find({'age': {'$lt': 18}}).delete()
-
-# Execute
-result = bulk.execute()`}
-                          </pre>
-                        </div>
-                      </div>
-
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          2. Aggregation framework
-                        </h4>
-                        <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
-                          <pre className="text-green-400 font-mono text-sm">
-                            {`pipeline = [
-    {'$match': {'status': 'active'}},
-    {'$group': {
-        '_id': '$type',
-        'count': {'$sum': 1},
-        'avg_value': {'$avg': '$value'}
-    }}
-]
-results = collection.aggregate(pipeline)`}
-                          </pre>
-                        </div>
-                      </div>
-
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          3. Vector search
-                        </h4>
-                        <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
-                          <pre className="text-green-400 font-mono text-sm">
-                            {`# Vector similarity search
-results = collection.find({
-    '$vectorSearch': {
-        'queryVector': [0.1, 0.2, 0.3],
-        'path': 'embeddings',
-        'numCandidates': 100,
-        'limit': 10
-    }
-})`}
-                          </pre>
-                        </div>
-                      </div>
-
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          4. PostgreSQL Integration
-                        </h4>
-                        <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
-                          <pre className="text-green-400 font-mono text-sm">
-                            {`# Access PostgreSQL features directly
-from documentdb_api import DocumentDB
-
-# Initialize DocumentDB with PostgreSQL support
-db = DocumentDB(client)
-
-# Execute SQL queries on BSON documents
-result = db.sql_query(
-    "SELECT jsonb_path_query(data, '$.name') FROM collection WHERE data @? '$.age > 21'"
-)`}
-                          </pre>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Error Handling */}
-                  <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                    <h3 className="text-2xl font-semibold text-white mb-6">
-                      Error Handling
-                    </h3>
-
-                    <div className="space-y-6">
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          1. Connection errors
-                        </h4>
-                        <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
-                          <pre className="text-green-400 font-mono text-sm">
-                            {`try:
-client = pymongo.MongoClient(connection_string)
-client.admin.command('ping')
-except pymongo.errors.ConnectionError as e:
-print(f"Connection error: {e}")`}
-                          </pre>
-                        </div>
-                      </div>
-
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          2. Operation errors
-                        </h4>
-                        <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
-                          <pre className="text-green-400 font-mono text-sm">
-                            {`from pymongo.errors import OperationFailure
-
-try:
-    result = collection.insert_one({'_id': existing_id})
-except OperationFailure as e:
-    print(f"Operation failed: {e}")`}
-                          </pre>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Best Practices */}
-                  <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                    <h3 className="text-2xl font-semibold text-white mb-6">
-                      Best Practices
-                    </h3>
-
-                    <div className="space-y-6">
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          1. Connection pooling
-                        </h4>
-                        <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
-                          <pre className="text-green-400 font-mono text-sm">
-                            {`# Configure connection pool
-client = pymongo.MongoClient(
-    connection_string,
-    maxPoolSize=50,
-    waitQueueTimeoutMS=2000
-)`}
-                          </pre>
-                        </div>
-                      </div>
-
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          2. Query optimization
-                        </h4>
-                        <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
-                          <pre className="text-green-400 font-mono text-sm">
-                            {`# Use explain for query analysis
-explanation = collection.find({'status': 'active'}).explain()`}
-                          </pre>
-                        </div>
-                      </div>
-
-                      <div>
-                        <h4 className="text-lg font-medium text-white mb-3">
-                          3. Proper cleanup
-                        </h4>
-                        <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
-                          <pre className="text-green-400 font-mono text-sm">
-                            {`# Always close connections when done
-try:
-    # Your code here
-finally:
-    client.close()`}
-                          </pre>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Sample Application */}
-                  <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                    <h3 className="text-2xl font-semibold text-white mb-4">
-                      Sample Application
-                    </h3>
                     <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
                       <pre className="text-green-400 font-mono text-sm">
-                        {`from flask import Flask, jsonify
-from pymongo import MongoClient
-from datetime import datetime
+                {`quickStartDatabase = client["quickStartDatabase"]
+quickStartCollection = quickStartDatabase.create_collection("quickStartCollection")`}
+                      </pre>
+                    </div>
+                  </div>
 
-app = Flask(__name__)
-client = MongoClient('mongodb://localhost:27017/')
-db = client.sample_database
+                  {/* Step 6: Insert documents */}
+                  <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
+                    <h3 className="text-2xl font-semibold text-white mb-6">
+                      Step 6: Insert documents
+                    </h3>
 
-@app.route('/users', methods=['GET'])
-def get_users():
-    users = list(db.users.find({}, {'_id': 0}))
-    return jsonify(users)
+                    <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
+                      <pre className="text-green-400 font-mono text-sm">
+                {`# Insert a single document
+quickStartCollection.insert_one({
+       'name': 'John Doe',
+       'email': 'john@email.com',
+       'address': '123 Main St, Anytown, USA',
+       'phone': '555-1234'
+   })
 
-@app.route('/user/<name>', methods=['GET'])
-def get_user(name):
-    user = db.users.find_one({'name': name}, {'_id': 0})
-    return jsonify(user)
+# Insert multiple documents
+quickStartCollection.insert_many([
+    {
+        'name': 'Jane Smith',
+        'email': 'jane@email.com',
+        'address': '456 Elm St, Othertown, USA',
+        'phone': '555-5678'
+    },
+    {
+        'name': 'Alice Johnson',
+        'email': 'alice@email.com',
+        'address': '789 Oak St, Sometown, USA',
+        'phone': '555-8765'
+    }
+])`}
+                      </pre>
+                    </div>
+                  </div>
 
-if __name__ == '__main__':
-    app.run(debug=True)`}
+                  {/* Step 7: Read documents */}
+                  <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
+                    <h3 className="text-2xl font-semibold text-white mb-6">
+                      Step 7: Read documents
+                    </h3>
+
+                    <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
+                      <pre className="text-green-400 font-mono text-sm">
+                {`# Read all documents
+for document in quickStartCollection.find():
+    print(document)
+
+# Read a specific document
+singleDocumentReadResult = quickStartCollection.find_one({'name': 'John Doe'})
+    print(singleDocumentReadResult)`}
+                      </pre>
+                    </div>
+                  </div>
+
+                  {/* Step 8: Run aggregation pipeline query */}
+                  <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
+                    <h3 className="text-2xl font-semibent text-white mb-6">
+                      Step 8: Run aggregation pipeline query
+                    </h3>
+
+                    <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
+                      <pre className="text-green-400 font-mono text-sm">
+                {`pipeline = [
+    {'$match': {'name': 'Alice Johnson'}},
+    {'$project': {
+        '_id': 0,
+        'name': 1,
+        'email': 1
+    }}
+]
+
+results = quickStartCollection.aggregate(pipeline)
+print("Aggregation results:")
+for eachDocument in results:
+    print(eachDocument)`}
                       </pre>
                     </div>
                   </div>
@@ -1946,42 +1667,14 @@ if __name__ == '__main__':
                       <li className="flex items-start">
                         <span className="text-blue-400 mr-3 mt-1">•</span>
                         <span>
-                          Explore advanced features in the{" "}
+                          Explore the{" "}
                           <button
                             onClick={() => setCurrentPage("api-reference")}
                             className="text-blue-400 hover:text-blue-300 underline"
                           >
                             API Reference
-                          </button>
-                        </span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-blue-400 mr-3 mt-1">•</span>
-                        <span>
-                          Learn about indexing strategies in the{" "}
-                          <button
-                            onClick={() => setCurrentPage("architecture")}
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            Architecture
-                          </button>
-                        </span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-blue-400 mr-3 mt-1">•</span>
-                        <span>
-                          Check out the{" "}
-                          <button
-                            onClick={() =>
-                              setSelectedGettingStartedItem(
-                                "MongoDB Shell Quick Start",
-                              )
-                            }
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            MongoDB Shell Guide
                           </button>{" "}
-                          for additional query examples
+                          for advanced features
                         </span>
                       </li>
                     </ul>
