@@ -24,7 +24,7 @@ export default function Blogs() {
             Latest from our Blog
           </h1>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-8">
-            Insights, updates, and deep dives into the world of document databases and open-source innovation
+            Insights, updates, and deep dives into the world of document databases and open source innovation
           </p>
           <div className="w-32 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 mx-auto rounded-full"></div>
         </div>
