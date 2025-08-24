@@ -864,32 +864,7 @@ docker image rm -f ghcr.io/microsoft/documentdb/documentdb-local:latest || echo 
                       <li className="flex items-start">
                         <span className="text-blue-400 mr-3 mt-1">•</span>
                         <span>
-                          Explore advanced querying capabilities in the{" "}
-                          <button
-                            onClick={() => setCurrentPage("api-reference")}
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            API Reference
-                          </button>
-                        </span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-blue-400 mr-3 mt-1">•</span>
-                        <span>
-                          Learn about indexing strategies in the{" "}
-                          <button
-                            onClick={() => setCurrentPage("architecture")}
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            Architecture
-                          </button>{" "}
-                          section
-                        </span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-blue-400 mr-3 mt-1">•</span>
-                        <span>
-                          Connect your application using one of our{" "}
+                          Connect your application using the Python quickstart
                           <button
                             onClick={() =>
                               setSelectedGettingStartedItem(
