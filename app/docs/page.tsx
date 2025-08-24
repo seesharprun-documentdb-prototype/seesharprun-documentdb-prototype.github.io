@@ -1307,41 +1307,6 @@ db.users.stats().indexSizes`}
                       </div>
                     </div>
                   </div>
-
-                  {/* Next Steps */}
-                  <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                    <h3 className="text-2xl font-semibold text-white mb-4">
-                      Next Steps
-                    </h3>
-                    <ul className="space-y-3 text-gray-300">
-                      <li className="flex items-start">
-                        <span className="text-blue-400 mr-3 mt-1">•</span>
-                        <span>
-                          Explore the API reference for advanced features
-                        </span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-blue-400 mr-3 mt-1">•</span>
-                        <span>
-                          Learn about advanced features in the{" "}
-                          <button
-                            onClick={() => setCurrentPage("architecture")}
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            Architecture
-                          </button>{" "}
-                          section
-                        </span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-blue-400 mr-3 mt-1">•</span>
-                        <span>
-                          Connect your application using one of our language
-                          guides
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
                 </div>
               ) : selectedGettingStartedItem === "Python Setup Guide" ? (
                 <div className="space-y-8">
@@ -1572,28 +1537,6 @@ for eachDocument in results:
     print(eachDocument)`}
                       </pre>
                     </div>
-                  </div>
-
-                  {/* Next Steps */}
-                  <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                    <h3 className="text-2xl font-semibold text-white mb-4">
-                      Next Steps
-                    </h3>
-                    <ul className="space-y-3 text-gray-300">
-                      <li className="flex items-start">
-                        <span className="text-blue-400 mr-3 mt-1">•</span>
-                        <span>
-                          Explore the{" "}
-                          <button
-                            onClick={() => setCurrentPage("api-reference")}
-                            className="text-blue-400 hover:text-blue-300 underline"
-                          >
-                            API Reference
-                          </button>{" "}
-                          for advanced features
-                        </span>
-                      </li>
-                    </ul>
                   </div>
                 </div>
               ): (
