@@ -7,7 +7,7 @@ export default function Docs() {
   const [selectedPostgresItem, setSelectedPostgresItem] =
     useState("Components");
   const [selectedGettingStartedItem, setSelectedGettingStartedItem] = useState(
-    "VS Code Extension Quick Start",
+    "Python Setup Guide",
   );
 
   const operatorCategories = [
