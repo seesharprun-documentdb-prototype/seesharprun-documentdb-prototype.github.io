@@ -24,7 +24,7 @@ export default function RootLayout({
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div className="text-center">
               <p className="text-gray-400 text-sm">
-                Copyright © DocumentDB a Series of LF Projects, LLC
+                Copyright © DocumentDB a Series of LF Projects, LLC.
 For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
               </p>
             </div>
