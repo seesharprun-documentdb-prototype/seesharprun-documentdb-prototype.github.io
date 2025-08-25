@@ -20,7 +20,16 @@ export default function RootLayout({
       <body className={inter.className}>
         <Navbar />
         {children}
-        
+        <footer className="bg-neutral-900 border-t border-neutral-700">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div className="text-center">
+              <p className="text-gray-400 text-sm">
+                Copyright © DocumentDB a Series of LF Projects, LLC and its
+                contributors
+              </p>
+            </div>
+          </div>
+        </footer>
       </body>
     </html>
   );
