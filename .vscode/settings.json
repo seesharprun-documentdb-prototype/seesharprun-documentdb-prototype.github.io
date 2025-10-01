@@ -2,6 +2,9 @@
   "yaml.schemas": {
     "./schema/blog.schema.json": [
       "blogs/**/*.{yml,yaml}"
+    ],
+    "./schema/reference.schema.json": [
+      "reference/**/*.{yml,yaml}"
     ]
   }
 }
