@@ -1,5 +1,5 @@
 import { getAllPosts } from '../services/blogService';
-import { BlogCard } from '../components/Card';
+import { Card } from '../components/Card';
 import { Post } from '../types/Post';
 
 export default function Blogs() {
