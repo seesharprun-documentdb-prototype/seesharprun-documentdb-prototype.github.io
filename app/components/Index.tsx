@@ -28,7 +28,7 @@ export default function Index({
               {categories.length > 0 && (
                 <>
                   <Option
-                    id={type}
+                    key={type}
                     target={`/docs/reference/${type}`}
                     display={capitalCase(type) + 's'}
                     className="uppercase"
@@ -37,7 +37,7 @@ export default function Index({
                   {/* Category links */}
                   {categories.map((category) => (
                     <Option
-                      id={`${type}-${category}`}
+                      key={`${type}-${category}`}
                       target={`/docs/reference/${type}/${category}`}
                       display={capitalCase(category)}
                     />
@@ -53,19 +53,16 @@ export default function Index({
 }
 
 function Option({
-  id,
   target,
   display,
   className
 }: {
-  id: string;
   target: string;
   display: string;
   className?: string;
 }) {
   return (
     <Link
-      key={id}
       href={target}
       className={`block w-full text-left px-4 py-3 rounded-lg text-sm transition-all duration-200 text-gray-300 hover:text-white hover:bg-neutral-700/50${className ? ' ' + className : ''}`}
     >
