@@ -28,10 +28,13 @@ export default async function ArticlePage({ params }: PageProps) {
         return notFound();
     }
 
-    const { content, navigation, file } = articleData;
+    const { content, frontmatter, navigation, file } = articleData;
     const selectedNavItem = navigation.find((item) =>
         item.link.includes(file)
     );
+
+    // Use title from frontmatter if available, otherwise fall back to navigation title or section name
+    const pageTitle = frontmatter.title || selectedNavItem?.title || section;
 
     return (
         <div className="min-h-screen bg-neutral-900 relative overflow-hidden">
@@ -78,7 +81,15 @@ export default async function ArticlePage({ params }: PageProps) {
                     <div className="flex-1 p-4 overflow-y-auto">
                         <nav className="space-y-1">
                             {navigation.map((item) => {
-                                const isActive = item.link.includes(file);
+                                // Better matching logic for active state
+                                // For index files, match both /section and /section/index
+                                // For other files, match the specific file name
+                                const itemPath = item.link.replace('/docs/', '');
+                                const currentPath = file === 'index' ? section : `${section}/${file}`;
+                                const isActive = itemPath === currentPath || 
+                                                (file === 'index' && itemPath === `${section}/index`) ||
+                                                (item.link.includes(file) && file !== 'index');
+                                
                                 return (
                                     <Link
                                         key={item.link}
@@ -101,7 +112,7 @@ export default async function ArticlePage({ params }: PageProps) {
                     <div className="max-w-4xl">
                         <div className="mb-8">
                             <h2 className="text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent mb-4">
-                                {selectedNavItem?.title || section}
+                                {pageTitle}
                             </h2>
                             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 rounded-full mb-6"></div>
                         </div>

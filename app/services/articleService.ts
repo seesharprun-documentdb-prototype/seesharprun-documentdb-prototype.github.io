@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
+import matter from 'gray-matter';
 import { Article } from '../types/Article';
 import { Link } from '../types/Link';
 
@@ -66,21 +67,29 @@ export function getAllArticlePaths(): { section: string; slug: string[] }[] {
 
 export function getArticleByPath(section: string, slug: string[] = []): {
   content: string;
+  frontmatter: {
+    title?: string;
+    [key: string]: any;
+  };
   navigation: Link[];
   section: string;
   file: string;
 } | null {
   const file = slug.length > 0 ? slug[slug.length - 1] : 'index';
-  const content = getMarkdownContent(section, file);
+  const rawContent = getMarkdownContent(section, file);
   
-  if (!content) {
+  if (!rawContent) {
     return null;
   }
+
+  // Parse front matter
+  const { data: frontmatter, content } = matter(rawContent);
 
   const navigation = getArticleNavigation(section);
 
   return {
     content,
+    frontmatter,
     navigation,
     section,
     file

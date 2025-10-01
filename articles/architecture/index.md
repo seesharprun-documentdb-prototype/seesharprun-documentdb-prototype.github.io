@@ -15,5 +15,6 @@ We're building something amazing! The technical architecture documentation is co
 > - Storage engine design
 > - Distributed systems architecture
 > - Performance characteristics
+>
 
 Stay tuned for comprehensive technical documentation!

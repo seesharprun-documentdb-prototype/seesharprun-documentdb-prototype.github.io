@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "change-case": "^5.4.4",
+    "gray-matter": "^4.0.3",
     "handlebars": "^4.7.8",
     "js-yaml": "^4.1.0",
     "next": "15.5.4",
