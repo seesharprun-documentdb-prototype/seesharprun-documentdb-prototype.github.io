@@ -4,6 +4,7 @@
   "type": "object",
   "required": [
     "type",
+    "category",
     "name",
     "description",
     "syntax",
@@ -18,6 +19,25 @@
         "command"
       ],
       "description": "Specifies whether the reference describes a query operator (such as $regex) or a database command (such as count). This helps categorize the reference for documentation and usage purposes."
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "query",
+        "aggregation",
+        "update",
+        "projection",
+        "array",
+        "expression",
+        "geospatial",
+        "bitwise",
+        "logical",
+        "evaluation",
+        "element",
+        "type",
+        "conditional"
+      ],
+      "description": "The category of the operator or command, such as query, aggregation, update, etc. This helps organize the reference within the broader context of MongoDB functionalities."
     },
     "name": {
       "type": "string",

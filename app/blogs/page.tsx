@@ -1,9 +1,9 @@
-import { getPosts } from './data';
+import { getAllPosts } from '../services/blogService';
 import { BlogCard } from '../components/Card';
 import { Post } from '../types/Post';
 
 export default function Blogs() {
-  const posts: Post[] = getPosts();
+  const posts: Post[] = getAllPosts();
   const featuredPosts = posts.filter(post => post.featured);
   const regularPosts = posts.filter(post => !post.featured);
 

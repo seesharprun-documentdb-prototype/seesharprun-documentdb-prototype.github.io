@@ -1,4 +1,5 @@
 type: command
+category: aggregation
 name: count
 description: |-
   The `count` command is used to count the number of documents in a collection that match specific criteria.
