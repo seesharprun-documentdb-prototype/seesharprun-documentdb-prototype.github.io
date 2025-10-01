@@ -23,53 +23,70 @@ export function BlogCard({ post, featured = false }: { post: Post; featured?: bo
     'microsoft-open-source-blog': {
       label: 'Microsoft Open Source Blog',
       timestamp: 'August 25, 2025',
-      gradientFrom: 'blue-500',
-      gradientTo: 'blue-600',
+      gradientFrom: 'from-blue-500',
+      gradientTo: 'to-blue-600',
       textColor: 'blue-400',
       hoverColor: 'blue-300',
       bgGradient: 'from-blue-500/10 to-purple-500/10',
       borderHover: 'border-blue-500/50',
+      tagColors: [
+        'bg-blue-500/20 text-blue-400',
+        'bg-purple-500/20 text-purple-400',
+        'bg-green-500/20 text-green-400',
+        'bg-orange-500/20 text-orange-400',
+      ],
     },
     'aws-blog': {
       label: 'AWS Blogs',
       timestamp: 'Recent',
-      gradientFrom: 'orange-500',
-      gradientTo: 'orange-600',
+      gradientFrom: 'from-orange-500',
+      gradientTo: 'to-orange-600',
       textColor: 'orange-400',
       hoverColor: 'orange-300',
       bgGradient: 'from-orange-500/10 to-amber-500/10',
       borderHover: 'border-orange-500/50',
+      tagColors: [
+        'bg-orange-500/20 text-orange-400',
+        'bg-amber-500/20 text-amber-400',
+        'bg-yellow-500/20 text-yellow-400',
+        'bg-blue-500/20 text-blue-400',
+      ],
     },
     'azure-cosmos-db-blog': {
       label: 'Azure Cosmos DB Blog',
       timestamp: 'Recent',
-      gradientFrom: 'purple-500',
-      gradientTo: 'purple-600',
+      gradientFrom: 'from-purple-500',
+      gradientTo: 'to-purple-600',
       textColor: 'purple-400',
       hoverColor: 'purple-300',
       bgGradient: 'from-purple-500/10 to-pink-500/10',
       borderHover: 'border-purple-500/50',
+      tagColors: [
+        'bg-purple-500/20 text-purple-400',
+        'bg-blue-500/20 text-blue-400',
+        'bg-green-500/20 text-green-400',
+        'bg-orange-500/20 text-orange-400',
+      ],
     },
     'yugabytedb-blog': {
       label: 'YugabyteDB Blog',
       timestamp: 'Partner Content',
-      gradientFrom: 'green-500',
-      gradientTo: 'green-600',
+      gradientFrom: 'from-green-500',
+      gradientTo: 'to-green-600',
       textColor: 'green-400',
       hoverColor: 'green-300',
       bgGradient: 'from-green-500/10 to-emerald-500/10',
       borderHover: 'border-green-500/50',
+      tagColors: [
+        'bg-green-500/20 text-green-400',
+        'bg-blue-500/20 text-blue-400',
+        'bg-orange-500/20 text-orange-400',
+        'bg-yellow-500/20 text-yellow-400',
+      ],
     },
   };
 
   const style = styles[post.category as keyof typeof styles];
-
-  const tagColors = [
-    'bg-blue-500/20 text-blue-400',
-    'bg-purple-500/20 text-purple-400',
-    'bg-green-500/20 text-green-400',
-    'bg-orange-500/20 text-orange-400',
-  ];
 
   return (
     <article className="group relative">
@@ -77,7 +94,7 @@ export function BlogCard({ post, featured = false }: { post: Post; featured?: bo
       <div className={`relative bg-neutral-800/80 backdrop-blur-sm rounded-2xl border border-neutral-700/50 hover:${style.borderHover} transition-all duration-500 group-hover:transform ${featured ? 'group-hover:scale-[1.02]' : 'group-hover:scale-105 h-full'} overflow-hidden`}>
         <div className={featured ? 'p-8' : 'p-6'}>
           <div className="flex items-center space-x-3 mb-4">
-            <div className={`${featured ? 'w-10 h-10' : 'w-8 h-8'} bg-gradient-to-br from-${style.gradientFrom} to-${style.gradientTo} rounded-lg flex items-center justify-center`}>
+            <div className={`${featured ? 'w-10 h-10' : 'w-8 h-8'} bg-gradient-to-br ${style.gradientFrom} ${style.gradientTo} rounded-lg flex items-center justify-center`}>
               <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                 {icon}
               </svg>
@@ -102,7 +119,7 @@ export function BlogCard({ post, featured = false }: { post: Post; featured?: bo
             {post.tags.map((tag, index) => (
               <span
                 key={index}
-                className={`${featured ? 'px-3 py-1 font-medium' : 'px-2 py-1'} ${tagColors[index % tagColors.length]} rounded-full text-xs`}
+                className={`${featured ? 'px-3 py-1 font-medium' : 'px-2 py-1'} ${style.tagColors[index % style.tagColors.length]} rounded-full text-xs`}
               >
                 {tag}
               </span>
