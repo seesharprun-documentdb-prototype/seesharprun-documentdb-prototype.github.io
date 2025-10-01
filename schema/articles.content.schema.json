@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Articles Content Configuration",
+  "description": "Schema for defining the landing page content structure for the articles/documentation section, including title, description, and navigation links",
+  "type": "object",
+  "required": ["landing"],
+  "properties": {
+    "landing": {
+      "type": "object",
+      "description": "Configuration for the documentation landing page that serves as the main entry point for users accessing the documentation section",
+      "required": ["title", "description", "links"],
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "The main heading displayed at the top of the documentation landing page. This should be concise and clearly indicate the purpose of the section (e.g., 'Documentation', 'Articles', 'Guides')",
+          "minLength": 1,
+          "maxLength": 100,
+          "examples": ["Documentation", "Getting Started", "Developer Resources"]
+        },
+        "description": {
+          "type": "string",
+          "description": "A brief introductory paragraph that explains what users can find in this section. This text appears below the title and helps set expectations for the content available. Should be clear, welcoming, and informative.",
+          "minLength": 10,
+          "maxLength": 500,
+          "examples": [
+            "Everything you need to build with DocumentDB - from getting started guides to deep architectural insights",
+            "Comprehensive guides and tutorials to help you get the most out of DocumentDB"
+          ]
+        },
+        "links": {
+          "type": "array",
+          "description": "An array of navigation links that direct users to different documentation sections. These links serve as the primary navigation for the landing page and should represent the major documentation categories available.",
+          "minItems": 1,
+          "maxItems": 20,
+          "items": {
+            "type": "object",
+            "description": "A single navigation link entry consisting of a display title and a target URL path",
+            "required": ["title", "link"],
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "The display text for the navigation link. Should be descriptive and action-oriented to help users understand what content they'll find when clicking. Use clear, consistent terminology that matches the target page's content.",
+                "minLength": 1,
+                "maxLength": 100,
+                "examples": [
+                  "Getting Started with DocumentDB",
+                  "API Reference Docs",
+                  "Architecture under the hood",
+                  "Best Practices Guide"
+                ]
+              },
+              "link": {
+                "type": "string",
+                "description": "The URL path (relative or absolute) that the link navigates to. For internal site navigation, use relative paths starting with '/'. Should point to valid documentation pages within the site structure.",
+                "pattern": "^(/|https?://)",
+                "minLength": 1,
+                "maxLength": 500,
+                "examples": [
+                  "/docs/quickstart",
+                  "/docs/reference",
+                  "/docs/postgresql",
+                  "/docs/architecture",
+                  "https://external-docs.example.com"
+                ]
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import Markdown from 'react-markdown'
 
 export default function Docs() {
   const [currentPage, setCurrentPage] = useState("main");

@@ -1,0 +1,12 @@
+landing:
+  title: Documentation
+  description: Everything you need to build with DocumentDB - from getting started guides to deep architectural insights
+  links:
+    - title: Getting Started with DocumentDB
+      link: /docs/quickstart
+    - title: API Reference Docs
+      link: /docs/reference
+    - title: Postgres Extension API Docs
+      link: /docs/postgresql
+    - title: Architecture under the hood
+      link: /docs/architecture
