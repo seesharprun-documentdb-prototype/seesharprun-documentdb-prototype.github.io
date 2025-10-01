@@ -1,5 +1,6 @@
 ---
 title: MongoDB Shell Quick Start
+description: Connect to DocumentDB using MongoDB shell (mongosh). Learn basic operations, querying, indexing, and database management commands.
 ---
 
 Get started with DocumentDB using the MongoDB shell for a familiar MongoDB-compatible experience.

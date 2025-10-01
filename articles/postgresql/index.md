@@ -1,5 +1,6 @@
 ---
 title: Components
+description: Learn about pg_documentdb_core and pg_documentdb_api PostgreSQL extensions that enable BSON support and document operations in Postgres.
 ---
 
 Comprehensive documentation for PostgreSQL extension components and their usage patterns.

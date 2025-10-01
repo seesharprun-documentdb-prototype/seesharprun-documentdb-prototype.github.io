@@ -1,5 +1,6 @@
 ---
 title: Visual Studio Code Quick Start
+description: Get started with DocumentDB using the VS Code extension. Connect to databases, create collections, and manage documents seamlessly.
 ---
 
 Get started with DocumentDB using the Visual Studio Code extension for a seamless development experience.

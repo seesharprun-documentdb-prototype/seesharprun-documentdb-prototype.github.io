@@ -1,5 +1,6 @@
 ---
 title: Python Setup Guide
+description: Setup and use DocumentDB with Python using PyMongo. Learn to connect, create databases, insert documents, and run aggregation queries.
 ---
 
 Learn how to set up and use DocumentDB with Python using the MongoDB Python driver (PyMongo).

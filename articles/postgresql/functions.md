@@ -1,5 +1,6 @@
 ---
 title: Functions
+description: Complete reference for PostgreSQL extension functions including CRUD operations, collection management, user management, and utilities.
 ---
 
 Comprehensive documentation for PostgreSQL extension functions and their usage patterns.
