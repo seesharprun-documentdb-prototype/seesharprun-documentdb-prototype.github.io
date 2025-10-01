@@ -46,12 +46,14 @@ export default async function ReferencePage({ params }: { params: Promise<{ type
       </div>
 
       {/* Syntax Section */}
-      <section className="mb-8">
-        <h2 className="text-2xl font-bold text-white mb-4">Syntax</h2>
-        <div className="bg-neutral-900 rounded-lg p-6 border border-neutral-700/50 overflow-x-auto">
-          <Code code={data.syntax} />
-        </div>
-      </section>
+      {data.syntax && data.syntax.length > 0 && (
+        <section className="mb-8">
+          <h2 className="text-2xl font-bold text-white mb-4">Syntax</h2>
+          <div className="bg-neutral-900 rounded-lg p-6 border border-neutral-700/50 overflow-x-auto">
+            <Code code={data.syntax} />
+          </div>
+        </section>
+      )}
 
       {/* Parameters Section */}
       {data.parameters && data.parameters.length > 0 && (
