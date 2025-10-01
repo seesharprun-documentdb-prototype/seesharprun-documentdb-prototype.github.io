@@ -3,125 +3,168 @@ title: MongoDB Shell Quick Start
 description: Connect to DocumentDB using MongoDB shell (mongosh). Learn basic operations, querying, indexing, and database management commands.
 ---
 
+Quick start guide for mongodb shell quick start.
+
 Get started with DocumentDB using the MongoDB shell for a familiar MongoDB-compatible experience.
 
 ## Prerequisites
 
 - MongoDB Shell (mongosh) installed
 - Docker Desktop installed and running
-- Basic familiarity with MongoDB commands
-- Terminal or command-line access
+- Basic MongoDB knowledge
+- Git installed (for cloning the repository)
 
 ## Installation
 
-### Installing MongoDB Shell
+### 1. Setting up DocumentDB locally
 
-**On macOS (using Homebrew):**
 ```bash
-brew install mongosh
+# Pull the latest DocumentDB Docker image
+docker pull ghcr.io/microsoft/documentdb/documentdb-local:latest
+
+# Tag the image for convenience
+docker tag ghcr.io/microsoft/documentdb/documentdb-local:latest documentdb
+
+# Run the container with your chosen username and password
+docker run -dt -p 10260:10260 --name documentdb-container documentdb --username <YOUR_USERNAME> --password <YOUR_PASSWORD>
+docker image rm -f ghcr.io/microsoft/documentdb/documentdb-local:latest || echo "No existing documentdb image to remove"
 ```
 
-**On Windows:**
-Download and install from [MongoDB Shell Downloads](https://www.mongodb.com/try/download/shell)
+> **Note:** Replace `<YOUR_USERNAME>` and `<YOUR_PASSWORD>` with your desired credentials. You must set these when creating the container for authentication to work.
 
-**On Linux:**
-```bash
-wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
-sudo apt-get install -y mongodb-mongosh
-```
+> **Port Note:** Port `10260` is used by default in these instructions to avoid conflicts with other local database services. You can use port `27017` (the standard MongoDB port) or any other available port if you prefer. If you do, be sure to update the port number in both your `docker run` command and your connection string accordingly.
 
-### Verify installation
+### 2. Starting the server
 
 ```bash
-mongosh --version
+# The server will be available at localhost:10260 (or your chosen port)
+# You can verify the server is running using:
+docker ps
 ```
 
 ## Connecting to DocumentDB
 
-Connection string format:
+Connection string format
+
 ```bash
-mongosh "mongodb://admin:password@localhost:27018/"
+mongosh "mongodb://<YOUR_USERNAME>:<YOUR_PASSWORD>@localhost:10260/?tls=true&tlsAllowInvalidCertificates=true"
 ```
 
 ## Basic Operations
 
-### Creating a database and collection
+### 1. Creating databases and collections
 
 ```javascript
-use my_database
-db.createCollection("my_collection")
+// Create/switch to a database
+use mydb
+
+// Create a collection
+db.createCollection("users")
+
+// Create another collection
+db.createCollection("logs")
 ```
 
-### Inserting documents
+### 2. Inserting documents
 
 ```javascript
-db.my_collection.insertOne({
-  name: "John Doe",
-  email: "john@example.com",
-  age: 30
-})
+// Insert a single document
+db.users.insertOne({ name: "John Doe", email: "john@example.com", created_at: new Date() })
 
-db.my_collection.insertMany([
-  { name: "Jane Smith", age: 25 },
-  { name: "Bob Johnson", age: 35 }
+// Insert multiple documents
+db.users.insertMany([
+  { name: "Jane Smith", email: "jane@example.com" }, 
+  { name: "Bob Johnson", email: "bob@example.com" }
 ])
 ```
 
-### Querying documents
+### 3. Querying documents
 
 ```javascript
 // Find all documents
-db.my_collection.find()
+db.users.find()
 
-// Find with filter
-db.my_collection.find({ age: { $gt: 25 } })
+// Find with criteria
+db.users.find({ name: "John Doe" })
 
-// Find one document
-db.my_collection.findOne({ name: "John Doe" })
+// Find with projection
+db.users.find({}, { name: 1, email: 1, _id: 0 })
+
+// Complex queries
+db.users.find(
+{ $and: 
+  [{ 
+    created_at: { $gte: new Date("2025-01-01") } 
+   }, 
+   { 
+    email: { $regex: "@example.com$" } 
+   }
+  ] 
+})
 ```
 
-### Updating documents
+### 4. Updating documents
 
 ```javascript
-db.my_collection.updateOne(
-  { name: "John Doe" },
-  { $set: { age: 31 } }
-)
+// Update a single document
+db.users.updateOne({ name: "John Doe" }, { $set: { status: "active" } })
+
+// Update multiple documents
+db.users.updateMany({ email: { $regex: "@example.com$" } }, { $set: { domain: "example.com" } })
 ```
 
-### Deleting documents
+### 5. Deleting documents
 
 ```javascript
-db.my_collection.deleteOne({ name: "John Doe" })
+// Delete a single document
+db.users.deleteOne({ name: "John Doe" })
+
+// Delete multiple documents
+db.users.deleteMany({ status: "inactive" })
 ```
 
 ## Working with Indexes
 
-### Creating an index
+### 1. Understanding index types
 
 ```javascript
-db.my_collection.createIndex({ email: 1 })
-
-// Compound index
-db.my_collection.createIndex({ name: 1, age: -1 })
+// Available index types:
+// - Single field
+// - Compound
+// - Multi-key
+// - Text
+// - Geospatial
+// - Vector
 ```
 
-### Viewing indexes
+### 2. Creating indexes
 
 ```javascript
-db.my_collection.getIndexes()
+// Single field index
+db.users.createIndex({ email: 1 })
+
+// Compound index
+db.users.createIndex({ name: 1, email: 1 })
 ```
 
 ## Monitoring and Management
 
-### Viewing database statistics
+### 1. Database statistics
 
 ```javascript
+// Get database stats
 db.stats()
+
+// Get collection stats
+db.users.stats()
 ```
 
-### Viewing collection statistics
+### 2. Collection statistics
 
 ```javascript
-db.my_collection.stats()
+// Get collection size
+db.users.dataSize()
+
+// Get index sizes
+db.users.stats().indexSizes
 ```

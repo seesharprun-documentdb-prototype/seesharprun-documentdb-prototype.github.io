@@ -3,6 +3,8 @@ title: Visual Studio Code Quick Start
 description: Get started with DocumentDB using the VS Code extension. Connect to databases, create collections, and manage documents seamlessly.
 ---
 
+Quick start guide for vs code extension quick start.
+
 Get started with DocumentDB using the Visual Studio Code extension for a seamless development experience.
 
 ## Prerequisites
@@ -15,83 +17,77 @@ Get started with DocumentDB using the Visual Studio Code extension for a seamles
 ## Installing the Extension
 
 1. Open VS Code
-2. Navigate to the Extensions marketplace (`Ctrl+Shift+X` or `Cmd+Shift+X`)
-3. Search for "DocumentDB for VS Code"
-4. Click Install
-5. Reload VS Code if prompted
+1. Navigate to the Extensions marketplace (`Ctrl+Shift+X` or `Cmd+Shift+X`)
+1. Search for "DocumentDB for VS Code"
+1. Click Install
+1. Reload VS Code if prompted
 
 ## Setting Up Your First Database
 
 ### 1. Creating a new DocumentDB instance
 
-Create a new DocumentDB instance using Docker:
-
 ```bash
-docker run -d --name documentdb -p 27018:27017 \
-  -e MONGO_INITDB_ROOT_USERNAME=admin \
-  -e MONGO_INITDB_ROOT_PASSWORD=password \
-  mcr.microsoft.com/documentdb:latest
+docker pull ghcr.io/microsoft/documentdb/documentdb-local:latest
+docker tag ghcr.io/microsoft/documentdb/documentdb-local:latest documentdb
+docker run -dt -p 10260:10260 --name documentdb-container documentdb --username <YOUR_USERNAME> --password <YOUR_PASSWORD>
+docker image rm -f ghcr.io/microsoft/documentdb/documentdb-local:latest || echo "No existing documentdb image to remove"
 ```
 
-> **Note**: During the transition to the Linux Foundation, Docker images may still be hosted on Microsoft's container registry. These will be migrated to the new DocumentDB organization as the transition completes.
+> **Note:** Replace `<YOUR_USERNAME>` and `<YOUR_PASSWORD>` with your desired credentials. You must set these when creating the container for authentication to work.
 
-> **Port Info**: Port `27018` is used by default in these instructions to avoid conflicts with other local database services. You can use port `27017` (the standard MongoDB port) or any other available port if you prefer. If you do, be sure to update the port number in both your `docker run` command and your connection string accordingly.
+> **Port Note:** Port `10260` is used by default in these instructions to avoid conflicts with other local database services. You can use port `27017` (the standard MongoDB port) or any other available port if you prefer. If you do, be sure to update the port number in both your `docker run` command and your connection string accordingly.
 
 ### 2. Connecting to your database
 
-- Open the DocumentDB extension in VS Code sidebar
-- Click "Add Connection"
-- Enter the connection string: `mongodb://admin:password@localhost:27018/`
-- Click "Connect"
+- Click the DocumentDB icon in the VS Code sidebar
+- Click "Add New Connection"
+- On the navigation bar, click on "Connection String"
+- Paste your connection string:
 
-Example connection string:
 ```
-mongodb://admin:password@localhost:27018/
+mongodb://<YOUR_USERNAME>:<YOUR_PASSWORD>@localhost:10260/?tls=true&tlsAllowInvalidCertificates=true&authMechanism=SCRAM-SHA-256
 ```
 
 ### 3. Creating your first database and collection
 
-- Right-click on the connection in the DocumentDB view
-- Select "Create Database"
-- Enter a database name (e.g., `my_database`)
-- Right-click on the new database
-- Select "Create Collection"
-- Enter a collection name (e.g., `my_collection`)
+- Click on the drop-down next to your local connection and select "Create Database..."
+- Enter database name and confirm
+- Click on the drop-down next to your created database and select "Create Collection..."
+- Enter collection name and confirm
+- Repeat for every database and collection you wish to create under your connection
 
 ## Working with Documents
 
 ### 1. Creating documents
 
-- Right-click on your collection
-- Select "Insert Document"
-- Enter your JSON document
+- Use the Table View for quick data entry
+- Use the Tree View for hierarchical data exploration
+- Use the JSON View for detailed document structure
 
-Example document:
 ```json
 {
-  "name": "John Doe",
-  "email": "john@example.com"
+  "name": "Test Document",
+  "type": "example",
+  "created_at": new Date()
 }
 ```
 
-### 2. Querying documents
+### 2. Using the document explorer
 
-- Click on your collection to view documents
-- Use the query bar to filter results
-- Example query: `{"age": {"$gt": 25}}`
+- Browse documents in multiple views:
+  - Table View for quick insights
+  - Tree View for hierarchical exploration
+  - JSON View for detailed structure
+- Use smooth pagination for large datasets
 
 ## Import and Export
 
-### Importing data
+### 1. Importing data
 
-- Right-click on a collection
-- Select "Import from JSON"
+- Click on the "Import" button on each collection
 - Choose your JSON file
-- Confirm the import
+- Confirm import
 
-### Exporting data
+### 2. Exporting data
 
-- Right-click on a collection
-- Select "Export Collection"
-- Choose export format (JSON or CSV)
-- Save to your desired location
+- Export entire collections or query results using the "Export" button on each collection
