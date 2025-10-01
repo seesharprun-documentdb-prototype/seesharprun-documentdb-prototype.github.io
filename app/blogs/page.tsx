@@ -60,12 +60,12 @@ export default function Blogs() {
         <div className="grid grid-cols-1 gap-12 mb-12">
           {/* Featured Posts */}
           {featuredPosts.map((post, index) => (
-            <BlogCard key={index} post={post} featured={true} />
+            <Card key={index} post={post} featured={true} />
           ))}
 
           {/* Regular Posts */}
           {regularPosts.map((post, index) => (
-            <BlogCard key={index} post={post} featured={false} />
+            <Card key={index} post={post} featured={false} />
           ))}
         </div>
       </div>
