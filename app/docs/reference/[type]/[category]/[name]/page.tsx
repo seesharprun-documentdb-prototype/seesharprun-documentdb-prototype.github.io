@@ -11,6 +11,7 @@ export async function generateMetadata({ params }: { params: Promise<{ type: str
   const data = getReferenceByPath(type, category, name);
   return {
     title: `${data?.name || 'Reference'} - DocumentDB MQL Reference`,
+    description: data?.description || data?.summary || undefined,
   };
 }
 

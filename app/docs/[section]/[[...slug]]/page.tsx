@@ -36,6 +36,7 @@ export async function generateMetadata({ params }: PageProps) {
     
     return {
         title: `${pageTitle} - DocumentDB Documentation`,
+        description: frontmatter.description || undefined,
     };
 }
 

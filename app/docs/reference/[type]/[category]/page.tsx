@@ -13,8 +13,10 @@ export const generateStaticParams = async (): Promise<{ type: string, category: 
 export async function generateMetadata({ params }: { params: Promise<{ type: string; category: string }> }) {
   const { type, category } = await params;
   const title = `${capitalCase(category)} ${capitalCase(pluralize(type))}`;
+  const description = getCategoryDescription(type, category);
   return {
     title: `${title} - DocumentDB MQL Reference`,
+    description: description || undefined,
   };
 }
 
