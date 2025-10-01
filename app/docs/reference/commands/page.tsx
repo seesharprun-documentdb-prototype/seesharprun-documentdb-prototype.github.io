@@ -6,17 +6,18 @@ export default function CommandReferencePage() {
   const grouped = getReferencesByTypeGroupedByCategory('command');
   return (
     <main className="max-w-4xl mx-auto p-8">
-      <h1 className="text-2xl font-bold text-gray-100">MongoDB Query Language (MQL) Operators</h1>
-      <div className="flex items-start justify-between mb-6 pt-2">
-        <p className="text-gray-400 mb-6 text-sm">
-          Commands in MongoDB are specialized instructions that allow you to interact directly with the database server to perform administrative, diagnostic, and operational tasks. They enable you to manage collections, databases, indexes, users, and server configurations, as well as retrieve statistics and perform maintenance operations. Understanding commands is crucial for controlling database behavior, optimizing performance, and ensuring the security and reliability of your MongoDB deployment.
-        </p>
-        <Link href="/reference" className="flex items-center gap-1 text-blue-400 transition-colors font-medium text-xs hover:text-blue-200 underline text-base font-semibold ml-2 whitespace-nowrap">
-          <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ transform: 'scaleX(-1)' }}>
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
-          <span>Back to MQL language</span>
-        </Link>
+      <div className="flex-1 p-8">
+        <div className="max-w-4xl">
+          <div className="mb-8">
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent mb-4">
+              MongoDB Query Language (MQL) Commands
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 rounded-full mb-6"></div>
+            <p className="text-gray-400 text-sm">
+              MongoDB commands are direct instructions for managing and interacting with your database server. They are essential for performing administrative tasks, optimizing performance, and maintaining security.
+            </p>
+          </div>
+        </div>
       </div>
       {Object.entries(grouped).map(([category, items]) => (
         <section key={category} className="mb-10">

@@ -20,8 +20,8 @@ export default function Table({ items }: {
             <td className="px-4 py-2 font-semibold text-gray-100">{page.name}</td>
             <td className="px-4 py-2 text-gray-300">{page.description}</td>
             <td className="px-4 py-2 text-center">
-              <Link className="text-blue-400 underline font-bold" href={`/reference/${page.slug}`}>
-                <code>/reference/{page.slug}</code>
+              <Link className="text-blue-400 underline font-bold" href={`/docs/reference/${page.slug}`}>
+                <code>/docs/reference/{page.slug}</code>
               </Link>
             </td>
           </tr>

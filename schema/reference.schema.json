@@ -5,11 +5,7 @@
   "required": [
     "type",
     "category",
-    "name",
-    "description",
-    "syntax",
-    "parameters",
-    "examples"
+    "name"
   ],
   "properties": {
     "type": {
@@ -22,22 +18,62 @@
     },
     "category": {
       "type": "string",
-      "enum": [
-        "query",
-        "aggregation",
-        "update",
-        "projection",
-        "array",
-        "expression",
-        "geospatial",
-        "bitwise",
-        "logical",
-        "evaluation",
-        "element",
-        "type",
-        "conditional"
-      ],
-      "description": "The category of the operator or command, such as query, aggregation, update, etc. This helps organize the reference within the broader context of MongoDB functionalities."
+      "description": "The category of the operator or command, such as query, aggregation, update, etc. This helps organize the reference within the broader context of MongoDB functionalities.",
+      "oneOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "operator"
+              }
+            }
+          },
+          "then": {
+            "enum": [
+              "accumulator",
+              "aggregation",
+              "arithmetic-expression",
+              "array-expression",
+              "array-query",
+              "array-update",
+              "bitwise",
+              "bitwise-query",
+              "bitwise-update",
+              "boolean-expression",
+              "comparison-query",
+              "conditional-expression",
+              "date-expression",
+              "data-size",
+              "element-query",
+              "evaluation-query",
+              "field-update",
+              "geospatial",
+              "logical-query",
+              "miscellaneous",
+              "object-expression",
+              "projection",
+              "timestamp-expression",
+              "set-expression",
+              "variable-expression",
+              "window"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "command"
+              }
+            }
+          },
+          "then": {
+            "enum": [
+              "aggregation"
+            ]
+          }
+        }
+      ]
     },
     "name": {
       "type": "string",

@@ -2,19 +2,26 @@ import Link from 'next/link';
 import ReferenceTable from '../../components/Table';
 import { getReferencesGroupedByTypeAndCategory } from '../../services/referenceService';
 
-const descriptions = {
-  command: 'Commands in MongoDB are specialized instructions that allow you to interact directly with the database server to perform administrative, diagnostic, and operational tasks. They enable you to manage collections, databases, indexes, users, and server configurations, as well as retrieve statistics and perform maintenance operations. Understanding commands is crucial for controlling database behavior, optimizing performance, and ensuring the security and reliability of your MongoDB deployment.',
-  operator: 'Operators in the MongoDB Query Language (MQL) are special keywords and symbols used to perform comparisons, logical operations, element matching, and data manipulation within queries. They allow you to filter documents, combine multiple conditions, update fields, and work with arrays and embedded documents. Understanding operators is essential for building expressive queries and efficiently retrieving or modifying data in MongoDB collections.'
-}
-
 export default function Home() {
   const grouped = getReferencesGroupedByTypeAndCategory();
   return (
     <main className="max-w-4xl mx-auto p-8">
-      <h1 className="text-2xl font-bold mb-6 text-gray-100">MongoDB Query Language (MQL)</h1>
+      <div className="flex-1 p-8">
+        <div className="max-w-4xl">
+          <div className="mb-8">
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent mb-4">
+              MongoDB Query Language (MQL)
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 rounded-full mb-6"></div>
+            <p className="text-gray-400 text-lg">
+              Explore the essential MongoDB Query Language (MQL) operators and commands available in this reference. Each entry includes a brief description and usage details to help you build effective queries and manage your database.
+            </p>
+          </div>
+        </div>
+      </div>
       {Object.entries(grouped).map(([type, categories]) => {
         const label = type === 'command' ? 'Commands' : 'Operators';
-        const linkHref = type === 'command' ? '/reference/commands' : '/reference/operators';
+        const linkHref = type === 'command' ? '/docs/reference/commands' : '/docs/reference/operators';
         return (
           <section key={type} className="mb-10">
             <div className="flex items-center mb-4">
@@ -38,13 +45,14 @@ export default function Home() {
                 </Link>
               </div>
             </div>
-            <p className="text-gray-400 mb-6 text-sm">
-              {descriptions[type as keyof typeof descriptions]}
-            </p>
             {Object.entries(categories).map(([category, items]) => (
               <div key={category} className="mb-6">
-                <h3 className="text-lg font-semibold mb-2 text-blue-200 capitalize">{category}</h3>
-                <ReferenceTable items={items} />
+                <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
+                  <h3 className="text-xl font-semibold text-white mb-4">
+                    {category} {type}
+                  </h3>
+                  <ReferenceTable items={items} />
+                </div>
               </div>
             ))}
           </section>

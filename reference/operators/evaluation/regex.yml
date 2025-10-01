@@ -1,5 +1,5 @@
 type: operator
-category: query
+category: evaluation-query
 name: $regex
 description: |-
   The `$regex` operator is used to perform pattern matching with regular expressions.
