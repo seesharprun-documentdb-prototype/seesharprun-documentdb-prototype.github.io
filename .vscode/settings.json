@@ -1,0 +1,7 @@
+{
+  "yaml.schemas": {
+    "./schema/blog.schema.json": [
+      "blogs/**/*.{yml,yaml}"
+    ]
+  }
+}

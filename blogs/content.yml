@@ -1,0 +1,36 @@
+- title: |-
+    DocumentDB Joins the Linux Foundation
+  category: microsoft-open-source-blog
+  featured: true
+  description: |-
+    DocumentDB's journey: the project is officially joining the Linux Foundation, marking a major milestone for open-source document databases.
+  tags: [Open Source, PostgreSQL, MIT License, Linux Foundation]
+  uri: https://opensource.microsoft.com/blog/2025/08/25/documentdb-joins-the-linux-foundation/
+- title: |-
+    AWS : DocumentDB Project Announcement
+  category: aws-blog
+  description: |-
+    AWS joins the DocumentDB project to build interoperable, open source document database technology.
+  tags: [Community, Growth, AWS, DocumentDB]
+  uri: https://aws.amazon.com/blogs/opensource/aws-joins-the-documentdb-project-to-build-interoperable-open-source-document-database-technology/
+- title: |-
+    DocumentDB: Open-Source Announcement
+  category: azure-cosmos-db-blog
+  description: |-
+    Announcing the official release of DocumentDB—an open-source document database platform and the engine powering the vCore-based Azure Cosmos DB for MongoDB, built on PostgreSQL.
+  tags: [Announcement, Open Source, Azure Cosmos DB, PostgreSQL]
+  uri: https://opensource.microsoft.com/blog/2025/01/23/documentdb-open-source-announcement/
+- title: |-
+    DocumentDB is Gaining Momentum in the Open-Source Database World
+  category: azure-cosmos-db-blog
+  description: |-
+    DocumentDB has quickly caught the attention of major tech publications and earned significant community engagement. In just under a week, our project earned 1000 GitHub stars, nearly 50 forks, and multiple pull requests.
+  tags: [Community, Open Source, Azure Cosmos DB, Growth]
+  uri: https://devblogs.microsoft.com/cosmosdb/documentdb-is-gaining-momentum-in-the-open-source-database-world/
+- title: |-
+    MongoDB API in YugabyteDB
+  category: yugabytedb-blog
+  description: |-
+    Learn how YugabyteDB now offers a MongoDB-compatible API with the support of the DocumentDB PostgreSQL extension, providing developers with an open source alternative for MongoDB workloads.
+  tags: [YugabyteDB, MongoDB API, DocumentDB, PostgreSQL]
+  uri: https://www.yugabyte.com/blog/mongodb-api-in-yugabytedb/
