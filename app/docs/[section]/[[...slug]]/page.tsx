@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getAllArticlePaths, getArticleByPath } from "../../../services/articleService";
+import ComingSoon from "../../../components/ComingSoon";
 
 export async function generateStaticParams() {
     const paths = getAllArticlePaths();
@@ -136,6 +137,9 @@ export default async function ArticlePage({ params }: PageProps) {
                             </h2>
                             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 rounded-full mb-6"></div>
                         </div>
+
+                        {/* Coming Soon Component for coming-soon layout */}
+                        {frontmatter.layout === 'coming-soon' && <ComingSoon />}
 
                         {/* Markdown Content */}
                         <div className="prose prose-invert prose-blue max-w-none">
