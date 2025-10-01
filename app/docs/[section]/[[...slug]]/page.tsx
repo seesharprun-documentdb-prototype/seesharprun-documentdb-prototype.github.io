@@ -20,6 +20,25 @@ interface PageProps {
     }>;
 }
 
+export async function generateMetadata({ params }: PageProps) {
+    const { section, slug = [] } = await params;
+    const articleData = getArticleByPath(section, slug);
+    
+    if (!articleData) {
+        return {
+            title: 'Documentation - DocumentDB',
+        };
+    }
+
+    const { frontmatter, navigation, file } = articleData;
+    const selectedNavItem = navigation.find((item) => item.link.includes(file));
+    const pageTitle = frontmatter.title || selectedNavItem?.title || section;
+    
+    return {
+        title: `${pageTitle} - DocumentDB Documentation`,
+    };
+}
+
 export default async function ArticlePage({ params }: PageProps) {
     const { section, slug = [] } = await params;
     const articleData = getArticleByPath(section, slug);

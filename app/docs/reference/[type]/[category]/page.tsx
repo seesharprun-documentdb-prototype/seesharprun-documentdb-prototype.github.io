@@ -10,6 +10,14 @@ export const generateStaticParams = async (): Promise<{ type: string, category: 
   return getAllTypeCategoryCombinations();
 };
 
+export async function generateMetadata({ params }: { params: Promise<{ type: string; category: string }> }) {
+  const { type, category } = await params;
+  const title = `${capitalCase(category)} ${capitalCase(pluralize(type))}`;
+  return {
+    title: `${title} - DocumentDB MQL Reference`,
+  };
+}
+
 export default async function CommandReferencePage({ params }: { params: Promise<{ type: string, category: string }> }) {
   const { type, category } = await params;
   if (!isValidTypeCategoryCombination(type, category)) {

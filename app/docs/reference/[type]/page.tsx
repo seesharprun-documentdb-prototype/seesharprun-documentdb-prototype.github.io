@@ -13,6 +13,14 @@ export const generateStaticParams = async (): Promise<{ type: string }[]> => [
   { type: 'command' }
 ];
 
+export async function generateMetadata({ params }: { params: Promise<{ type: string }> }) {
+  const { type } = await params;
+  const title = capitalCase(pluralize(type));
+  return {
+    title: `${title} - DocumentDB MQL Reference`,
+  };
+}
+
 export default async function CommandReferencePage({ params }: { params: Promise<{ type: string }> }) {
   const type = (await params).type;
   if (!allowed_types.includes(type)) {
