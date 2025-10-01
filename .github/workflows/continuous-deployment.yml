@@ -2,7 +2,7 @@ name: Deploy Next.js site to GitHub Pages
 on:
   push:
     branches:
-      - documentation-rework
+      - main
   workflow_dispatch:
 concurrency:
   group: pages
