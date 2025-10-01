@@ -3,8 +3,14 @@ import path from 'path';
 import yaml from 'js-yaml';
 import type { Reference } from '../types/Reference';
 import type { Page } from '../types/Page';
+import { Content } from '../types/Content';
 
 export type ReferencePage = Page & { type: string; category?: string };
+
+function getContentMetadata(): Content {
+  const contentPath = path.join(process.cwd(), 'reference', 'content.yml');
+  return yaml.load(fs.readFileSync(contentPath, 'utf8')) as Content;
+}
 
 function getAllReferences(): ReferencePage[] {
   const root = path.join(process.cwd(), 'reference');
@@ -12,7 +18,7 @@ function getAllReferences(): ReferencePage[] {
   function walk(dir: string) {
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
       if (entry.isDirectory()) walk(path.join(dir, entry.name));
-      else if (entry.name.endsWith('.yml')) files.push(path.join(dir, entry.name));
+      else if (entry.name.endsWith('.yml') && entry.name !== 'content.yml') files.push(path.join(dir, entry.name));
     }
   }
   walk(root);
@@ -33,6 +39,9 @@ export function getReferencesGroupedByTypeAndCategory() {
   const refs = getAllReferences();
   const grouped: Record<string, Record<string, ReferencePage[]>> = {};
   for (const ref of refs) {
+    // Skip items with undefined type
+    if (!ref.type) continue;
+    
     if (!grouped[ref.type]) grouped[ref.type] = {};
     if (!grouped[ref.type][ref.category || 'Uncategorized']) grouped[ref.type][ref.category || 'Uncategorized'] = [];
     grouped[ref.type][ref.category || 'Uncategorized'].push(ref);
@@ -104,4 +113,18 @@ export function getReferenceByPath(type: string, category: string, name: string)
 
   const data = yaml.load(fs.readFileSync(filePath, 'utf8')) as Reference;
   return data;
+}
+
+export function getTypeDescription(type: string): string | undefined {
+  const content = getContentMetadata();
+  const typeEntry = content.find(entry => entry.type === type);
+  return typeEntry?.description;
+}
+
+export function getCategoryDescription(type: string, category: string): string | undefined {
+  const content = getContentMetadata();
+  const typeEntry = content.find(entry => entry.type === type);
+  if (!typeEntry) return undefined;
+  const categoryEntry = typeEntry.categories.find(cat => cat.category === category);
+  return categoryEntry?.description;
 }

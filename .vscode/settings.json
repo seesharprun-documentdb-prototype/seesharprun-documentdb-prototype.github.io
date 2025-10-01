@@ -1,10 +1,13 @@
 {
   "yaml.schemas": {
-    "./schema/blog.schema.json": [
-      "blogs/**/*.{yml,yaml}"
+    "./schema/blog.content.schema.json": [
+      "blogs/content.{yml,yaml}"
     ],
-    "./schema/reference.schema.json": [
-      "reference/**/*.{yml,yaml}"
+    "./schema/reference.content.schema.json": [
+      "reference/content.{yml,yaml}"
+    ],
+    "./schema/reference.data.schema.json": [
+      "reference/*/**/*.{yml,yaml}"
     ]
   }
 }

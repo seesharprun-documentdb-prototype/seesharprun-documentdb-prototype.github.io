@@ -1,11 +1,14 @@
 import Link from 'next/link';
 import Index from '../../components/Index';
+import { getReferencesGroupedByTypeAndCategory } from '../../services/referenceService';
 
 export default function ReferenceLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const groupedReferences = getReferencesGroupedByTypeAndCategory();
+
   return (
     <div className="min-h-screen bg-neutral-900 relative overflow-hidden">
       {/* Background elements */}
@@ -36,13 +39,9 @@ export default function ReferenceLayout({
               </svg>
               Back to Documentation
             </Link>
-            <h1 className="text-2xl font-bold text-white">MQL Documentation</h1>
-            <Index categories={[]} />
+            <Link className="text-2xl font-bold text-white" href={'/docs/reference'}>MQL Documentation</Link>
           </div>
-          <div className="flex-1 p-4 overflow-y-auto">
-            <nav className="space-y-1">
-            </nav>
-          </div>
+          <Index groupedReferences={groupedReferences} />
         </div>
         <article className="flex-1 p-8">
           <div className="max-w-4xl">

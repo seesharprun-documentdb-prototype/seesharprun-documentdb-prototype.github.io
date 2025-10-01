@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import Code from '../../../../../components/Code';
 import Breadcrumb from '../../../../../components/Breadcrumb';
 import { getAllReferenceParams, getReferenceByPath } from '../../../../../services/referenceService';
 import pluralize from 'pluralize';
@@ -34,27 +35,6 @@ export default async function ReferencePage({ params }: { params: Promise<{ type
           {data.name}
         </h1>
         <div className="w-24 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 rounded-full mb-6"></div>
-        <Link
-          href={`/docs/reference/${type}/${category}`}
-          className="text-xs text-blue-500 hover:underline inline-flex items-center gap-1 mb-6">
-          <span className="inline-flex items-center">
-            <svg
-              className="w-[1em] h-[1em] mr-1 group-hover:-translate-x-1 transition-transform"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              style={{ verticalAlign: 'middle' }}>
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-            </svg>
-          </span>
-          <span>
-            Back to {capitalCase(category)} {capitalCase(pluralize(type))}
-          </span>
-        </Link>
         <p className="text-gray-300 text-lg leading-relaxed">
           {data.description}
         </p>
@@ -69,9 +49,7 @@ export default async function ReferencePage({ params }: { params: Promise<{ type
       <section className="mb-8">
         <h2 className="text-2xl font-bold text-white mb-4">Syntax</h2>
         <div className="bg-neutral-900 rounded-lg p-6 border border-neutral-700/50 overflow-x-auto">
-          <pre className="text-sm text-gray-300 font-mono whitespace-pre">
-            <code>{data.syntax}</code>
-          </pre>
+          <Code code={data.syntax} />
         </div>
       </section>
 
@@ -112,9 +90,7 @@ export default async function ReferencePage({ params }: { params: Promise<{ type
             <div className="mb-6">
               <h3 className="text-lg font-semibold text-gray-200 mb-3">Sample Data</h3>
               <div className="bg-neutral-900 rounded-lg p-6 border border-neutral-700/50 overflow-x-auto">
-                <pre className="text-sm text-gray-300 font-mono whitespace-pre">
-                  <code>{typeof data.examples.sample === 'string' ? data.examples.sample : JSON.stringify(data.examples.sample, null, 2)}</code>
-                </pre>
+                <Code code={typeof data.examples.sample === 'string' ? data.examples.sample : JSON.stringify(data.examples.sample, null, 2)} language='json' />
               </div>
             </div>
           )}
@@ -140,9 +116,7 @@ export default async function ReferencePage({ params }: { params: Promise<{ type
                   <div className="mb-4">
                     <h4 className="text-sm font-semibold text-gray-300 mb-2">Query:</h4>
                     <div className="bg-neutral-900 rounded-lg p-4 border border-neutral-700/50 overflow-x-auto">
-                      <pre className="text-sm text-green-300 font-mono whitespace-pre">
-                        <code>{example.query}</code>
-                      </pre>
+                      <Code code={example.query} language='javascript' />
                     </div>
                   </div>
 
@@ -151,9 +125,7 @@ export default async function ReferencePage({ params }: { params: Promise<{ type
                     <div>
                       <h4 className="text-sm font-semibold text-gray-300 mb-2">Output:</h4>
                       <div className="bg-neutral-900 rounded-lg p-4 border border-neutral-700/50 overflow-x-auto">
-                        <pre className="text-sm text-gray-300 font-mono whitespace-pre">
-                          <code>{example.output.value}</code>
-                        </pre>
+                        <Code code={example.output.value} language='json' />
                       </div>
                     </div>
                   )}
