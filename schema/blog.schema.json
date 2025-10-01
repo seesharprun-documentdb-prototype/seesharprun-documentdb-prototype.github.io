@@ -1,0 +1,48 @@
+{
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "featured": {
+        "type": "boolean",
+        "description": "Whether the blog post is featured. Only present if true."
+      },
+      "title": {
+        "type": "string",
+        "description": "The title of the blog post."
+      },
+      "category": {
+        "type": "string",
+        "description": "The category slug for the blog post. Must be one of: microsoft-open-source-blog, aws, azure-cosmos-db-blog, yugabytedb-blog.",
+        "enum": [
+          "microsoft-open-source-blog",
+          "aws-blog",
+          "azure-cosmos-db-blog",
+          "yugabytedb-blog"
+        ]
+      },
+      "description": {
+        "type": "string",
+        "description": "A short summary or description of the blog post."
+      },
+      "tags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "A list of tags associated with the blog post."
+      },
+      "uri": {
+        "type": "string",
+        "description": "The URI to the full article."
+      }
+    },
+    "required": [
+      "title",
+      "category",
+      "description",
+      "tags",
+      "uri"
+    ]
+  }
+}
