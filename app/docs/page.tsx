@@ -1,43 +1,14 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function Docs() {
   const [currentPage, setCurrentPage] = useState("main");
-  const [selectedOperator, setSelectedOperator] = useState("Accumulator");
   const [selectedPostgresItem, setSelectedPostgresItem] =
     useState("Components");
   const [selectedGettingStartedItem, setSelectedGettingStartedItem] = useState(
     "Python Setup Guide",
   );
-
-  const operatorCategories = [
-    "Accumulator",
-    "Aggregation",
-    "Arithmetic Expression",
-    "Array Expression",
-    "Array Query",
-    "Array Update",
-    "Bitwise",
-    "Bitwise Query",
-    "Bitwise Update",
-    "Boolean Expression",
-    "Comparison Query",
-    "Conditional Expression",
-    "Date Expression",
-    "Data Size",
-    "Element Query",
-    "Evaluation Query",
-    "Field Update",
-    "Geospatial",
-    "Logical Query",
-    "Miscellaneous",
-    "Object Expression",
-    "Projection",
-    "Timestamp Expression",
-    "Set Expression",
-    "Variable Expression",
-    "Window"
-  ];
 
   const postgresMenuItems = ["Components", "Functions"];
 
@@ -96,11 +67,10 @@ export default function Docs() {
                   <button
                     key={item}
                     onClick={() => setSelectedPostgresItem(item)}
-                    className={`w-full text-left px-4 py-3 rounded-lg text-sm transition-all duration-200 ${
-                      selectedPostgresItem === item
-                        ? "bg-blue-500/20 text-blue-300 border border-blue-500/30"
-                        : "text-gray-300 hover:text-white hover:bg-neutral-700/50"
-                    }`}
+                    className={`w-full text-left px-4 py-3 rounded-lg text-sm transition-all duration-200 ${selectedPostgresItem === item
+                      ? "bg-blue-500/20 text-blue-300 border border-blue-500/30"
+                      : "text-gray-300 hover:text-white hover:bg-neutral-700/50"
+                      }`}
                   >
                     {item}
                   </button>
@@ -440,11 +410,10 @@ export default function Docs() {
                   <button
                     key={item}
                     onClick={() => setSelectedGettingStartedItem(item)}
-                    className={`w-full text-left px-4 py-3 rounded-lg text-sm transition-all duration-200 ${
-                      selectedGettingStartedItem === item
-                        ? "bg-blue-500/20 text-blue-300 border border-blue-500/30"
-                        : "text-gray-300 hover:text-white hover:bg-neutral-700/50"
-                    }`}
+                    className={`w-full text-left px-4 py-3 rounded-lg text-sm transition-all duration-200 ${selectedGettingStartedItem === item
+                      ? "bg-blue-500/20 text-blue-300 border border-blue-500/30"
+                      : "text-gray-300 hover:text-white hover:bg-neutral-700/50"
+                      }`}
                   >
                     {item}
                   </button>
@@ -469,7 +438,7 @@ export default function Docs() {
 
               {/* Content based on selected getting started item */}
               {selectedGettingStartedItem ===
-              "VS Code Extension Quick Start" ? (
+                "VS Code Extension Quick Start" ? (
                 <div className="space-y-8">
                   {/* Introduction */}
                   <div className="mb-8">
@@ -1151,7 +1120,7 @@ db.users.stats().indexSizes`}
 
                     <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
                       <pre className="text-green-400 font-mono text-sm">
-                {`pip install pymongo`}
+                        {`pip install pymongo`}
                       </pre>
                     </div>
                   </div>
@@ -1164,7 +1133,7 @@ db.users.stats().indexSizes`}
 
                     <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
                       <pre className="text-green-400 font-mono text-sm">
-                {`pip install dnspython`}
+                        {`pip install dnspython`}
                       </pre>
                     </div>
                   </div>
@@ -1177,7 +1146,7 @@ db.users.stats().indexSizes`}
 
                     <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30 mb-4">
                       <pre className="text-green-400 font-mono text-sm overflow-x-auto">
-                {`# Pull the latest DocumentDB Docker image
+                        {`# Pull the latest DocumentDB Docker image
 docker pull ghcr.io/microsoft/documentdb/documentdb-local:latest
 
 # Tag the image for convenience
@@ -1236,7 +1205,7 @@ docker image rm -f ghcr.io/microsoft/documentdb/documentdb-local:latest || echo 
 
                     <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
                       <pre className="text-green-400 font-mono text-sm">
-                {`import pymongo
+                        {`import pymongo
 from pymongo import MongoClient
 
 # Create a MongoDB client and open a connection to DocumentDB
@@ -1255,7 +1224,7 @@ client = pymongo.MongoClient(
 
                     <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
                       <pre className="text-green-400 font-mono text-sm">
-                {`quickStartDatabase = client["quickStartDatabase"]
+                        {`quickStartDatabase = client["quickStartDatabase"]
 quickStartCollection = quickStartDatabase.create_collection("quickStartCollection")`}
                       </pre>
                     </div>
@@ -1269,7 +1238,7 @@ quickStartCollection = quickStartDatabase.create_collection("quickStartCollectio
 
                     <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
                       <pre className="text-green-400 font-mono text-sm">
-                {`# Insert a single document
+                        {`# Insert a single document
 quickStartCollection.insert_one({
        'name': 'John Doe',
        'email': 'john@email.com',
@@ -1304,7 +1273,7 @@ quickStartCollection.insert_many([
 
                     <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
                       <pre className="text-green-400 font-mono text-sm">
-                {`# Read all documents
+                        {`# Read all documents
 for document in quickStartCollection.find():
     print(document)
 
@@ -1323,7 +1292,7 @@ singleDocumentReadResult = quickStartCollection.find_one({'name': 'John Doe'})
 
                     <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
                       <pre className="text-green-400 font-mono text-sm">
-                {`pipeline = [
+                        {`pipeline = [
     {'$match': {'name': 'Alice Johnson'}},
     {'$project': {
         '_id': 0,
@@ -1340,7 +1309,7 @@ for eachDocument in results:
                     </div>
                   </div>
                 </div>
-              ): (
+              ) : (
                 // Keep your existing content for other menu items
                 <div className="space-y-8">
                   <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
@@ -1377,825 +1346,6 @@ for eachDocument in results:
                       Start building with DocumentDB using{" "}
                       {selectedGettingStartedItem}.
                     </p>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (currentPage === "api-reference") {
-    return (
-      <div className="min-h-screen bg-neutral-900 relative overflow-hidden">
-        {/* Background elements */}
-        <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-neutral-800 to-black"></div>
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-16 right-20 w-36 h-36 bg-blue-500 rounded-full blur-3xl animate-pulse"></div>
-          <div
-            className="absolute bottom-20 left-16 w-28 h-28 bg-purple-500 rounded-full blur-3xl animate-pulse"
-            style={{ animationDelay: "1.5s" }}
-          ></div>
-        </div>
-
-        <div className="relative flex min-h-screen">
-          {/* Left Sidebar */}
-          <div className="w-80 bg-neutral-800/50 backdrop-blur-sm border-r border-neutral-700/50 flex flex-col">
-            {/* Header */}
-            <div className="p-6 border-b border-neutral-700/50">
-              <button
-                onClick={() => setCurrentPage("main")}
-                className="text-blue-400 hover:text-blue-300 text-sm mb-4 flex items-center transition-colors"
-              >
-                <svg
-                  className="w-4 h-4 mr-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 19l-7-7 7-7"
-                  />
-                </svg>
-                Back to Documentation
-              </button>
-              <h1 className="text-2xl font-bold text-white">Operator Docs</h1>
-            </div>
-
-            {/* Menu Items */}
-
-          </div>
-
-          {/* Main Content */}
-          <div className="flex-1 p-8">
-            <div className="max-w-4xl">
-              <div className="mb-8">
-                <h2 className="text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent mb-4">
-                  {selectedOperator}
-                </h2>
-                <div className="w-24 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 rounded-full mb-6"></div>
-                <p className="text-gray-400 text-lg">
-                  List of supported {selectedOperator} operators. Detailed
-                  usage samples coming soon!
-                </p>
-              </div>
-
-              {/* Content based on selected operator */}
-              {selectedOperator === "Accumulator" ? (
-                <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                  <h3 className="text-xl font-semibold text-white mb-4">
-                    Accumulator Operators
-                  </h3>
-                  <div className="grid gap-3">
-                    {[
-                      "$avg",
-                      "$bottom",
-                      "$bottomN",
-                      "$count",
-                      "$first",
-                      "$firstN",
-                      "$last",
-                      "$lastN",
-                      "$max",
-                      "$maxN",
-                      "$median",
-                      "$min",
-                      "$minN",
-                      "$stdDevPop",
-                      "$stdDevSamp",
-                      "$sum",
-                      "$top",
-                      "$topN",
-                    ].map((operator) => (
-                      <button
-                        key={operator}
-                        className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                      >
-                        <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                          {operator}
-                        </h4>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ) : selectedOperator === "Aggregation" ? (
-                <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                  <h3 className="text-xl font-semibold text-white mb-4">
-                    Aggregation Operators
-                  </h3>
-                  <div className="grid gap-3">
-                    {[
-                        "$addFields",
-                        "$bucket",
-                        "$changeStreams",
-                        "$collstats",
-                        "$convert",
-                        "$count",
-                        "$densify",
-                        "documents",
-                        "$facet", 
-                        "$fill",  
-                        "$geoNear", 
-                        "$group",
-                        "$indexStats",
-                        "$isNumber",
-                        "$lookup", 
-                        "$match",
-                        "$merge",
-                        "$out",
-                        "$redact",
-                        "$replaceWith",
-                        "$sample",
-                        "$set",
-                        "$skip",
-                        "$sort",
-                        "$sortByCount",
-                        "$toBool",
-                        "$toDate",
-                        "$toDecimal",
-                        "$toDouble",
-                        "$toInt",
-                        "$toLong",
-                        "$toObjectId",
-                        "$toString",
-                        "$unset",
-                        "$unwind"].map(
-                      (operator) => (
-                        <button
-                          key={operator}
-                          className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                        >
-                          <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                            {operator}
-                          </h4>
-                        </button>
-                      ),
-                    )}
-                  </div>
-                </div>
-              ) : selectedOperator === "Arithmetic Expression" ? (
-                <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                  <h3 className="text-xl font-semibold text-white mb-4">
-                    Arithmetic Expression Operators
-                  </h3>
-                  <div className="grid gap-3">
-                    {[
-                      "$abs",
-                      "$add",
-                      "$ceil",
-                      "$divide",
-                      "$exp",
-                      "$floor",
-                      "$ln",
-                      "$log",
-                      "$log10",
-                      "$mod",
-                      "$multiply",
-                      "$pow",
-                      "$round",
-                      "$sqrt",
-                      "$subtract",
-                      "$trunc",
-                    ].map((operator) => (
-                      <button
-                        key={operator}
-                        className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                      >
-                        <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                          {operator}
-                        </h4>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ) : selectedOperator === "Array Expression" ? (
-                <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                  <h3 className="text-xl font-semibold text-white mb-4">
-                    Array Expression Operators
-                  </h3>
-                  <div className="grid gap-3">
-                    {[
-                      "$arrayElemAt",
-                      "$arrayToObject",
-                      "$concatArrays",
-                      "$filter",
-                      "$in",
-                      "$indexOfArray",
-                      "$isArray",
-                      "$objectToArray",
-                      "$reverseArray",
-                      "$map",
-                      "$range",
-                      "$reduce",
-                      "$slice",
-                      "$sortArray",
-                      "$zip",
-                    ].map((operator) => (
-                      <button
-                        key={operator}
-                        className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                      >
-                        <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                          {operator}
-                        </h4>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ) : selectedOperator === "Array Query" ? (
-                <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                  <h3 className="text-xl font-semibold text-white mb-4">
-                    Array Query Operators
-                  </h3>
-                  <div className="grid gap-3">
-                    {["$all", "$elemMatch", "$size"].map((operator) => (
-                      <button
-                        key={operator}
-                        className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                      >
-                        <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                          {operator}
-                        </h4>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ) : selectedOperator === "Array Update" ? (
-                <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                  <h3 className="text-xl font-semibold text-white mb-4">
-                    Array Update Operators
-                  </h3>
-                  <div className="grid gap-3">
-                    {[
-                      "$addToSet",
-                      "$each",
-                      "$pop",
-                      "$position",
-                      "$",
-                      "[]",
-                      "[<identifier>]",
-                      "$pull",
-                      "$pullAll",
-                      "$push",
-                      "$slice",
-                      "$sort",
-                    ].map((operator) => (
-                      <button
-                        key={operator}
-                        className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                      >
-                        <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                          {operator}
-                        </h4>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ) : selectedOperator === "Bitwise" ? (
-                <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                  <h3 className="text-xl font-semibold text-white mb-4">
-                    Bitwise Operators
-                  </h3>
-                  <div className="grid gap-3">
-                    {["$bitand", "$bitnot", "$bitor", "$bitxnor"].map(
-                      (operator) => (
-                        <button
-                          key={operator}
-                          className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                        >
-                          <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                            {operator}
-                          </h4>
-                        </button>
-                      ),
-                    )}
-                  </div>
-                </div>
-              ) : selectedOperator === "Bitwise Query" ? (
-                <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                  <h3 className="text-xl font-semibold text-white mb-4">
-                    Bitwise Query Operators
-                  </h3>
-                  <div className="grid gap-3">
-                    {[
-                      "$bitsAllClear",
-                      "$bitsAllSet",
-                      "$bitsAnyClear",
-                      "$bitsAnySet",
-                    ].map((operator) => (
-                      <button
-                        key={operator}
-                        className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                      >
-                        <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                          {operator}
-                        </h4>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ) : selectedOperator === "Bitwise Update" ? (
-                <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                  <h3 className="text-xl font-semibold text-white mb-4">
-                    Bitwise Update Operators
-                  </h3>
-                  <div className="grid gap-3">
-                    {["$bit"].map((operator) => (
-                      <button
-                        key={operator}
-                        className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                      >
-                        <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                          {operator}
-                        </h4>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ) : selectedOperator === "Boolean Expression" ? (
-                  <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                    <h3 className="text-xl font-semibold text-white mb-4">
-                      Boolean Expression Operators
-                    </h3>
-                    <div className="grid gap-3">
-                      {["$and", "$not", "$or"].map((operator) => (
-                        <button
-                          key={operator}
-                          className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                        >
-                          <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                            {operator}
-                          </h4>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                ) : selectedOperator === "Comparison Query" ? (
-                <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                  <h3 className="text-xl font-semibold text-white mb-4">
-                    Comparison Query Operators
-                  </h3>
-                  <div className="grid gap-3">
-                    {[
-                      "$cmp",
-                      "$eq",
-                      "$gt",
-                      "$gte",
-                      "$in",
-                      "$lt",
-                      "$lte",
-                      "$ne",
-                      "$nin",
-                    ].map((operator) => (
-                      <button
-                        key={operator}
-                        className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                      >
-                        <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                          {operator}
-                        </h4>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ) : selectedOperator === "Conditional Expression" ? (
-                <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                  <h3 className="text-xl font-semibold text-white mb-4">
-                    Conditional Expression Operators
-                  </h3>
-                  <div className="grid gap-3">
-                    {["$cond", "$ifNull", "$switch"].map((operator) => (
-                      <button
-                        key={operator}
-                        className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                      >
-                        <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                          {operator}
-                        </h4>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ) : selectedOperator === "Date Expression" ? (
-                <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                  <h3 className="text-xl font-semibold text-white mb-4">
-                    Date Expression Operators
-                  </h3>
-                  <div className="grid gap-3">
-                    {[
-                      "$dateAdd",
-                      "$dateDiff",
-                      "$dateFromParts",
-                      "$dateFromString",
-                      "$dateSubtract",
-                      "$dateToParts",
-                      "$dateToString",
-                      "$dayOfMonth",
-                      "$dayOfWeek",  
-                      "$dayOfYear",
-                      "$hour",
-                      "$isoDayOfWeek",
-                      "$isoWeek",
-                      "$isoWeekYear",
-                      "$millisecond",
-                      "$minute",
-                      "$month",
-                      "$second",
-                      "$week",
-                      "$year"
-                    ].map((operator) => (
-                      <button
-                        key={operator}
-                        className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                      >
-                        <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                          {operator}
-                        </h4>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ) : selectedOperator === "Data Size" ? (
-                <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                  <h3 className="text-xl font-semibold text-white mb-4">
-                    Data Size Operators
-                  </h3>
-                  <div className="grid gap-3">
-                    {["$binarysize", "$bsonsize"].map((operator) => (
-                      <button
-                        key={operator}
-                        className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                      >
-                        <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                          {operator}
-                        </h4>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ) : selectedOperator === "Element Query" ? (
-                  <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                    <h3 className="text-xl font-semibold text-white mb-4">
-                      Element Query Operators
-                    </h3>
-                    <div className="grid gap-3">
-                      {["$exists", "$type"].map((operator) => (
-                        <button
-                          key={operator}
-                          className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                        >
-                          <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                            {operator}
-                          </h4>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                ) : selectedOperator === "Evaluation Query" ? (
-                <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                  <h3 className="text-xl font-semibold text-white mb-4">
-                    Evaluation Query Operators
-                  </h3>
-                  <div className="grid gap-3">
-                    {["$expr", "$mod", "$regex", "$text"].map((operator) => (
-                      <button
-                        key={operator}
-                        className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                      >
-                        <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                          {operator}
-                        </h4>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ) : selectedOperator === "Field Update" ? (
-                  <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                    <h3 className="text-xl font-semibold text-white mb-4">
-                      Field Update Operators
-                    </h3>
-                    <div className="grid gap-3">
-                      {[
-                        "$currentDate", 
-                        "$inc", 
-                        "$max", 
-                        "$min", 
-                        "$mul", 
-                        "$rename", 
-                        "$set", 
-                        "$setOnInsert", 
-                        "$unset"
-                      ].map((operator) => (
-                        <button
-                          key={operator}
-                          className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                        >
-                          <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                            {operator}
-                          </h4>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                ) : selectedOperator === "Geospatial" ? (
-                <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                  <h3 className="text-xl font-semibold text-white mb-4">
-                    Geospatial Operators
-                  </h3>
-                  <div className="grid gap-3">
-                    {[
-                      "$box",
-                      "$center",
-                      "$centerSphere",
-                      "$geoIntersects",
-                      "$geoWithin",
-                      "$geometry",
-                      "$maxDistance",
-                      "$minDistance",
-                      "$near",
-                      "$nearSphere",
-                      "$polygon",
-                    ].map((operator) => (
-                      <button
-                        key={operator}
-                        className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                      >
-                        <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                          {operator}
-                        </h4>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ) : selectedOperator === "Literal Expression" ? (
-                  <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                    <h3 className="text-xl font-semibold text-white mb-4">
-                      Geospatial Operators
-                    </h3>
-                    <div className="grid gap-3">
-                      {[
-                        "$literal",
-                      ].map((operator) => (
-                        <button
-                          key={operator}
-                          className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                        >
-                          <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                            {operator}
-                          </h4>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                ) : selectedOperator === "Logical Query" ? (
-                <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                  <h3 className="text-xl font-semibold text-white mb-4">
-                    Logical Query Operators
-                  </h3>
-                  <div className="grid gap-3">
-                    {["$and", "$nor", "$not", "$or"].map((operator) => (
-                      <button
-                        key={operator}
-                        className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                      >
-                        <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                          {operator}
-                        </h4>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ) : selectedOperator === "Miscellaneous" ? (
-                <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                  <h3 className="text-xl font-semibold text-white mb-4">
-                    Miscellaneous Operators
-                  </h3>
-                  <div className="grid gap-3">
-                    {["$getField", "$sampleRate", "$comment", "$natural", "$rand"].map((operator) => (
-                      <button
-                        key={operator}
-                        className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                      >
-                        <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                          {operator}
-                        </h4>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ) : selectedOperator === "Object Expression" ? (
-                <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                  <h3 className="text-xl font-semibold text-white mb-4">
-                    Object Expression Operators
-                  </h3>
-                  <div className="grid gap-3">
-                    {["$mergeObjects", "$objectToArray", "$setField"].map(
-                      (operator) => (
-                        <button
-                          key={operator}
-                          className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                        >
-                          <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                            {operator}
-                          </h4>
-                        </button>
-                      ),
-                    )}
-                  </div>
-                </div>
-              ) : selectedOperator === "Projection" ? (
-                <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                  <h3 className="text-xl font-semibold text-white mb-4">
-                    Projection Operators
-                  </h3>
-                  <div className="grid gap-3">
-                    {["$elemMatch", "$meta", "$slice"].map((operator) => (
-                      <button
-                        key={operator}
-                        className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                      >
-                        <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                          {operator}
-                        </h4>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ) : selectedOperator === "Timestamp Expression" ? (
-                  <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                    <h3 className="text-xl font-semibold text-white mb-4">
-                      Timestamp Expression Operators
-                    </h3>
-                    <div className="grid gap-3">
-                      {["$tsSecond", "$tsIncrement"].map((operator) => (
-                        <button
-                          key={operator}
-                          className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                        >
-                          <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                            {operator}
-                          </h4>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                ) : selectedOperator === "Set Expression" ? (
-                  <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                    <h3 className="text-xl font-semibold text-white mb-4">
-                      Set Expression Operators
-                    </h3>
-                    <div className="grid gap-3">
-                      {[
-                        "$allElementsTrue", 
-                        "$anyElementTrue",
-                        "$setDifference",
-                        "$setEquals",
-                        "$setIntersection",
-                        "$setIsSubset",
-                        "$setUnion"  
-                        ].map((operator) => (
-                        <button
-                          key={operator}
-                          className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                        >
-                          <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                            {operator}
-                          </h4>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                ) : selectedOperator === "Variable Expression" ? (
-                <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                  <h3 className="text-xl font-semibold text-white mb-4">
-                    Variable Expression Operators
-                  </h3>
-                  <div className="grid gap-3">
-                    {["$let"].map((operator) => (
-                      <button
-                        key={operator}
-                        className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                      >
-                        <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                          {operator}
-                        </h4>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ) : selectedOperator === "Window" ? (
-                  <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                    <h3 className="text-xl font-semibold text-white mb-4">
-                      Window Operators
-                    </h3>
-                    <div className="grid gap-3">
-                      {[
-                        "$shift",
-                        "$covariancePop",
-                        "covarianceSamp",
-                        "$denseRank",
-                        "$derivative",
-                        "$documentNumber",
-                        "$expMovingAvg",
-                        "$integral",
-                        "$linearFill",
-                        "$locf",
-                        "$rank"
-                       ].map((operator) => (
-                        <button
-                          key={operator}
-                          className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20 text-left hover:border-blue-500/40 hover:bg-neutral-700/30 transition-all duration-200 group"
-                        >
-                          <h4 className="text-blue-300 font-mono font-medium group-hover:text-blue-200">
-                            {operator}
-                          </h4>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                ) : (
-                /* Sample content for other operators */
-                <div className="space-y-8">
-                  <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                    <h3 className="text-xl font-semibold text-white mb-4">
-                      Overview
-                    </h3>
-                    <p className="text-gray-300 leading-relaxed mb-4">
-                      The {selectedOperator} category provides powerful
-                      operators for document manipulation and querying. These
-                      operators are essential for building complex database
-                      operations and data transformations.
-                    </p>
-                    <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
-                      <p className="text-sm text-gray-400 mb-2">
-                        Example usage:
-                      </p>
-                      <code className="text-green-400 font-mono text-sm">
-                        db.collection.find(
-                        {`{${selectedOperator.toLowerCase()}_operator: value}`})
-                      </code>
-                    </div>
-                  </div>
-
-                  <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                    <h3 className="text-xl font-semibold text-white mb-4">
-                      Common Operators
-                    </h3>
-                    <div className="grid gap-4">
-                      {[1, 2, 3].map((i) => (
-                        <div
-                          key={i}
-                          className="bg-neutral-900/30 rounded-lg p-4 border border-neutral-600/20"
-                        >
-                          <h4 className="text-blue-300 font-medium mb-2">
-                            Operator {i}
-                          </h4>
-                          <p className="text-gray-400 text-sm mb-3">
-                            Description of operator {i} functionality and use
-                            cases.
-                          </p>
-                          <div className="bg-black/30 rounded p-3 border border-neutral-600/20">
-                            <code className="text-green-400 font-mono text-xs">
-                              {`{ $operator${i}: { field: "value" } }`}
-                            </code>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-                    <h3 className="text-xl font-semibold text-white mb-4">
-                      Best Practices
-                    </h3>
-                    <ul className="space-y-3 text-gray-300">
-                      <li className="flex items-start">
-                        <span className="text-blue-400 mr-3 mt-1">•</span>
-                        <span>
-                          Always validate input parameters before using{" "}
-                          {selectedOperator.toLowerCase()} operators
-                        </span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-blue-400 mr-3 mt-1">•</span>
-                        <span>
-                          Consider performance implications when chaining
-                          multiple operators
-                        </span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-blue-400 mr-3 mt-1">•</span>
-                        <span>
-                          Use appropriate indexing strategies to optimize{" "}
-                          {selectedOperator.toLowerCase()} queries
-                        </span>
-                      </li>
-                    </ul>
                   </div>
                 </div>
               )}
@@ -2465,10 +1615,9 @@ for eachDocument in results:
           </div>
 
           {/* API Reference */}
-          <div
-            className="group relative cursor-pointer"
-            onClick={() => setCurrentPage("api-reference")}
-          >
+          <Link
+            href={'/docs/reference'}
+            className="group relative cursor-pointer">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-lg blur-md group-hover:blur-lg transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
             <div className="relative bg-neutral-800/80 backdrop-blur-sm rounded-lg border border-neutral-700/50 hover:border-blue-500/50 transition-all duration-500 group-hover:transform group-hover:scale-105 overflow-hidden h-40">
               <div className="p-4 h-full flex flex-col items-center justify-center text-center">
@@ -2492,7 +1641,7 @@ for eachDocument in results:
                 </h2>
               </div>
             </div>
-          </div>
+          </Link>
 
           {/* PostgreSQL Extension API */}
           <div
