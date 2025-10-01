@@ -1,0 +1,7 @@
+type: operator
+category: accumulator
+name: $avg
+description: |-
+  The `$avg` operator computes the average of numeric values across groups of documents or within defined windows.
+related:
+  - reference: /operator/array-query/size

@@ -98,4 +98,4 @@ examples:
         value: |-
           1
 related:
-  - reference: /operators/query/regex
+  - reference: /command/query-and-write/find

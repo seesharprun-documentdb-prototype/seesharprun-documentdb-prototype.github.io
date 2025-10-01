@@ -115,4 +115,4 @@ examples:
             }
           ]
 related:
-  - reference: /commands/aggregation/count
+  - reference: /operator/accumulator/avg

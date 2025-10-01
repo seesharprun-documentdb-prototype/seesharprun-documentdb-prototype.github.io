@@ -1,0 +1,7 @@
+type: operator
+category: array-query
+name: $size
+description: |-
+  The `$size` operator is used to query documents where an array field has a specified number of elements. This operator is useful when you need to find documents based on the size of an array field, such as finding documents with some items in a list.
+related:
+  - reference: /operator/evaluation-query/regex

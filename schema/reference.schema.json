@@ -19,7 +19,7 @@
     "category": {
       "type": "string",
       "description": "The category of the operator or command, such as query, aggregation, update, etc. This helps organize the reference within the broader context of MongoDB functionalities.",
-      "oneOf": [
+      "allOf": [
         {
           "if": {
             "properties": {
@@ -29,34 +29,38 @@
             }
           },
           "then": {
-            "enum": [
-              "accumulator",
-              "aggregation",
-              "arithmetic-expression",
-              "array-expression",
-              "array-query",
-              "array-update",
-              "bitwise",
-              "bitwise-query",
-              "bitwise-update",
-              "boolean-expression",
-              "comparison-query",
-              "conditional-expression",
-              "date-expression",
-              "data-size",
-              "element-query",
-              "evaluation-query",
-              "field-update",
-              "geospatial",
-              "logical-query",
-              "miscellaneous",
-              "object-expression",
-              "projection",
-              "timestamp-expression",
-              "set-expression",
-              "variable-expression",
-              "window"
-            ]
+            "properties": {
+              "category": {
+                "enum": [
+                  "accumulator",
+                  "aggregation",
+                  "arithmetic-expression",
+                  "array-expression",
+                  "array-query",
+                  "array-update",
+                  "bitwise",
+                  "bitwise-query",
+                  "bitwise-update",
+                  "boolean-expression",
+                  "comparison-query",
+                  "conditional-expression",
+                  "date-expression",
+                  "data-size",
+                  "element-query",
+                  "evaluation-query",
+                  "field-update",
+                  "geospatial",
+                  "logical-query",
+                  "miscellaneous",
+                  "object-expression",
+                  "projection",
+                  "timestamp-expression",
+                  "set-expression",
+                  "variable-expression",
+                  "window"
+                ]
+              }
+            }
           }
         },
         {
@@ -68,9 +72,14 @@
             }
           },
           "then": {
-            "enum": [
-              "aggregation"
-            ]
+            "properties": {
+              "category": {
+                "enum": [
+                  "aggregation",
+                  "query-and-write"
+                ]
+              }
+            }
           }
         }
       ]

@@ -1,7 +1,7 @@
 import { JSX } from 'react';
 import { Post } from '../types/Post';
 
-export function BlogCard({ post, featured = false }: { post: Post; featured?: boolean }) {
+export function Card({ post, featured = false }: { post: Post; featured?: boolean }) {
   const icons: Record<string, JSX.Element> = {
     'microsoft-open-source-blog': (
       <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
