@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { notFound } from 'next/navigation';
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import { getAllArticlePaths, getArticleByPath } from "../../../services/articleService";
 import ComingSoon from "../../../components/ComingSoon";
+import Markdown from "../../../components/Markdown";
 
 export async function generateStaticParams() {
     const paths = getAllArticlePaths();
@@ -142,87 +141,7 @@ export default async function ArticlePage({ params }: PageProps) {
                         {frontmatter.layout === 'coming-soon' && <ComingSoon />}
 
                         {/* Markdown Content */}
-                        <div className="prose prose-invert prose-blue max-w-none">
-                            <ReactMarkdown
-                                remarkPlugins={[remarkGfm]}
-                                components={{
-                                    h1: ({ ...props }) => (
-                                        <h1
-                                            className="text-3xl font-bold text-white mt-8 mb-4"
-                                            {...props}
-                                        />
-                                    ),
-                                    h2: ({ ...props }) => (
-                                        <h2
-                                            className="text-2xl font-semibold text-white mt-6 mb-3"
-                                            {...props}
-                                        />
-                                    ),
-                                    h3: ({ ...props }) => (
-                                        <h3
-                                            className="text-xl font-semibold text-white mt-4 mb-2"
-                                            {...props}
-                                        />
-                                    ),
-                                    h4: ({ ...props }) => (
-                                        <h4
-                                            className="text-lg font-medium text-white mt-3 mb-2"
-                                            {...props}
-                                        />
-                                    ),
-                                    p: ({ ...props }) => (
-                                        <p
-                                            className="text-gray-300 leading-relaxed mb-4"
-                                            {...props}
-                                        />
-                                    ),
-                                    ul: ({ ...props }) => (
-                                        <ul
-                                            className="space-y-2 text-gray-300 mb-4 list-disc list-inside"
-                                            {...props}
-                                        />
-                                    ),
-                                    ol: ({ ...props }) => (
-                                        <ol
-                                            className="space-y-2 text-gray-300 mb-4 list-decimal list-inside"
-                                            {...props}
-                                        />
-                                    ),
-                                    li: ({ ...props }) => (
-                                        <li className="text-gray-300" {...props} />
-                                    ),
-                                    code: ({ inline, ...props }: any) =>
-                                        inline ? (
-                                            <code
-                                                className="bg-neutral-800 text-green-400 px-1.5 py-0.5 rounded text-sm font-mono"
-                                                {...props}
-                                            />
-                                        ) : (
-                                            <code
-                                                className="block bg-neutral-900/50 text-green-400 p-4 rounded-lg border border-neutral-600/30 font-mono text-sm overflow-x-auto"
-                                                {...props}
-                                            />
-                                        ),
-                                    pre: ({ ...props }) => (
-                                        <pre
-                                            className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30 mb-4 overflow-x-auto"
-                                            {...props}
-                                        />
-                                    ),
-                                    blockquote: ({ ...props }) => (
-                                        <blockquote
-                                            className="border-l-4 border-blue-500 bg-blue-900/20 pl-4 py-2 my-4 text-blue-200"
-                                            {...props}
-                                        />
-                                    ),
-                                    strong: ({ ...props }) => (
-                                        <strong className="font-semibold text-white" {...props} />
-                                    ),
-                                }}
-                            >
-                                {content}
-                            </ReactMarkdown>
-                        </div>
+                        <Markdown content={content} />
                     </div>
                 </div>
             </div>
