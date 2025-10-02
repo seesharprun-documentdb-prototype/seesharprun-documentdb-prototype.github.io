@@ -1,0 +1,230 @@
+type: command
+category: query-and-write
+name: update
+description: |-
+  The `update` command is used to modify existing documents within a collection. The `update` command can be used to update one or multiple documents based on filtering criteria. Values of fields can be changed, new fields and values can be added and existing fields can be removed.
+summary: |-
+  Modifies documents in a collection using various update operators like $set, $inc, $min, $max, and more.
+syntax: |-
+  db.collection.updateOne(
+    <filter>,
+    <update>,
+    <options>
+  );
+  
+  db.collection.updateMany(
+    <filter>,
+    <update>,
+    <options>
+  );
+parameters:
+  - name: filter
+    type: object
+    required: true
+    description: |-
+      A document that specifies the criteria for selecting documents to update.
+  - name: update
+    type: object
+    required: true
+    description: |-
+      A document that specifies the modifications to apply using update operators.
+  - name: options
+    type: object
+    required: false
+    description: |-
+      A document that specifies options for the update operation, including `upsert` and `writeConcern`.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "name": "First Up Consultants | Beverage Shop - Satterfieldmouth",
+      "location": {
+        "lat": -89.2384,
+        "lon": -46.4012
+      },
+      "staff": {
+        "totalStaff": {
+          "fullTime": 8,
+          "partTime": 20
+        }
+      },
+      "sales": {
+        "totalSales": 75670,
+        "salesByCategory": [
+          {
+            "categoryName": "Wine Accessories",
+            "totalSales": 34440
+          }
+        ]
+      },
+      "promotionEvents": [
+        {
+          "eventName": "Unbeatable Bargain Bash",
+          "promotionalDates": {
+            "startDate": {
+              "Month": 6
+            }
+          }
+        }
+      ]
+    }
+  items:
+    - title: Update a single document using the $inc operator
+      explanation: |-
+        Increment the totalSales by 10 and decrement the number of full time staff for a document with the specified _id.
+      description: |-
+        The `$inc` operator increments or decrements field values by a specified amount.
+      query: |-
+        db.stores.updateOne(
+          {"_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4"}, 
+          {"$inc": {"sales.salesByCategory.0.totalSales": 10, "staff.totalStaff.fullTime": -6}}
+        )
+      output:
+        value: |-
+          {
+            acknowledged: true,
+            matchedCount: 1,
+            modifiedCount: 1
+          }
+    - title: Update a single document using the $min operator
+      explanation: |-
+        Update the totalStaff count for the document with the specified _id to 10 if the current value of the field is greater than 10.
+      description: |-
+        The `$min` operator updates the field value only if the specified value is less than the current value.
+      query: |-
+        db.stores.updateOne(
+          {"_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4"}, 
+          {"$min": {"staff.totalStaff.fullTime": 10}}
+        )
+      output:
+        value: |-
+          {
+            acknowledged: true,
+            matchedCount: 1,
+            modifiedCount: 1
+          }
+    - title: Update a single document using the $max operator
+      explanation: |-
+        Update the totalStaff count for the document with the specified _id to 14 if the current value of the field is less than 14.
+      description: |-
+        The `$max` operator updates the field value only if the specified value is greater than the current value.
+      query: |-
+        db.stores.updateOne(
+          {"_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4"}, 
+          {"$max": {"staff.totalStaff.fullTime": 14}}
+        )
+      output:
+        value: |-
+          {
+            acknowledged: true,
+            matchedCount: 1,
+            modifiedCount: 1
+          }
+    - title: Update a single document using the $mul operator
+      explanation: |-
+        Multiply the count of part time employees by 2 for the document with the specified _id value.
+      description: |-
+        The `$mul` operator multiplies the field value by a specified number.
+      query: |-
+        db.stores.updateOne(
+          {"_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4"}, 
+          {"$mul": {"staff.totalStaff.partTime": 2}}
+        )
+      output:
+        value: |-
+          {
+            acknowledged: true,
+            matchedCount: 1,
+            modifiedCount: 1
+          }
+    - title: Update a single document using the $rename operator
+      explanation: |-
+        Rename the totalSales and totalStaff fields to fullSales and staffCounts respectively.
+      description: |-
+        The `$rename` operator renames a field in a document.
+      query: |-
+        db.stores.updateOne(
+          {"_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4"}, 
+          {"$rename": {"sales.totalSales": "sales.fullSales", "staff.totalStaff": "staff.staffCounts"}}
+        )
+      output:
+        value: |-
+          {
+            acknowledged: true,
+            matchedCount: 1,
+            modifiedCount: 1
+          }
+    - title: Update a single document using the $set operator
+      explanation: |-
+        Set the fullSales field to 3700 for the document with the specified _id value.
+      description: |-
+        The `$set` operator sets the value of a field in a document.
+      query: |-
+        db.stores.updateOne(
+          {"_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4"}, 
+          {"$set": {"sales.fullSales": 3700}}
+        )
+      output:
+        value: |-
+          {
+            acknowledged: true,
+            matchedCount: 1,
+            modifiedCount: 1
+          }
+    - title: Update a single document using the $unset operator
+      explanation: |-
+        Remove the lon field from the location object in the document with the specified _id value.
+      description: |-
+        The `$unset` operator removes a field from a document.
+      query: |-
+        db.stores.updateOne(
+          {"_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4"}, 
+          {"$unset": {"location.lon": ""}}
+        )
+      output:
+        value: |-
+          {
+            acknowledged: true,
+            matchedCount: 1,
+            modifiedCount: 1
+          }
+    - title: Update multiple documents
+      explanation: |-
+        Update all documents where the first promotional event starts in February to start in March.
+      description: |-
+        The `updateMany` command modifies all documents that match the filter criteria.
+      query: |-
+        db.stores.updateMany(
+          {"promotionEvents.0.promotionalDates.startDate.Month": 2}, 
+          {"$inc": {"promotionEvents.0.promotionalDates.startDate.Month": 1}}
+        )
+      output:
+        value: |-
+          {
+            acknowledged: true,
+            matchedCount: 156,
+            modifiedCount: 156
+          }
+    - title: Upsert a single document
+      explanation: |-
+        Set the upsert flag to true to create a new document if the document specified in the query filter does not exist in the collection.
+      description: |-
+        When `upsert` is true, a new document is created if no matching document is found.
+      query: |-
+        db.stores.updateOne(
+          {"_id": "NonExistentDocId"}, 
+          {"$set": {"name": "Lakeshore Retail", "sales.totalSales": 0}}, 
+          {"upsert": true}
+        )
+      output:
+        value: |-
+          {
+            acknowledged: true,
+            matchedCount: 0,
+            modifiedCount: 0,
+            upsertedId: "NonExistentDocId"
+          }
+related:
+  - reference: /command/query-and-write/insert
+  - reference: /command/query-and-write/delete
+  - reference: /command/query-and-write/find

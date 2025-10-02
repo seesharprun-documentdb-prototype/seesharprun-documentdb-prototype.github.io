@@ -1,0 +1,104 @@
+type: command
+category: aggregation
+name: distinct
+description: |-
+  The `distinct` command is used to find the unique values for a specified field across a single collection. This command is useful when you need to identify the set of distinct values for a field without retrieving all the documents or when you need to perform operations like filtering or grouping based on unique values.
+summary: |-
+  Retrieves distinct values for a specified field across a collection.
+syntax: |-
+  db.collection.distinct(
+    <field>,
+    <query>,
+    <options>
+  );
+parameters:
+  - name: field
+    type: string
+    required: true
+    description: |-
+      The field that receives the returned distinct values.
+  - name: query
+    type: object
+    required: false
+    description: |-
+      A query that specifies the documents from which to retrieve the distinct values.
+  - name: options
+    type: object
+    required: false
+    description: |-
+      Other options for the command.
+examples:
+  sample: |-
+    {
+      "_id": "00000000-0000-0000-0000-000000001001",
+      "name": "Example Store",
+      "sales": {
+        "salesByCategory": [
+          {
+            "categoryName": "Music Theory Books"
+          },
+          {
+            "categoryName": "Superfoods"
+          }
+        ]
+      },
+      "promotionEvents": [
+        {
+          "eventName": "Summer Sale",
+          "discounts": [
+            {
+              "categoryName": "Bath Sheets",
+              "discountPercentage": 25
+            }
+          ]
+        }
+      ]
+    }
+  items:
+    - title: Find distinct categories in sales
+      explanation: |-
+        To find the distinct `categoryName` in the `salesByCategory` array.
+      description: |-
+        This query returns all unique category names from the sales data.
+      query: |-
+        db.stores.distinct("sales.salesByCategory.categoryName")
+      output:
+        value: |-
+          [
+            'Music Theory Books',
+            'Superfoods',
+            'Harmonicas',
+            'Garden Tools',
+            ... 883 more items
+          ]
+    - title: Find distinct event names in promotion events
+      explanation: |-
+        To find the distinct `eventName` in the `promotionEvents` array.
+      description: |-
+        This query returns all unique promotion event names.
+      query: |-
+        db.stores.distinct("promotionEvents.eventName")
+      output:
+        value: |-
+          [
+            'Super Saver Celebration',
+            'Discount Derby',
+            'Incredible Discount Days'
+          ]
+    - title: Find distinct discount percentages for a specific event
+      explanation: |-
+        To find the distinct `discountPercentage` in the `discounts` array for the "Incredible Discount Days" event.
+      description: |-
+        This query filters by event name and returns unique discount percentages for that event.
+      query: |-
+        db.stores.distinct("promotionEvents.discounts.discountPercentage", { "promotionEvents.eventName": "Incredible Discount Days" })
+      output:
+        value: |-
+          [
+             6, 17, 22, 25,  9, 15, 14,
+             7, 12, 19, 24,  5, 20, 10,
+            23, 16, 18, 21, 13, 11,  8
+          ]
+related:
+  - reference: /command/aggregation/aggregate
+  - reference: /command/query-and-write/find

@@ -1,0 +1,218 @@
+type: command
+category: query-and-write
+name: findAndModify
+description: |-
+  The `findAndModify` command is used to atomically modify and return a single document. This command is useful for operations that require reading and updating a document in a single step, ensuring data consistency. Common use cases include implementing counters, queues, and other atomic operations.
+summary: |-
+  Atomically modifies and returns a single document in a collection.
+syntax: |-
+  db.collection.findAndModify({
+    query: <document>,
+    sort: <document>,
+    remove: <boolean>,
+    update: <document>,
+    new: <boolean>,
+    fields: <document>,
+    upsert: <boolean>
+  });
+parameters:
+  - name: query
+    type: object
+    required: true
+    description: |-
+      The selection criteria for the document to modify.
+  - name: sort
+    type: object
+    required: false
+    description: |-
+      Determines which document to modify if the query selects multiple documents.
+  - name: remove
+    type: object
+    required: false
+    description: |-
+      If `true`, removes the selected document.
+  - name: update
+    type: object
+    required: false
+    description: |-
+      The modifications to apply.
+  - name: new
+    type: object
+    required: false
+    description: |-
+      If `true`, returns the modified document rather than the original.
+  - name: fields
+    type: object
+    required: false
+    description: |-
+      Limits the fields to return for the matching document.
+  - name: upsert
+    type: object
+    required: false
+    description: |-
+      If `true`, creates a new document if no document matches the query.
+examples:
+  sample: |-
+    {
+      "_id": "e5767a9f-cd95-439c-9ec4-7ddc13d22926",
+      "name": "Marina's Eyewear Bargains",
+      "location": { 
+        "lat": -87.4376, 
+        "lon": 42.2928 
+      },
+      "staff": { 
+        "totalStaff": { 
+          "fullTime": 20, 
+          "partTime": 6 
+        } 
+      },
+      "sales": {
+        "totalSales": 50152,
+        "salesByCategory": [
+          { 
+            "categoryName": "Round Sunglasses", 
+            "totalSales": 39621 
+          },
+          { 
+            "categoryName": "Reading Glasses", 
+            "totalSales": 1146 
+          },
+          { 
+            "categoryName": "Aviators", 
+            "totalSales": 9385 
+          }
+        ]
+      },
+      "promotionEvents": [
+        {
+          "eventName": "Incredible Discount Days",
+          "discounts": [
+            { 
+              "categoryName": "Square Sunglasses", 
+              "discountPercentage": 16 
+            }
+          ]
+        }
+      ],
+      "tag": [
+        "#ShopLocal",
+        "#FashionStore",
+        "#SeasonalSale"
+      ]
+    }
+  items:
+    - title: Update total sales
+      explanation: |-
+        Update the total sales for a specific store to `550000.00` and return the updated document.
+      description: |-
+        This command finds the document by `_id` and sets a new value for the total sales field.
+      query: |-
+        db.stores.findAndModify({
+          query: { "_id": "e5767a9f-cd95-439c-9ec4-7ddc13d22926" },
+          update: { $set: { "sales.totalSales": 550000.00 } },
+          new: true
+        })
+      output:
+        value: |-
+          {
+            _id: 'e5767a9f-cd95-439c-9ec4-7ddc13d22926',
+            name: "Marina's Eyewear Bargains",
+            location: { lat: -87.4376, lon: 42.2928 },
+            staff: { totalStaff: { fullTime: 20, partTime: 6 } },
+            sales: {
+              totalSales: 550000,
+              salesByCategory: [
+                { categoryName: 'Round Sunglasses', totalSales: 39621 },
+                { categoryName: 'Reading Glasses', totalSales: 1146 },
+                { categoryName: 'Aviators', totalSales: 9385 }
+              ]
+            },
+            promotionEvents: [
+              {
+                eventName: 'Incredible Discount Days',
+                discounts: [
+                  { categoryName: 'Square Sunglasses', discountPercentage: 16 },
+                  { categoryName: 'Safety Glasses', discountPercentage: 17 }
+                ]
+              }
+            ],
+            tag: [ '#ShopLocal', '#FashionStore', '#SeasonalSale' ]
+          }
+    - title: Add a new promotional event
+      explanation: |-
+        Add a new promotional event called "Electronics Super Saver" to a specific store and return the updated document.
+      description: |-
+        This command uses the `$push` operator to add a new event to the promotionEvents array.
+      query: |-
+        db.stores.findAndModify({
+          query: { "_id": "e5767a9f-cd95-439c-9ec4-7ddc13d22926" },
+          update: { 
+            $push: { 
+              "promotionEvents": {
+                "eventName": "Electronics Super Saver",
+                "promotionalDates": {
+                  "startDate": "2025-09-31",
+                  "endDate": "2025-09-31"
+                },
+                "discounts": [
+                  {
+                    "categoryName": "Laptops",
+                    "discountPercentage": 45
+                  },
+                  {
+                    "categoryName": "Smartphones",
+                    "discountPercentage": 25
+                  }
+                ]
+              }
+            }
+          },
+          new: true
+        })
+      output:
+        value: |-
+          {
+            _id: 'e5767a9f-cd95-439c-9ec4-7ddc13d22926',
+            name: "Marina's Eyewear Bargains",
+            promotionEvents: [
+              {
+                eventName: 'Electronics Super Saver',
+                promotionalDates: { startDate: '2025-09-31', endDate: '2025-09-31' },
+                discounts: [
+                  { categoryName: 'Laptops', discountPercentage: 45 },
+                  { categoryName: 'Smartphones', discountPercentage: 25 }
+                ]
+              }
+            ],
+            tag: [ '#ShopLocal', '#FashionStore', '#SeasonalSale' ]
+          }
+    - title: Remove a promotional event
+      explanation: |-
+        Remove the "Electronics Super Saver" promotional event from a specific store and return the updated document.
+      description: |-
+        This command uses the `$pull` operator to remove an event from the promotionEvents array.
+      query: |-
+        db.stores.findAndModify({
+          query: { "_id": "e5767a9f-cd95-439c-9ec4-7ddc13d22926" },
+          update: { $pull: { "promotionEvents": { "eventName": "Electronics Super Saver" } } },
+          new: true
+        })
+      output:
+        value: |-
+          {
+            _id: 'e5767a9f-cd95-439c-9ec4-7ddc13d22926',
+            name: "Marina's Eyewear Bargains",
+            promotionEvents: [
+              {
+                eventName: 'Incredible Discount Days',
+                discounts: [
+                  { categoryName: 'Square Sunglasses', discountPercentage: 16 },
+                  { categoryName: 'Safety Glasses', discountPercentage: 17 }
+                ]
+              }
+            ],
+            tag: [ '#ShopLocal', '#FashionStore', '#SeasonalSale' ]
+          }
+related:
+  - reference: /command/query-and-write/find
+  - reference: /command/query-and-write/update
