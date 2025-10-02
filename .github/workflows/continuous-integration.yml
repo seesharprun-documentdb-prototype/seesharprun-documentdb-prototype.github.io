@@ -29,3 +29,29 @@ jobs:
         shell: bash
         env:
           AJV_LOG_LEVEL: info
+      - name: Capture validation output
+        run: |
+          set -o pipefail
+          for file in $(find . -name '*.yml' -o -name '*.yaml'); do
+            schema=$(jq -r --arg f "$file" '."yaml.schemas" | to_entries[] | select(.value | index($f)) | .key' .vscode/settings.json)
+            if [ "$schema" != "null" ] && [ -f "$schema" ]; then
+              ajv validate -s "$schema" -d "$file" 2>&1 | tee -a validation-output.txt
+            fi
+          done
+        shell: bash
+
+      - name: Convert validation output to CTRF
+        run: |
+          mkdir -p ctrf
+          node .github/scripts/ajv-to-ctrf.js validation-output.txt ctrf/report.json
+
+      - name: Upload CTRF test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: ctrf-test-report
+          path: "ctrf/report.json"
+
+      - name: Publish CTRF test report
+        uses: ctrf-io/github-test-reporter@v1
+        with:
+          report-path: "ctrf/report.json"
