@@ -9,6 +9,12 @@ if (!inputPath || !outputPath) {
   process.exit(1);
 }
 
+if (!fs.existsSync(inputPath)) {
+  console.error(`Error: Input file not found: ${inputPath}`);
+  fs.writeFileSync(outputPath, JSON.stringify({ version: '1.0', results: [], error: `Input file not found: ${inputPath}` }, null, 2));
+  process.exit(0);
+}
+
 const output = {
   version: '1.0',
   results: []
