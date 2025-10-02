@@ -2,16 +2,12 @@
 
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import type { ReactElement } from 'react';
 import Code from './Code';
 
-export default function Markdown({ content }: {
-  content: string;
-}) {
-  const [processedContent, setProcessedContent] = useState<ReactElement[]>([]);
-
-  useEffect(() => {
+export default function Markdown({ content }: { content: string }) {
+  const processedContent = useMemo(() => {
     // Split content by H2 headings to group sections
     const sections = content.split(/^## /gm);
     const elements: ReactElement[] = [];
@@ -53,7 +49,7 @@ export default function Markdown({ content }: {
       }
     });
 
-    setProcessedContent(elements);
+    return elements;
   }, [content]);
 
   return <div className="space-y-8">{processedContent}</div>;
