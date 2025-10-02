@@ -15,5 +15,7 @@
     "./schema/articles.navigation.schema.json": [
       "articles/**/navigation.{yml,yaml}"
     ]
-  }
+  },
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true
 }

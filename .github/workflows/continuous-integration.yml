@@ -1,0 +1,31 @@
+name: Validate schema files
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  yaml-schema-validation:
+    name: Validate YAML files against schemas
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install ajv-cli for schema validation
+        run: npm install -g ajv-cli
+      - name: Validate YAML files
+        run: |
+          for file in $(find . -name '*.yml' -o -name '*.yaml'); do
+            # Determine schema path from .vscode/settings.json (requires jq)
+            schema=$(jq -r --arg f "$file" '."yaml.schemas" | to_entries[] | select(.value | index($f)) | .key' .vscode/settings.json)
+            if [ "$schema" != "null" ] && [ -f "$schema" ]; then
+              ajv validate -s "$schema" -d "$file" || exit 1
+            fi
+          done
+        shell: bash
+        env:
+          AJV_LOG_LEVEL: info

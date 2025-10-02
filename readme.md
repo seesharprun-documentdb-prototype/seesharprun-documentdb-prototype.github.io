@@ -2,14 +2,33 @@
 
 A concise, modern website prototype for DocumentDB, built with [Next.js](https://nextjs.org/) and [Tailwind CSS](https://tailwindcss.com/). The site features a list of community blog posts and core documentation. Content is managed via YAML and Markdown files for easy editing and extensibility.
 
-## Contribute a Blog Post
+## Contributing a Blog Post
 
 1. Open `blogs/content.yml` in the repository.
 
-1. Add your blog post as a new YAML entry, following the format of existing posts (title, author, date, summary, etc).
+1. Add your blog post as a new entry, following the format of existing posts (title, author, date, summary, etc).
+  - The YAML file is validated against its schema for consistency and editor support.
 
-    > [!TIP]
-    > The YAML file includes an associated schema that will give you completion support in editors like Visual Studio Code.
+1. Submit a pull request for review.
+
+
+## Contributing a Documentation Article
+
+1. Navigate to the appropriate folder under `articles/` (e.g., `articles/quickstart/`, `articles/postgresql/`).
+
+1. Add your article as a Markdown file (`.md`).
+  - Update the corresponding `navigation.yml` to include your new article if needed.
+  - Ensure your content follows the structure and style of existing articles.
+
+1. Submit a pull request for review.
+
+## Contributing Reference Content
+
+1. Open the relevant file in the `reference/` directory (e.g., `reference/content.yml`, or a command/operator YAML file).
+
+1. Add or update entries according to the schema and format used in existing files.
+  - Reference content is organized by command, operator, and type. Follow the folder structure for new additions.
+  - Use the schemas in the `schema/` directory for guidance and validation.
 
 1. Submit a pull request for review.
 
