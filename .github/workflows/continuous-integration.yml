@@ -1,18 +1,20 @@
 name: Validate schema files
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    branches: [main]
+    branches:
+      - main
 jobs:
   yaml-schema-validation:
     name: Validate YAML files against schemas
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: "20"
       - name: Install ajv-cli for schema validation
@@ -39,18 +41,15 @@ jobs:
             fi
           done
         shell: bash
-
       - name: Convert validation output to CTRF
         run: |
           mkdir -p ctrf
           node .github/scripts/ajv-to-ctrf.js validation-output.txt ctrf/report.json
-
       - name: Upload CTRF test report
         uses: actions/upload-artifact@v4
         with:
           name: ctrf-test-report
           path: "ctrf/report.json"
-
       - name: Publish CTRF test report
         uses: ctrf-io/github-test-reporter@v1
         with:

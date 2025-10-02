@@ -32,7 +32,8 @@ jobs:
           path: ./out
   publish:
     name: Publish site to GitHub Pages
-    needs: [build]
+    needs:
+      - build
     permissions:
       pages: write
       id-token: write
