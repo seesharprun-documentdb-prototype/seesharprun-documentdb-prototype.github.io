@@ -46,7 +46,7 @@ export default function Blogs() {
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl sm:text-6xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent mb-6">
+          <h1 className="text-4xl sm:text-6xl font-bold text-white mb-6">
             Latest from our Blog
           </h1>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-8">

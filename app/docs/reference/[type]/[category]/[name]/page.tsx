@@ -32,7 +32,7 @@ export default async function ReferencePage({ params }: { params: Promise<{ type
       <Breadcrumb type={type} category={category} name={data.name} />
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-5xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent mb-4">
+        <h1 className="text-5xl font-bold text-white mb-4">
           {data.name}
         </h1>
         <div className="w-24 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 rounded-full mb-6"></div>
