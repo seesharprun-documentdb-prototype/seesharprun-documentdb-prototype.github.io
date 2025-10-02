@@ -63,7 +63,7 @@ function getMarkdownComponents() {
   return {
     // Paragraphs
     p: ({ children, ...props }: any) => (
-      <p className="text-gray-300 text-lg leading-relaxed mb-4" {...props}>
+      <p className="text-gray-300 text-md leading-relaxed mb-4" {...props}>
         {children}
       </p>
     ),
@@ -100,7 +100,7 @@ function getMarkdownComponents() {
 
     // List items
     li: ({ ...props }) => (
-      <li className="marker:text-blue-400 marker:mr-3 marker:flex-shrink-0" {...props} />
+      <li className="marker:text-blue-400 marker:mr-3 marker:flex-shrink-0 [&>p]:m-0 [&>p]:inline" {...props} />
     ),
 
     // Inline code
@@ -251,7 +251,7 @@ function getMarkdownComponents() {
 
     // Strong text
     strong: ({ children, ...props }: any) => (
-      <strong className="font-medium" {...props}>
+      <strong className="font-medium text-white" {...props}>
         {children}
       </strong>
     ),
