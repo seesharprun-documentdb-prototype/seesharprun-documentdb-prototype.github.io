@@ -1,4 +1,4 @@
-name: Validate schema files
+name: Validate structured content
 on:
   push:
     branches:
@@ -16,86 +16,12 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v5
         with:
-          node-version: "20"
+          node-version: 24
       - name: Install dependencies
         run: |
-          npm install -g ajv-cli ajv-formats
-          sudo apt-get update && sudo apt-get install -y jq
-      - name: Validate YAML files and capture output
+          npm install yaml-ls-check
+      - name: Validate YAML files
         run: |
-          touch validation-output.txt
-          echo "Starting YAML validation..." | tee -a validation-output.txt
-          
-          # Find all YAML files
-          yaml_files=$(find . -name '*.yml' -o -name '*.yaml' | grep -v node_modules | sort)
-          
-          if [ -z "$yaml_files" ]; then
-            echo "No YAML files found." | tee -a validation-output.txt
-            exit 0
-          fi
-          
-          validation_failed=0
-          files_validated=0
-          
-          # Process each YAML file
-          for file in $yaml_files; do
-            # Normalize path for matching
-            normalized_file=$(echo "$file" | sed 's|^\./||')
-            
-            # Find matching schema from .vscode/settings.json
-            schema=""
-            while IFS= read -r pattern_line; do
-              schema_path=$(echo "$pattern_line" | jq -r '.schema')
-              patterns=$(echo "$pattern_line" | jq -r '.patterns[]')
-              
-              for pattern in $patterns; do
-                # Convert glob pattern to regex-like matching
-                if [[ "$normalized_file" == $pattern ]]; then
-                  schema="$schema_path"
-                  break 2
-                fi
-              done
-            done < <(jq -r '.["yaml.schemas"] | to_entries[] | {schema: .key, patterns: .value} | @json' .vscode/settings.json)
-            
-            if [ -n "$schema" ] && [ -f "$schema" ]; then
-              echo "" | tee -a validation-output.txt
-              echo "Validating: $file against $schema" | tee -a validation-output.txt
-              
-              if ajv validate -s "$schema" -d "$file" --strict=false 2>&1 | tee -a validation-output.txt; then
-                echo "✓ PASSED: $file" | tee -a validation-output.txt
-                files_validated=$((files_validated + 1))
-              else
-                echo "✗ FAILED: $file" | tee -a validation-output.txt
-                validation_failed=1
-                files_validated=$((files_validated + 1))
-              fi
-            else
-              echo "Skipping $file (no schema found)" | tee -a validation-output.txt
-            fi
-          done
-          
-          echo "" | tee -a validation-output.txt
-          echo "Validation complete. Files validated: $files_validated" | tee -a validation-output.txt
-          
-          if [ $validation_failed -eq 1 ]; then
-            echo "Some validations failed." | tee -a validation-output.txt
-            exit 1
-          fi
-        shell: bash
-        continue-on-error: true
-      - name: Convert validation output to CTRF
-        if: always()
-        run: |
-          mkdir -p ctrf
-          node .github/scripts/ajv-to-ctrf.js validation-output.txt ctrf/report.json
-      - name: Upload CTRF test report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: ctrf-test-report
-          path: "ctrf/report.json"
-      - name: Publish CTRF test report
-        if: always()
-        uses: ctrf-io/github-test-reporter@v1
-        with:
-          report-path: "ctrf/report.json"
+          npx yaml-ls-check .\articles
+          npx yaml-ls-check .\blogs
+          npx yaml-ls-check .\reference
