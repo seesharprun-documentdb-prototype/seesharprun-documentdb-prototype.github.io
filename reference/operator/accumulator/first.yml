@@ -1,0 +1,98 @@
+type: operator
+category: accumulator
+name: $first
+description: |-
+  The `$first` operator sorts documents on one or more fields specified by the query and returns the first document matching the filtering criteria. If no sorting order is specified, the order is undefined.
+syntax: |-
+  {
+    $first: <expression>
+  }
+parameters:
+  - name: expression
+    type: object
+    required: true
+    description: |-
+      The expression to evaluate and return the first document from the result set.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "name": "First Up Consultants | Beverage Shop",
+      "lastUpdated": "2025-06-11T10:48:01.291Z",
+      "sales": {
+        "salesByCategory": [
+          { "categoryName": "Wine Accessories" }
+        ]
+      }
+    }
+  items:
+    - title: Get the least recently updated document
+      explanation: |-
+        Retrieve the least recently updated store by sorting in ascending order and taking the first document.
+      description: |-
+        This query sorts stores by lastUpdated field and returns the first (oldest) update timestamp.
+      query: |-
+        db.stores.aggregate([
+          {
+            $match: { company: { $in: ["First Up Consultants"] } }
+          },
+          {
+            $sort: { lastUpdated: 1 }
+          },
+          {
+            $group: {
+              _id: "$company",
+              firstUpdated: { $first: "$lastUpdated" }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "First Up Consultants",
+              "firstUpdated": "2025-06-11T10:48:01.291Z"
+            }
+          ]
+    - title: Get first category by sales amount per store
+      explanation: |-
+        Retrieve the first category alphabetically within each store.
+      description: |-
+        This query sorts categories alphabetically and returns the first one per store.
+      query: |-
+        db.stores.aggregate([
+          { $unwind: "$sales.salesByCategory" },
+          {
+            $sort: {
+              "_id": 1,
+              "sales.salesByCategory.categoryName": 1
+            }
+          },
+          {
+            $group: {
+              _id: "$_id",
+              storeName: { $first: "$name" },
+              firstCategory: {
+                $first: {
+                  categoryName: "$sales.salesByCategory.categoryName",
+                  categoryTotalSales: "$sales.salesByCategory.totalSales"
+                }
+              }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "64ec6589-068a-44a6-be5b-9d37bb0a90f1",
+              "storeName": "First Up Consultants | Computer Gallery",
+              "firstCategory": {
+                "categoryName": "Cases",
+                "categoryTotalSales": 36386
+              }
+            }
+          ]
+related:
+  - reference: /operator/accumulator/last
+  - reference: /operator/accumulator/firstn

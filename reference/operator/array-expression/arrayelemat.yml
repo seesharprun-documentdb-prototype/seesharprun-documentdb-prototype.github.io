@@ -1,0 +1,53 @@
+type: operator
+category: array-expression
+name: $arrayElemAt
+description: |-
+  The `$arrayElemAt` operator is used to return the element at the specified array index. This operator is helpful when you need to extract a specific element from an array within your documents.
+syntax: |-
+  { $arrayElemAt: ["<array>", <idx>] }
+parameters:
+  - name: <array>
+    type: string
+    required: true
+    description: |-
+      The array reference from which the element is retrieved.
+  - name: <idx>
+    type: number
+    required: true
+    description: |-
+      The index of the element to return. The index is zero-based. A negative index counts from the end of the array.
+examples:
+  sample: |-
+    {
+      "_id": "7954bd5c-9ac2-4c10-bb7a-2b79bd0963c5",
+      "name": "Lakeshore Retail | DJ Equipment Stop",
+      "sales": {
+        "salesByCategory": [
+          { "categoryName": "DJ Cables", "totalSales": 1000 },
+          { "categoryName": "DJ Headphones", "totalSales": 35921 }
+        ]
+      }
+    }
+  items:
+    - title: Retrieve the first element from an array
+      description: |-
+        Use $arrayElemAt to get the first category from the salesByCategory array.
+      query: |-
+        db.stores.aggregate([
+          { $match: { _id: "7954bd5c-9ac2-4c10-bb7a-2b79bd0963c5" } },
+          {
+            $project: {
+              name: 1,
+              firstCategory: { $arrayElemAt: ["$sales.salesByCategory", 0] }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "7954bd5c-9ac2-4c10-bb7a-2b79bd0963c5",
+              "name": "Lakeshore Retail | DJ Equipment Stop",
+              "firstCategory": { "categoryName": "DJ Cables", "totalSales": 1000 }
+            }
+          ]

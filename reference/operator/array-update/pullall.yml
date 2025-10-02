@@ -1,0 +1,18 @@
+type: operator
+category: array-update
+name: $pullAll
+description: |-
+  The `$pullAll` operator removes all instances of the specified values from an existing array.
+syntax: |-
+  { $pullAll: { field: [ <value1>, <value2>, ... ] } }
+parameters:
+  - name: field
+    type: string
+    required: true
+    description: |-
+      The field to update.
+  - name: <value1>, <value2>
+    type: string
+    required: true
+    description: |-
+      The values to remove from the array.

@@ -1,0 +1,25 @@
+type: operator
+category: array-update
+name: $slice
+description: |-
+  The `$slice` modifier limits the number of array elements during a $push operation.
+syntax: |-
+  {
+    $push: {
+      field: {
+        $each: [ <value1>, <value2>, ... ],
+        $slice: <num>
+      }
+    }
+  }
+parameters:
+  - name: field
+    type: string
+    required: true
+    description: |-
+      The field to update.
+  - name: <num>
+    type: number
+    required: true
+    description: |-
+      An integer that specifies the number of array elements to keep. If positive, keeps the first n elements. If negative, keeps the last n elements.

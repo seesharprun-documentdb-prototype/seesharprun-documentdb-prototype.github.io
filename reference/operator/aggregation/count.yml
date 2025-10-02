@@ -1,0 +1,55 @@
+type: operator
+category: aggregation
+name: $count
+description: |-
+  The `$count` stage returns a count of the number of documents at this stage of the aggregation pipeline. It outputs a document with a single field containing the count.
+syntax: |-
+  {
+    $count: <string>
+  }
+parameters:
+  - name: field
+    type: string
+    required: true
+    description: |-
+      The name of the output field which contains the count. Must be a non-empty string.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "name": "First Up Consultants | Beverage Shop",
+      "sales": { "totalSales": 75670 }
+    }
+  items:
+    - title: Count all documents
+      explanation: |-
+        Count the total number of documents in the collection.
+      description: |-
+        This query returns the total document count.
+      query: |-
+        db.stores.aggregate([
+          { $count: "totalStores" }
+        ])
+      output:
+        value: |-
+          [
+            { "totalStores": 45505 }
+          ]
+    - title: Count documents after filtering
+      explanation: |-
+        Count documents matching specific criteria.
+      description: |-
+        This query counts stores with sales above a threshold.
+      query: |-
+        db.stores.aggregate([
+          { $match: { "sales.totalSales": { $gt: 50000 } } },
+          { $count: "highSalesStores" }
+        ])
+      output:
+        value: |-
+          [
+            { "highSalesStores": 12350 }
+          ]
+related:
+  - reference: /operator/aggregation/group
+  - reference: /operator/aggregation/match

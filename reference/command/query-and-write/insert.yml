@@ -1,0 +1,199 @@
+type: command
+category: query-and-write
+name: insert
+description: |-
+  The `insert` command is used to create new documents into a collection. Either a single document or multiple documents can be inserted in one go.
+summary: |-
+  Creates new documents in a collection with support for single or bulk insert operations.
+syntax: |-
+  db.collection.insert(
+    <single document or array of documents>,
+    {
+      writeConcern: <document>,
+      ordered: <boolean>
+    }
+  );
+parameters:
+  - name: document
+    type: object
+    required: true
+    description: |-
+      The document or array of documents to insert into the collection.
+  - name: writeConcern
+    type: object
+    required: false
+    description: |-
+      A document expressing the write concern. The write concern describes the level of acknowledgment requested from the server for the write operation.
+  - name: ordered
+    type: object
+    required: false
+    description: |-
+      If `true`, the server inserts the documents in the order provided. If `false`, the server can insert the documents in any order and will attempt to insert all documents regardless of errors.
+examples:
+  sample: |-
+    {
+      "storeId": "12345",
+      "name": "Boulder Innovations",
+      "location": {
+        "lat": 37.7749,
+        "lon": -122.4194
+      },
+      "staff": {
+        "totalStaff": {
+          "fullTime": 15,
+          "partTime": 10
+        }
+      },
+      "sales": {
+        "totalSales": 500000.00,
+        "salesByCategory": [
+          {
+            "categoryName": "Laptops",
+            "totalSales": 300000.00
+          },
+          {
+            "categoryName": "Smartphones",
+            "totalSales": 200000.00
+          }
+        ]
+      }
+    }
+  items:
+    - title: Inserting a single document
+      explanation: |-
+        Insert a single document into the stores collection.
+      description: |-
+        This command inserts one document with store information including location, staff, and sales data.
+      query: |-
+        db.stores.insertOne({
+          "storeId": "12345",
+          "name": "Boulder Innovations",
+          "location": {
+            "lat": 37.7749,
+            "lon": -122.4194
+          },
+          "staff": {
+            "totalStaff": {
+              "fullTime": 15,
+              "partTime": 10
+            }
+          },
+          "sales": {
+            "totalSales": 500000.00,
+            "salesByCategory": [
+              {
+                "categoryName": "Laptops",
+                "totalSales": 300000.00
+              },
+              {
+                "categoryName": "Smartphones",
+                "totalSales": 200000.00
+              }
+            ]
+          }
+        })
+      output:
+        value: |-
+          {
+            acknowledged: true,
+            insertedId: ObjectId("...")
+          }
+    - title: Inserting multiple documents
+      explanation: |-
+        Insert an array of documents into the stores collection.
+      description: |-
+        This command inserts multiple store documents in a single operation.
+      query: |-
+        db.stores.insertMany([
+          {
+            "storeId": "12346",
+            "name": "Graphic Design Institute",
+            "location": {
+              "lat": 34.0522,
+              "lon": -118.2437
+            },
+            "staff": {
+              "totalStaff": {
+                "fullTime": 20,
+                "partTime": 5
+              }
+            },
+            "sales": {
+              "totalSales": 750000.00
+            }
+          },
+          {
+            "storeId": "12347",
+            "name": "Relecloud",
+            "location": {
+              "lat": 40.7128,
+              "lon": -74.0060
+            },
+            "staff": {
+              "totalStaff": {
+                "fullTime": 10,
+                "partTime": 20
+              }
+            },
+            "sales": {
+              "totalSales": 600000.00
+            }
+          }
+        ])
+      output:
+        value: |-
+          {
+            acknowledged: true,
+            insertedIds: {
+              '0': ObjectId("..."),
+              '1': ObjectId("...")
+            }
+          }
+    - title: Specifying a value for the _id field
+      explanation: |-
+        If the _id field is not specified, the server auto generates a unique ObjectId() value for the document.
+      description: |-
+        If the document specifies the _id field, it must be a globally unique value. A duplicate key violation error will be thrown if a duplicate _id is used.
+      query: |-
+        db.stores.insertOne({
+          "_id": "custom-id-12345",
+          "storeId": "12345",
+          "name": "Boulder Innovations"
+        })
+      output:
+        value: |-
+          {
+            acknowledged: true,
+            insertedId: "custom-id-12345"
+          }
+    - title: Inserting multiple documents in order
+      explanation: |-
+        Documents that are inserted in bulk can be inserted in order when specifying "ordered": true.
+      description: |-
+        This ensures documents are inserted sequentially and any error stops further insertions.
+      query: |-
+        db.stores.insertMany([
+          {
+            "_id": "123456",
+            "storeId": "123456",
+            "name": "Graphic Design Institute"
+          },
+          {
+            "_id": "234567",
+            "storeId": "234567",
+            "name": "Relecloud"
+          }
+        ], { "ordered": true })
+      output:
+        value: |-
+          {
+            acknowledged: true,
+            insertedIds: {
+              '0': '123456',
+              '1': '234567'
+            }
+          }
+related:
+  - reference: /command/query-and-write/update
+  - reference: /command/query-and-write/find
+  - reference: /command/query-and-write/delete

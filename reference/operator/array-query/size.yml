@@ -1,0 +1,20 @@
+type: operator
+category: array-query
+name: $size
+description: |-
+  The `$size` operator matches any array with the specified number of elements.
+syntax: |-
+  { field: { $size: <number> } }
+parameters:
+  - name: field
+    type: string
+    required: true
+    description: |-
+      The field to query.
+  - name: <number>
+    type: number
+    required: true
+    description: |-
+      The number of elements the array must contain.
+related:
+  - reference: /operator/evaluation-query/regex

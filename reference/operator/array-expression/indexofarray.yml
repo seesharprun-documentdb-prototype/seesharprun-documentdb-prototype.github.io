@@ -1,0 +1,28 @@
+type: operator
+category: array-expression
+name: $indexOfArray
+description: |-
+  The `$indexOfArray` operator searches an array for an occurrence of a specified value and returns the array index of the first occurrence. If the value is not found, returns -1.
+syntax: |-
+  { $indexOfArray: [ <array expression>, <search expression>, <start>, <end> ] }
+parameters:
+  - name: <array expression>
+    type: string
+    required: true
+    description: |-
+      An expression that resolves to an array.
+  - name: <search expression>
+    type: string
+    required: true
+    description: |-
+      An expression that resolves to the value to search for.
+  - name: <start>
+    type: number
+    required: false
+    description: |-
+      Optional integer that specifies the starting index position for the search.
+  - name: <end>
+    type: number
+    required: false
+    description: |-
+      Optional integer that specifies the ending index position for the search.

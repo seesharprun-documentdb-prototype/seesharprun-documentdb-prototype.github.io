@@ -1,0 +1,76 @@
+type: operator
+category: aggregation
+name: $bucket
+description: |-
+  The `$bucket` stage in an aggregation pipeline groups input documents into buckets based on specified boundaries. This is especially useful for creating histograms or categorizing data into ranges.
+syntax: |-
+  {
+    $bucket: {
+      groupBy: <expression>,
+      boundaries: [<lowerBoundary>, <upperBoundary>, ...],
+      default: <defaultBucket>,
+      output: {
+        <outputField1>: { <accumulator1> }
+      }
+    }
+  }
+parameters:
+  - name: groupBy
+    type: object
+    required: true
+    description: |-
+      The expression to group documents by.
+  - name: boundaries
+    type: object
+    required: true
+    description: |-
+      An array of boundary values to define the buckets. Must be sorted in ascending order with at least two values.
+  - name: default
+    type: string
+    required: false
+    description: |-
+      The name of the bucket for documents that do not fall within the specified boundaries.
+  - name: output
+    type: object
+    required: false
+    description: |-
+      Optional field to specify computed fields for each bucket.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "name": "First Up Consultants | Beverage Shop",
+      "sales": {
+        "totalSales": 75670,
+        "fullSales": 3700
+      }
+    }
+  items:
+    - title: Categorizing sales into ranges
+      explanation: |-
+        Categorize the fullSales field into three buckets based on sales ranges.
+      description: |-
+        This query creates buckets for different sales ranges and counts documents in each bucket.
+      query: |-
+        db.stores.aggregate([
+          {
+            $bucket: {
+              groupBy: "$sales.fullSales",
+              boundaries: [0, 1000, 5000, 10000],
+              default: "Other",
+              output: {
+                count: { $sum: 1 },
+                totalSales: { $sum: "$sales.fullSales" }
+              }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            { "_id": 1000, "count": 1, "totalSales": 3700 },
+            { "_id": "Other", "count": 41504, "totalSales": 0 }
+          ]
+related:
+  - reference: /operator/aggregation/bucketauto
+  - reference: /operator/aggregation/group

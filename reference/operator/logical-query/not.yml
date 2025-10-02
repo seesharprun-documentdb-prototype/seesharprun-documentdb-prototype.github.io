@@ -1,0 +1,100 @@
+type: operator
+category: logical-query
+name: $not
+description: The `$not` operator performs a logical NOT operation on a specified expression and selects documents that don't match the expression.
+syntax: |
+  {
+      field: {
+          $not: {
+              <operator-expression>
+          }
+      }
+  }
+parameters:
+  - name: operator-expression
+    type: object
+    required: true
+    description: The expression to negate
+examples:
+  items:
+    - title: Find stores with staff not equal to specific value
+      description: This query retrieves stores where the number of full-time staff isn't equal to 5 using the `$not` operator with $eq. It returns only the `name` and `staff` fields for up to two such matching documents.
+      query: |
+        db.stores.find({
+            "staff.totalStaff.fullTime": {
+                $not: {
+                    $eq: 5
+                }
+            }
+        }, {
+            "name": 1,
+            "staff": 1
+        }).limit(2)
+      output:
+        value: |
+          [
+              {
+                  "_id": "a715ab0f-4c6e-4e9d-a812-f2fab11ce0b6",
+                  "name": "Lakeshore Retail | Holiday Supply Hub - Marvinfort",
+                  "staff": {
+                      "totalStaff": {
+                          "fullTime": 9,
+                          "partTime": 18
+                      }
+                  }
+              },
+              {
+                  "_id": "923d2228-6a28-4856-ac9d-77c39eaf1800",
+                  "name": "Lakeshore Retail | Home Decor Hub - Franciscoton",
+                  "staff": {
+                      "totalStaff": {
+                          "fullTime": 7,
+                          "partTime": 6
+                      }
+                  }
+              }
+          ]
+    - title: Negate comparison condition
+      description: This query retrieves stores that don't have high sales volume (not greater than 50,000).
+      query: |
+        db.stores.aggregate([
+          {
+            $project: {
+              name: 1,
+              totalSales: "$sales.salesByCategory.totalSales",
+              isNotHighVolume: {
+                $not: { $gt: ["$sales.salesByCategory.totalSales", 50000] }
+              },
+              storeCategory: {
+                $cond: [
+                  { $not: { $gt: ["$sales.salesByCategory.totalSales", 50000] } },
+                  "High Volume Store",
+                  "Small/Medium Store"
+                ]
+              }
+            }
+          },
+          { $limit: 2 }
+        ])
+      output:
+        value: |
+          [
+           {
+              "_id": "905d1939-e03a-413e-a9c4-221f74055aac",
+              "name": "Trey Research | Home Office Depot - Lake Freeda",
+              "totalSales": [ 37978 ],
+              "isNotHighVolume": false,
+              "storeCategory": "Small/Medium Store"
+            },
+            {
+              "_id": "a715ab0f-4c6e-4e9d-a812-f2fab11ce0b6",
+              "name": "Lakeshore Retail | Holiday Supply Hub - Marvinfort",
+              "totalSales": [ 25731 ],
+              "isNotHighVolume": false,
+              "storeCategory": "Small/Medium Store"
+            }
+          ]
+related:
+  - reference: /operator/logical-query/and
+  - reference: /operator/logical-query/or
+  - reference: /operator/logical-query/nor

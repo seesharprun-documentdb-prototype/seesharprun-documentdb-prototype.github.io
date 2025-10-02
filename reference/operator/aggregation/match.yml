@@ -1,0 +1,80 @@
+type: operator
+category: aggregation
+name: $match
+description: |-
+  The `$match` stage in the aggregation pipeline is used to filter documents that match a specified condition. It's similar to the `find` operation but is used within the aggregation pipeline to narrow down the documents that pass through to the next stage.
+syntax: |-
+  {
+    $match: {
+      <query>
+    }
+  }
+parameters:
+  - name: query
+    type: object
+    required: true
+    description: |-
+      A standard MongoDB query document that specifies the conditions that the documents must meet.
+examples:
+  sample: |-
+    {
+      "_id": "7954bd5c-9ac2-4c10-bb7a-2b79bd0963c5",
+      "name": "Lakeshore Retail | DJ Equipment Stop",
+      "sales": {
+        "totalSales": 35921
+      },
+      "promotionEvents": [
+        {
+          "discounts": [
+            { "categoryName": "DJ Mixers", "discountPercentage": 15 }
+          ]
+        }
+      ]
+    }
+  items:
+    - title: Match documents using string comparison
+      explanation: |-
+        Retrieve documents where the _id matches a specific value.
+      description: |-
+        This query filters documents by ID using the $match stage.
+      query: |-
+        db.stores.aggregate([
+          {
+            $match: {
+              "_id": "7954bd5c-9ac2-4c10-bb7a-2b79bd0963c5"
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "7954bd5c-9ac2-4c10-bb7a-2b79bd0963c5",
+              "name": "Lakeshore Retail | DJ Equipment Stop",
+              "sales": { "totalSales": 35921 }
+            }
+          ]
+    - title: Match documents using numeric comparison
+      explanation: |-
+        Retrieve all stores where the total sales are greater than $35,000.
+      description: |-
+        This query uses a comparison operator to filter by sales amount.
+      query: |-
+        db.stores.aggregate([
+          {
+            $match: {
+              "sales.totalSales": { $gt: 35000 }
+            }
+          },
+          { $limit: 3 },
+          { $project: { _id: 1, name: 1 } }
+        ])
+      output:
+        value: |-
+          [
+            { "_id": "8345de34-73ec-4a99-9cb6-a81f7b145c34", "name": "Northwind Traders | Bed and Bath Place" },
+            { "_id": "57cc4095-77d9-4345-af20-f8ead9ef0197", "name": "Wide World Importers | Bed and Bath Store" }
+          ]
+related:
+  - reference: /operator/aggregation/group
+  - reference: /command/query-and-write/find

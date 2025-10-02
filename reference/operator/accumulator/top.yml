@@ -1,0 +1,129 @@
+type: operator
+category: accumulator
+name: $top
+description: |-
+  The `$top` operator sorts documents on one or more fields specified by the query and returns the first document matching the filtering criteria. It combines sorting and selection in a single operation.
+syntax: |-
+  {
+    $top: {
+      output: [listOfFields],
+      sortBy: {
+        <fieldName>: <sortOrder>
+      }
+    }
+  }
+parameters:
+  - name: listOfFields
+    type: object
+    required: true
+    description: |-
+      The list of fields to be returned for the first document in the result set.
+  - name: fieldName
+    type: string
+    required: true
+    description: |-
+      The field to use for sorting the result set.
+  - name: sortOrder
+    type: number
+    required: true
+    description: |-
+      1 or -1. 1 implies ascending order while -1 implies descending order.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "name": "First Up Consultants | Beverage Shop",
+      "sales": {
+        "totalSales": 75670
+      },
+      "promotionEvents": [
+        {
+          "eventName": "Unbeatable Bargain Bash",
+          "discounts": [
+            { "categoryName": "Whiskey", "discountPercentage": 7 }
+          ]
+        }
+      ]
+    }
+  items:
+    - title: Get the top selling category per store
+      explanation: |-
+        Find the highest-selling category within a company using $top.
+      description: |-
+        This query sorts documents by total sales and returns the top document per company.
+      query: |-
+        db.stores.aggregate([
+          {
+            $match: { company: { $in: ["First Up Consultants"] } }
+          },
+          {
+            $group: {
+              _id: "$company",
+              topSales: {
+                $top: {
+                  output: ["$company", "$sales"],
+                  sortBy: { "sales.totalSales": -1 }
+                }
+              }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "First Up Consultants",
+              "topSales": [
+                "First Up Consultants",
+                {
+                  "salesByCategory": [
+                    { "categoryName": "Towel Sets", "totalSales": 520 },
+                    { "categoryName": "Bath Accessories", "totalSales": 41710 }
+                  ],
+                  "revenue": 279183
+                }
+              ]
+            }
+          ]
+    - title: Get the highest discount by promotion category
+      explanation: |-
+        Fetch the highest discount per sales category across all promotions.
+      description: |-
+        This query unwinds promotion events and finds the maximum discount per category.
+      query: |-
+        db.stores.aggregate([
+          { $unwind: "$promotionEvents" },
+          { $unwind: "$promotionEvents.discounts" },
+          {
+            $group: {
+              _id: "$_id",
+              storeName: { $first: "$name" },
+              highestDiscount: {
+                $top: {
+                  sortBy: {
+                    "promotionEvents.discounts.discountPercentage": -1
+                  },
+                  output: {
+                    categoryName: "$promotionEvents.discounts.categoryName",
+                    discountPercentage: "$promotionEvents.discounts.discountPercentage"
+                  }
+                }
+              }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "64ec6589-068a-44a6-be5b-9d37bb0a90f1",
+              "storeName": "First Up Consultants | Computer Gallery",
+              "highestDiscount": {
+                "categoryName": "Gaming Accessories",
+                "discountPercentage": 24
+              }
+            }
+          ]
+related:
+  - reference: /operator/accumulator/bottom
+  - reference: /operator/accumulator/topn

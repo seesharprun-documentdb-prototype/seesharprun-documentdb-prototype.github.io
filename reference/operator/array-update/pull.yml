@@ -1,0 +1,18 @@
+type: operator
+category: array-update
+name: $pull
+description: |-
+  The `$pull` operator removes from an existing array all instances of a value or values that match a specified condition.
+syntax: |-
+  { $pull: { field: <value|condition> } }
+parameters:
+  - name: field
+    type: string
+    required: true
+    description: |-
+      The field to update.
+  - name: <value|condition>
+    type: string
+    required: true
+    description: |-
+      The value to remove or a condition that specifies which elements to remove.

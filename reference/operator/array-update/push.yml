@@ -1,0 +1,114 @@
+type: operator
+category: array-update
+name: $push
+description: |-
+  The `$push` operator is used to add a specified value to an array within a document. The $push operator adds new elements to an existing array without affecting other elements in the array.
+syntax: |-
+  db.collection.update({
+    <query>
+  }, {
+    $push: {
+      <field>: <value>
+    }
+  }, {
+    <options>
+  })
+parameters:
+  - name: <query>
+    type: object
+    required: true
+    description: |-
+      The selection criteria for the documents to update.
+  - name: <field>
+    type: string
+    required: true
+    description: |-
+      The array field to which the value will be appended.
+  - name: <value>
+    type: string
+    required: true
+    description: |-
+      The value to append to the array field.
+  - name: <options>
+    type: object
+    required: false
+    description: |-
+      Optional. Additional options for the update operation.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "name": "First Up Consultants | Beverage Shop - Satterfieldmouth",
+      "sales": {
+        "totalSales": 75670,
+        "salesByCategory": [
+          { "categoryName": "Wine Accessories", "totalSales": 34440 },
+          { "categoryName": "Bitters", "totalSales": 39496 },
+          { "categoryName": "Rum", "totalSales": 1734 }
+        ]
+      }
+    }
+  items:
+    - title: Add a new sales category
+      description: |-
+        Adds a new sales category to the salesByCategory array using $push operator.
+      query: |-
+        db.stores.update({
+          _id: "0fcc0bf0-ed18-4ab8-b558-9848e18058f4"
+        }, {
+          $push: {
+            "sales.salesByCategory": {
+              categoryName: "Wine Accessories",
+              totalSales: 1000.00
+            }
+          }
+        })
+      output:
+        value: |-
+          [
+            {
+              "acknowledged": true,
+              "insertedId": null,
+              "matchedCount": "1",
+              "modifiedCount": "1",
+              "upsertedCount": 0
+            }
+          ]
+    - title: Using $push with $setWindowFields
+      description: |-
+        Retrieves distinct sales volumes across stores using $push in window functions.
+      query: |-
+        db.stores.aggregate([
+          { $match: { company: { $in: ["First Up Consultants"] } } },
+          {
+            $setWindowFields: {
+              partitionBy: "$company",
+              sortBy: { "sales.totalSales": -1 },
+              output: {
+                salesByStore: {
+                  $push: "$sales.totalSales",
+                  window: { documents: ["unbounded", "current"] }
+                }
+              }
+            }
+          },
+          { $project: { company: 1, salesByStore: 1 } }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "a0386810-b6f8-4b05-9d60-e536fb2b0026",
+              "company": "First Up Consultants",
+              "salesByStore": [327583]
+            },
+            {
+              "_id": "ad8af64a-d5bb-4162-9bb6-e5104126566d",
+              "company": "First Up Consultants",
+              "salesByStore": [327583, 288582]
+            }
+          ]
+related:
+  - reference: /operator/array-update/addtoset
+  - reference: /operator/array-update/each
+  - reference: /operator/array-update/position

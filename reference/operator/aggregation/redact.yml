@@ -1,0 +1,85 @@
+type: operator
+category: aggregation
+name: $redact
+description: |-
+  The `$redact` stage in aggregation pipeline is used to filter fields of the documents in a collection dynamically based on access rights or other conditions. It processes each document and removes or retains fields based on the specified logic.
+syntax: |-
+  {
+    $redact: <expression>
+  }
+parameters:
+  - name: expression
+    type: object
+    required: true
+    description: |-
+      A valid MongoDB expression that evaluates to one of: $$DESCEND, $$PRUNE, or $$KEEP. These variables determine whether to keep, remove, or traverse deeper into the document.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "name": "First Up Consultants | Beverage Shop",
+      "promotionEvents": [
+        {
+          "discounts": [
+            { "categoryName": "Whiskey", "discountPercentage": 7 }
+          ]
+        }
+      ],
+      "tag": ["#MembershipDeals"]
+    }
+  items:
+    - title: Redacting sensitive information
+      explanation: |-
+        Filter the promotionEvents field for documents where the discountPercentage exceeds 15%.
+      description: |-
+        This query uses $redact with conditional logic to prune documents with high discounts.
+      query: |-
+        db.stores.aggregate([
+          {
+            $redact: {
+              $cond: {
+                if: { $gt: ["$promotionEvents.discounts.discountPercentage", 15] },
+                then: "$$PRUNE",
+                else: "$$DESCEND"
+              }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "new-store-001",
+              "name": "Adatum Corporation - Downtown Branch",
+              "sales": { "totalSales": 5000 }
+            }
+          ]
+    - title: Restricting access based on tags
+      explanation: |-
+        Remove all documents that contain the tag #MembershipDeals.
+      description: |-
+        This query prunes documents with specific tags using conditional logic.
+      query: |-
+        db.stores.aggregate([
+          {
+            $redact: {
+              $cond: {
+                if: { $in: ["#MembershipDeals", "$tag"] },
+                then: "$$PRUNE",
+                else: "$$DESCEND"
+              }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "gaming-store-mall-001",
+              "name": "Trey Research | Gaming Paradise",
+              "status": "active"
+            }
+          ]
+related:
+  - reference: /operator/aggregation/match
+  - reference: /operator/aggregation/project

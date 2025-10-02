@@ -1,0 +1,84 @@
+type: operator
+category: accumulator
+name: $last
+description: |-
+  The `$last` operator sorts documents on one or more fields specified by the query and returns the last document matching the filtering criteria.
+syntax: |-
+  {
+    $last: <expression>
+  }
+parameters:
+  - name: expression
+    type: object
+    required: true
+    description: |-
+      The expression to evaluate and return the last document from the result set.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "name": "First Up Consultants | Beverage Shop",
+      "lastUpdated": "2024-12-31T13:01:19.097Z"
+    }
+  items:
+    - title: Get the last updated store within a company
+      explanation: |-
+        Retrieve the most recently updated store by sorting in ascending order and taking the last document.
+      description: |-
+        This query sorts stores by lastUpdated field and returns the last (most recent) update timestamp.
+      query: |-
+        db.stores.aggregate([
+          {
+            $match: { company: { $in: ["First Up Consultants"] } }
+          },
+          {
+            $sort: { lastUpdated: 1 }
+          },
+          {
+            $group: {
+              _id: "$company",
+              lastUpdated: { $last: "$lastUpdated" }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "First Up Consultants",
+              "lastUpdated": "2024-12-31T13:01:19.097Z"
+            }
+          ]
+    - title: Using the window operator
+      explanation: |-
+        Retrieve the most recently updated store within each company using window functions.
+      description: |-
+        This query partitions by company and sorts within each partition to find the last update.
+      query: |-
+        db.stores.aggregate([
+          {
+            $setWindowFields: {
+              partitionBy: "$company",
+              sortBy: { lastUpdated: 1 },
+              output: {
+                lastUpdatedDateForStore: {
+                  $last: "$lastUpdated",
+                  window: {
+                    documents: ["current", "unbounded"]
+                  }
+                }
+              }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "First Up Consultants",
+              "lastUpdated": "2024-12-31T13:01:19.097Z"
+            }
+          ]
+related:
+  - reference: /operator/accumulator/first
+  - reference: /operator/accumulator/lastn

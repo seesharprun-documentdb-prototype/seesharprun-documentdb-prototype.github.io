@@ -1,0 +1,60 @@
+type: operator
+category: array-expression
+name: $concatArrays
+description: |-
+  The `$concatArrays` operator is used to combine multiple arrays into a single array. This operator is useful when you need to merge arrays from different documents or fields in a document.
+syntax: |-
+  { $concatArrays: ["<array1>", "<array2>"] }
+parameters:
+  - name: <array1>, <array2>
+    type: string
+    required: true
+    description: |-
+      The array fields targeted for concatenation.
+examples:
+  sample: |-
+    {
+      "_id": "7954bd5c-9ac2-4c10-bb7a-2b79bd0963c5",
+      "sales": {
+        "salesByCategory": [
+          { "categoryName": "DJ Headphones", "totalSales": 35921 }
+        ]
+      },
+      "promotionEvents": [
+        {
+          "discounts": [
+            { "categoryName": "DJ Turntables", "discountPercentage": 18 }
+          ]
+        }
+      ]
+    }
+  items:
+    - title: Concatenate discount arrays
+      description: |-
+        Combine discount arrays from multiple promotion events into a single array.
+      query: |-
+        db.stores.aggregate([
+          { $match: { _id: "7954bd5c-9ac2-4c10-bb7a-2b79bd0963c5" } },
+          {
+            $project: {
+              name: 1,
+              allDiscounts: {
+                $concatArrays: [
+                  { $arrayElemAt: ["$promotionEvents.discounts", 0] },
+                  { $arrayElemAt: ["$promotionEvents.discounts", 1] }
+                ]
+              }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "7954bd5c-9ac2-4c10-bb7a-2b79bd0963c5",
+              "name": "Lakeshore Retail | DJ Equipment Stop",
+              "allDiscounts": [
+                { "categoryName": "DJ Turntables", "discountPercentage": 18 }
+              ]
+            }
+          ]

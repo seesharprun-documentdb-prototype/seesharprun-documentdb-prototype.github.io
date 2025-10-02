@@ -1,0 +1,39 @@
+type: operator
+category: comparison-query
+name: $eq
+description: The `$eq` operator is used to match documents where the value of a field is equal to a specified value.
+syntax: |
+  { field: { $eq: <value> } }
+parameters:
+  - name: field
+    type: string
+    required: true
+    description: The field to be compared
+  - name: value
+    type: string
+    required: true
+    description: The value to compare against
+examples:
+  items:
+    - title: Use $eq filter on a root level field
+      description: To find a store with a specific name, run a query with the $eq predicate to match on the name field.
+      query: |
+        db.stores.find({
+            name: { $eq: "Boulder Innovations | Home Security Place - Ankundingburgh" }
+        }, { name: 1 })
+      output:
+        value: |
+          [{ "_id": "bda56164-954d-4f47-a230-ecf64b317b43", "name": "Boulder Innovations | Home Security Place - Ankundingburgh" }]
+    - title: Use $eq filter on a nested field
+      description: To find a store with total sales of exactly $37,015, run a query using the $eq operator using dot notation on the nested sales.totalSales field.
+      query: |
+        db.stores.find({
+            "sales.totalSales": { $eq: 37015 }
+        }, { name: 1, "sales.totalSales": 1 })
+      output:
+        value: |
+          [{ "_id": "bda56164-954d-4f47-a230-ecf64b317b43", "name": "Boulder Innovations | Home Security Place - Ankundingburgh", "sales": { "totalSales": 37015 } }]
+related:
+  - reference: /operator/comparison-query/ne
+  - reference: /operator/comparison-query/gt
+  - reference: /operator/comparison-query/lt

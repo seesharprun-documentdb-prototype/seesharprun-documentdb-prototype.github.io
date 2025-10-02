@@ -1,0 +1,30 @@
+type: operator
+category: comparison-query
+name: $lt
+description: The `$lt` operator retrieves documents where the value of a field is strictly less than a specified value.
+syntax: |
+  { field: { $lt: value } }
+parameters:
+  - name: field
+    type: string
+    required: true
+    description: The field in the document you want to evaluate
+  - name: value
+    type: number
+    required: true
+    description: The value to compare against; documents where field is less than this value will match
+examples:
+  items:
+    - title: Find stores with sales below $36,000
+      description: To find stores with less than $36,000 in sales, run a query using $lt on the sales.totalSales field.
+      query: |
+        db.stores.find({
+            "sales.totalSales": { $lt: 36000 }
+        }, { name: 1, "sales.totalSales": 1 }, { limit: 1 })
+      output:
+        value: |
+          [{ "_id": "e6895a31-a5cd-4103-8889-3b95a864e5a6", "name": "VanArsdel, Ltd. | Picture Frame Store - Port Clevelandton", "sales": { "totalSales": 17676 } }]
+related:
+  - reference: /operator/comparison-query/lte
+  - reference: /operator/comparison-query/gt
+  - reference: /operator/comparison-query/gte

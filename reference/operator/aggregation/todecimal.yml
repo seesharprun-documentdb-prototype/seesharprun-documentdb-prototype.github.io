@@ -1,0 +1,72 @@
+type: operator
+category: aggregation
+name: $toDecimal
+description: |-
+  The `$toDecimal` operator converts an input expression into a Decimal value. Long, Double or Int values are simply converted to a Decimal data type, while Decimal values are returned as is. A boolean value of true is converted to 1, while a boolean false is converted to 0. Lastly, ISODates are converted to a Decimal value corresponding to the number of milliseconds since January 1st, 1970 represented by the ISODate value.
+syntax: |-
+  {
+    $toDecimal: <expression>
+  }
+parameters:
+  - name: expression
+    type: object
+    required: true
+    description: |-
+      The specified value to convert into a Decimal value.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "name": "First Up Consultants | Beverage Shop",
+      "location": { "lat": -89.2384 }
+    }
+  items:
+    - title: Convert a Double to Decimal
+      explanation: |-
+        Convert latitude field from double to decimal value.
+      description: |-
+        This query converts a double to a Decimal128 value.
+      query: |-
+        db.stores.aggregate([{
+          $match: { _id: "b0107631-9370-4acd-aafa-8ac3511e623d" }
+        }, {
+          $project: {
+            originalLatitude: "$location.lat",
+            latitudeAsDecimal: { $toDecimal: "$location.lat" }
+          }
+        }])
+      output:
+        value: |-
+          [
+            {
+              "_id": "b0107631-9370-4acd-aafa-8ac3511e623d",
+              "originalLatitude": 72.8377,
+              "latitudeAsDecimal": "Decimal128('72.8377000000000')"
+            }
+          ]
+    - title: Convert an ISODate to Decimal
+      explanation: |-
+        Convert an ISO date to decimal milliseconds.
+      description: |-
+        This query converts a date to milliseconds since epoch.
+      query: |-
+        db.stores.aggregate([{
+          $match: { _id: "b0107631-9370-4acd-aafa-8ac3511e623d" }
+        }, {
+          $project: {
+            dateAsDecimal: {
+              $toDecimal: ISODate("2025-01-06T00:00:00.000Z")
+            }
+          }
+        }])
+      output:
+        value: |-
+          [
+            {
+              "_id": "b0107631-9370-4acd-aafa-8ac3511e623d",
+              "dateAsDecimal": "Decimal128('1736121600000')"
+            }
+          ]
+related:
+  - reference: /operator/aggregation/convert
+  - reference: /operator/aggregation/todouble

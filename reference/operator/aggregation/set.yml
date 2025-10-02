@@ -1,0 +1,58 @@
+type: operator
+category: aggregation
+name: $set
+description: |-
+  The `$set` operator updates an existing field or creates a new field with the specified value if it does not exist. One or more fields listed are updated or created. The dot notation is used to update or create nested objects.
+syntax: |-
+  {
+    $set: {
+      newField: <expression>
+    }
+  }
+parameters:
+  - name: newField
+    type: object
+    required: true
+    description: |-
+      The name of the field to update or create with the expression that defines the value.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "name": "First Up Consultants | Beverage Shop",
+      "sales": { "totalSales": 75670 }
+    }
+  items:
+    - title: Update an existing field
+      explanation: |-
+        Update the name field with a new value.
+      description: |-
+        This query updates the store name to a new value.
+      query: |-
+        db.stores.updateOne(
+          { _id: "8eefe8bd-5d6f-4038-90e8-05a8277637f0" },
+          { $set: { name: "Lakeshore Retail" } }
+        )
+    - title: Update a nested field
+      explanation: |-
+        Update a field within a nested object using dot notation.
+      description: |-
+        This query updates the part-time staff count.
+      query: |-
+        db.stores.updateOne(
+          { _id: "8eefe8bd-5d6f-4038-90e8-05a8277637f0" },
+          { $set: { "staff.totalStaff.partTime": 9 } }
+        )
+    - title: Create a new field
+      explanation: |-
+        Create a new field that doesn't exist.
+      description: |-
+        This query adds a formerName field to the document.
+      query: |-
+        db.stores.updateOne(
+          { _id: "8eefe8bd-5d6f-4038-90e8-05a8277637f0" },
+          { $set: { formerName: "Tailwind Traders | Drone Shoppe" } }
+        )
+related:
+  - reference: /operator/aggregation/addfields
+  - reference: /operator/aggregation/unset

@@ -1,0 +1,73 @@
+type: operator
+category: aggregation
+name: $toBool
+description: |-
+  The `$toBool` operator converts an expression into a Boolean value. Boolean values are returned as is without a conversion. Nonzero numeric values are converted to true while Decimal, Long, Double or Int values of 0 are converted to false. All other data types are converted to true.
+syntax: |-
+  {
+    $toBool: <expression>
+  }
+parameters:
+  - name: expression
+    type: object
+    required: true
+    description: |-
+      The specified value to convert into a Boolean value.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "name": "First Up Consultants | Beverage Shop",
+      "location": { "lat": -89.2384 },
+      "sales": { "totalSales": 75670 }
+    }
+  items:
+    - title: Convert a Double to Boolean
+      explanation: |-
+        Convert latitude field from double to boolean.
+      description: |-
+        Positive numeric values are converted to true.
+      query: |-
+        db.stores.aggregate([{
+          $match: { _id: "b0107631-9370-4acd-aafa-8ac3511e623d" }
+        }, {
+          $project: {
+            originalLatitude: "$location.lat",
+            latitudeAsBool: { $toBool: "$location.lat" }
+          }
+        }])
+      output:
+        value: |-
+          [
+            {
+              "_id": "b0107631-9370-4acd-aafa-8ac3511e623d",
+              "originalLatitude": 72.8377,
+              "latitudeAsBool": true
+            }
+          ]
+    - title: Convert a String to Boolean
+      explanation: |-
+        Convert _id field from string to boolean.
+      description: |-
+        String values are converted to true.
+      query: |-
+        db.stores.aggregate([{
+          $match: { _id: "b0107631-9370-4acd-aafa-8ac3511e623d" }
+        }, {
+          $project: {
+            originalId: "$_id",
+            idAsBool: { $toBool: "$_id" }
+          }
+        }])
+      output:
+        value: |-
+          [
+            {
+              "_id": "b0107631-9370-4acd-aafa-8ac3511e623d",
+              "originalId": "b0107631-9370-4acd-aafa-8ac3511e623d",
+              "idAsBool": true
+            }
+          ]
+related:
+  - reference: /operator/aggregation/convert
+  - reference: /operator/aggregation/tostring

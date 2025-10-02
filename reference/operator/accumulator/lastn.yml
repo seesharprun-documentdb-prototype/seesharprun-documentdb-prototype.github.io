@@ -1,0 +1,126 @@
+type: operator
+category: accumulator
+name: $lastN
+description: |-
+  The `$lastN` accumulator operator returns the last N values in a group of documents for a specified expression. It's useful when you need to retrieve multiple final values from a sorted collection.
+syntax: |-
+  {
+    $group: {
+      _id: <expression>,
+      <field>: {
+        $lastN: {
+          n: <number>,
+          input: <expression>
+        }
+      }
+    }
+  }
+parameters:
+  - name: n
+    type: number
+    required: true
+    description: |-
+      The number of values to return. Must be a positive integer.
+  - name: input
+    type: object
+    required: true
+    description: |-
+      The expression that specifies the field or value to return the last N occurrences of.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "name": "First Up Consultants | Beverage Shop",
+      "promotionEvents": [
+        {
+          "eventName": "Unbeatable Bargain Bash",
+          "promotionalDates": {
+            "startDate": { "Year": 2024, "Month": 6, "Day": 23 }
+          }
+        }
+      ]
+    }
+  items:
+    - title: Find last two promotion events by store
+      explanation: |-
+        Retrieve the last two promotion events for each store by sorting and grouping.
+      description: |-
+        This query sorts events by start date and returns the last two per store.
+      query: |-
+        db.stores.aggregate([
+          { $unwind: "$promotionEvents" },
+          {
+            $sort: {
+              "promotionEvents.promotionalDates.startDate.Year": 1,
+              "promotionEvents.promotionalDates.startDate.Month": 1,
+              "promotionEvents.promotionalDates.startDate.Day": 1
+            }
+          },
+          {
+            $group: {
+              _id: "$_id",
+              storeName: { $last: "$name" },
+              lastTwoPromotions: {
+                $lastN: {
+                  input: "$promotionEvents.eventName",
+                  n: 2
+                }
+              }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "e28fff9b-a8fb-4ac9-bb37-dea60d2a7d32",
+              "storeName": "Lakeshore Retail | Outdoor Furniture Collection",
+              "lastTwoPromotions": [
+                "Big Bargain Bash",
+                "Spectacular Savings Showcase"
+              ]
+            }
+          ]
+    - title: Find three highest selling categories
+      explanation: |-
+        Retrieve the three highest selling categories per store using $lastN.
+      description: |-
+        This query sorts categories by sales and returns the top three per store.
+      query: |-
+        db.stores.aggregate([
+          { $unwind: "$sales.salesByCategory" },
+          {
+            $sort: { "sales.salesByCategory.totalSales": 1 }
+          },
+          {
+            $group: {
+              _id: "$_id",
+              storeName: { $last: "$name" },
+              top3Categories: {
+                $lastN: {
+                  input: "$sales.salesByCategory.categoryName",
+                  n: 3
+                }
+              },
+              top3SalesAmounts: {
+                $lastN: {
+                  input: "$sales.salesByCategory.totalSales",
+                  n: 3
+                }
+              }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "22e6367e-8341-415f-9795-118d2b522abf",
+              "storeName": "Adatum Corporation | Outdoor Furniture Mart",
+              "top3Categories": ["Outdoor Benches"],
+              "top3SalesAmounts": [4976]
+            }
+          ]
+related:
+  - reference: /operator/accumulator/last
+  - reference: /operator/accumulator/firstn

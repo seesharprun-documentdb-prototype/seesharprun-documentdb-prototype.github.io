@@ -1,0 +1,49 @@
+type: operator
+category: aggregation
+name: $sortByCount
+description: |-
+  The $sortByCount stage in the aggregation pipeline is used to group documents by a specified expression and then sort the count of documents in each group in descending order. The `$sortByCount` stage is useful for quickly identifying the most common values within a dataset.
+syntax: |-
+  {
+    $sortByCount: <expression>
+  }
+parameters:
+  - name: expression
+    type: string
+    required: true
+    description: |-
+      The field or computed expression on which to group and count the documents.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "name": "First Up Consultants | Beverage Shop",
+      "promotionEvents": [
+        { "eventName": "Unbeatable Bargain Bash" },
+        { "eventName": "Steal of a Deal Days" }
+      ]
+    }
+  items:
+    - title: Group and count by event name
+      explanation: |-
+        Group promotion events by name and count occurrences in descending order.
+      description: |-
+        This query identifies the most common promotional events.
+      query: |-
+        db.stores.aggregate([
+          { $unwind: "$promotionEvents" },
+          { $sortByCount: "$promotionEvents.eventName" }
+        ])
+      output:
+        value: |-
+          [
+            { "_id": "Crazy Deal Days", "count": 4239 },
+            { "_id": "Markdown Madness", "count": 2967 },
+            { "_id": "Bargain Bonanza", "count": 2925 },
+            { "_id": "Crazy Discount Days", "count": 2922 },
+            { "_id": "Price Smash Spectacular", "count": 2915 }
+          ]
+related:
+  - reference: /operator/aggregation/group
+  - reference: /operator/aggregation/sort
+  - reference: /operator/aggregation/count

@@ -1,0 +1,58 @@
+type: operator
+category: arithmetic-expression
+name: $log10
+description: |-
+  The `$log10` operator calculates the logarithm of a number in base 10 and returns the result.
+syntax: |-
+  { $log10: <number> }
+parameters:
+  - name: <number>
+    type: string
+    required: true
+    description: |-
+      Any valid expression that resolves to a positive number.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "sales": {
+        "salesByCategory": [
+          { "categoryName": "Wine Accessories", "totalSales": 34440 }
+        ]
+      }
+    }
+  items:
+    - title: Analyze sales distribution
+      description: |-
+        Bucket the distribution of sales per category within a store using log10 scale.
+      query: |-
+        db.stores.aggregate([
+          { $match: { _id: "40d6f4d7-50cd-4929-9a07-0a7a133c2e74" } },
+          {
+            $project: {
+              name: 1,
+              salesAnalysis: {
+                $map: {
+                  input: "$sales.salesByCategory",
+                  as: "category",
+                  in: {
+                    categoryName: "$$category.categoryName",
+                    originalSales: "$$category.totalSales",
+                    logScale: { $log10: "$$category.totalSales" }
+                  }
+                }
+              }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "40d6f4d7-50cd-4929-9a07-0a7a133c2e74",
+              "name": "Proseware, Inc. | Home Entertainment Hub",
+              "salesAnalysis": [
+                { "categoryName": "Sound Bars", "originalSales": 2120, "logScale": 3.326 }
+              ]
+            }
+          ]

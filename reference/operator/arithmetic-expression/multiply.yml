@@ -1,0 +1,44 @@
+type: operator
+category: arithmetic-expression
+name: $multiply
+description: |-
+  The `$multiply` operator calculates the product of the specified input numerical values.
+syntax: |-
+  { $multiply: [ <listOfValues> ] }
+parameters:
+  - name: <listOfValues>
+    type: string
+    required: true
+    description: |-
+      A comma separated list of numerical values.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "sales": { "revenue": 75670 }
+    }
+  items:
+    - title: Multiply a field by a constant
+      description: |-
+        Double the total sales for all stores by multiplying the sales field by 2.
+      query: |-
+        db.stores.aggregate([
+          { $match: { company: { $in: ["First Up Consultants"] } } },
+          {
+            $project: {
+              company: 1,
+              "sales.revenue": 1,
+              salesVolumeDoubled: { $multiply: ["$sales.revenue", 2] }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "39acb3aa-f350-41cb-9279-9e34c004415a",
+              "sales": { "revenue": 279183 },
+              "company": "First Up Consultants",
+              "salesVolumeDoubled": 558366
+            }
+          ]

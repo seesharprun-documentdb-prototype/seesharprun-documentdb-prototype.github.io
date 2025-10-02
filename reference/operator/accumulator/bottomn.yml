@@ -1,0 +1,146 @@
+type: operator
+category: accumulator
+name: $bottomN
+description: |-
+  The `$bottomN` operator sorts documents on one or more fields specified by the query and returns the last N documents matching the filtering criteria.
+syntax: |-
+  {
+    $bottomN: {
+      output: [listOfFields],
+      sortBy: {
+        <fieldName>: <sortOrder>
+      },
+      n: <numDocumentsToReturn>
+    }
+  }
+parameters:
+  - name: listOfFields
+    type: object
+    required: true
+    description: |-
+      The list of fields to be returned for the last documents in the result set.
+  - name: fieldName
+    type: string
+    required: true
+    description: |-
+      The field to use for sorting the result set.
+  - name: sortOrder
+    type: number
+    required: true
+    description: |-
+      1 or -1. 1 implies ascending order while -1 implies descending order.
+  - name: n
+    type: number
+    required: true
+    description: |-
+      The number of documents to return from the bottom of the sorted result set.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "name": "First Up Consultants | Beverage Shop",
+      "sales": {
+        "totalSales": 75670
+      }
+    }
+  items:
+    - title: Find the bottom two stores by total sales
+      explanation: |-
+        Retrieve the two stores with the lowest sales by sorting in descending order and taking the last two.
+      description: |-
+        This query groups stores by company and uses $bottomN to find the two lowest-selling stores.
+      query: |-
+        db.stores.aggregate([
+          {
+            $match: { company: { $in: ["First Up Consultants"] } }
+          },
+          {
+            $group: {
+              _id: "$company",
+              bottomSales: {
+                $bottomN: {
+                  output: ["$company", "$sales"],
+                  sortBy: { "sales.revenue": -1 },
+                  n: 2
+                }
+              }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "First Up Consultants",
+              "bottomSales": [
+                [
+                  "First Up Consultants",
+                  {
+                    "salesByCategory": [
+                      { "categoryName": "Skirts", "totalSales": 109 }
+                    ],
+                    "revenue": 109
+                  }
+                ],
+                [
+                  "First Up Consultants",
+                  {
+                    "salesByCategory": [
+                      { "categoryName": "Mirrors", "totalSales": 120 }
+                    ],
+                    "revenue": 120
+                  }
+                ]
+              ]
+            }
+          ]
+    - title: Find the bottom two categories by total sales within each store
+      explanation: |-
+        Determine the two lowest-performing categories by sales within each store.
+      description: |-
+        This query unwinds categories, groups by store, and returns the bottom two categories per store.
+      query: |-
+        db.stores.aggregate([
+          { $unwind: "$sales.salesByCategory" },
+          {
+            $match: {
+              "sales.salesByCategory.totalSales": { $exists: true }
+            }
+          },
+          {
+            $group: {
+              _id: "$_id",
+              storeName: { $first: "$name" },
+              categoryCount: { $sum: 1 },
+              bottomTwoCategories: {
+                $bottomN: {
+                  n: 2,
+                  sortBy: { "sales.salesByCategory.totalSales": -1 },
+                  output: {
+                    categoryName: "$sales.salesByCategory.categoryName",
+                    totalSales: "$sales.salesByCategory.totalSales"
+                  }
+                }
+              }
+            }
+          },
+          {
+            $match: { categoryCount: { $gte: 2 } }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "64ec6589-068a-44a6-be5b-9d37bb0a90f1",
+              "storeName": "First Up Consultants | Computer Gallery",
+              "categoryCount": 8,
+              "bottomTwoCategories": [
+                { "categoryName": "Gaming Controllers", "totalSales": 12000 },
+                { "categoryName": "Network Adapters", "totalSales": 15000 }
+              ]
+            }
+          ]
+related:
+  - reference: /operator/accumulator/bottom
+  - reference: /operator/accumulator/topn

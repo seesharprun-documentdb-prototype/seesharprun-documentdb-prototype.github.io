@@ -1,0 +1,79 @@
+type: operator
+category: aggregation
+name: $replaceWith
+description: |-
+  The `$replaceWith` aggregation stage operator is used to replace the input document with the specified document. It transforms documents from one structure to another or replaces them entirely with new fields and values.
+syntax: |-
+  {
+    $replaceWith: <newDocument>
+  }
+parameters:
+  - name: newDocument
+    type: object
+    required: true
+    description: |-
+      The new document to replace the original document.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "name": "First Up Consultants | Beverage Shop",
+      "sales": {
+        "totalSales": 75670,
+        "salesByCategory": [
+          { "categoryName": "Wine Accessories", "totalSales": 34440 }
+        ]
+      }
+    }
+  items:
+    - title: Replace document with subset of fields
+      explanation: |-
+        Match a specific document and replace its contents with a subset of fields.
+      description: |-
+        This query transforms the document structure by replacing it with selected fields.
+      query: |-
+        db.stores.aggregate([
+          {
+            $match: {
+              "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4"
+            }
+          },
+          {
+            $replaceWith: {
+              storeName: "$name",
+              totalSales: "$sales.totalSales"
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "storeName": "First Up Consultants | Beverage Shop",
+              "totalSales": 75670
+            }
+          ]
+    - title: Replace with nested field
+      explanation: |-
+        Replace the entire document with a nested field from the original.
+      description: |-
+        This query promotes a nested field to become the entire document.
+      query: |-
+        db.stores.aggregate([
+          {
+            $replaceWith: "$sales"
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "totalSales": 75670,
+              "salesByCategory": [
+                { "categoryName": "Wine Accessories", "totalSales": 34440 }
+              ]
+            }
+          ]
+related:
+  - reference: /operator/aggregation/project
+  - reference: /operator/aggregation/addfields

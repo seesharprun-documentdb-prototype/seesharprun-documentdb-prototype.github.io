@@ -1,0 +1,44 @@
+type: operator
+category: arithmetic-expression
+name: $sqrt
+description: |-
+  The `$sqrt` operator is used to calculate the square root of a specified number.
+syntax: |-
+  { $sqrt: <expression> }
+parameters:
+  - name: <expression>
+    type: string
+    required: true
+    description: |-
+      Any valid expression that resolves to a number.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "sales": { "revenue": 75670 }
+    }
+  items:
+    - title: Calculate the square root of sales
+      description: |-
+        Calculate the square root of the sales volumes for each store.
+      query: |-
+        db.stores.aggregate([
+          { $match: { company: { $in: ["First Up Consultants"] } } },
+          {
+            $project: {
+              name: 1,
+              "sales.revenue": 1,
+              sqrtFullSales: { $sqrt: "$sales.revenue" }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "c52c9f65-5b1a-4ef5-a7a2-d1af0426cbe4",
+              "name": "First Up Consultants | Jewelry Pantry - Nicolasberg",
+              "sales": { "revenue": 4624 },
+              "sqrtFullSales": 68
+            }
+          ]

@@ -1,0 +1,18 @@
+type: operator
+category: array-expression
+name: $slice
+description: |-
+  The `$slice` operator returns a subset of an array.
+syntax: |-
+  { $slice: [ <array>, <n> ] }
+parameters:
+  - name: <array>
+    type: string
+    required: true
+    description: |-
+      Any valid expression that resolves to an array.
+  - name: <n>
+    type: number
+    required: true
+    description: |-
+      Any valid expression that resolves to an integer. If positive, returns the first n elements. If negative, returns the last n elements.

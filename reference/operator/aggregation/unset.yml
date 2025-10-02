@@ -1,0 +1,71 @@
+type: operator
+category: aggregation
+name: $unset
+description: |-
+  The $unset stage in the aggregation pipeline is used to remove specified fields from documents. This can be particularly useful when you need to exclude certain fields from the results of an aggregation query for reasons such as privacy, reducing payload size, or simply cleaning up the output.
+syntax: |-
+  {
+    $unset: "<field1>" | ["<field1>", "<field2>", ...]
+  }
+parameters:
+  - name: field
+    type: string
+    required: true
+    description: |-
+      The names of the fields to remove from the documents. Can be a single field name or an array of field names.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "name": "First Up Consultants | Beverage Shop",
+      "location": { "lat": -89.2384, "lon": -46.4012 },
+      "sales": { "totalSales": 75670 }
+    }
+  items:
+    - title: Remove a single field
+      explanation: |-
+        Remove the location field from documents.
+      description: |-
+        This query excludes the location field from results.
+      query: |-
+        db.stores.aggregate([
+          { $unset: "store.location" }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "7954bd5c-9ac2-4c10-bb7a-2b79bd0963c5",
+              "store": {
+                "name": "Downtown Store",
+                "sales": { "totalSales": 15000 }
+              }
+            }
+          ]
+    - title: Remove multiple fields
+      explanation: |-
+        Remove the location and sales.totalSales fields.
+      description: |-
+        This query excludes multiple fields from results.
+      query: |-
+        db.stores.aggregate([
+          { $unset: ["store.location", "store.sales.totalSales"] }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "7954bd5c-9ac2-4c10-bb7a-2b79bd0963c5",
+              "store": {
+                "name": "Downtown Store",
+                "sales": {
+                  "salesByCategory": [
+                    { "category": "Electronics", "totalSales": 5000 }
+                  ]
+                }
+              }
+            }
+          ]
+related:
+  - reference: /operator/aggregation/set
+  - reference: /operator/aggregation/project

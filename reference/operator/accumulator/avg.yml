@@ -1,0 +1,73 @@
+type: operator
+category: accumulator
+name: $avg
+description: |-
+  The `$avg` operator computes the average of numeric values across groups of documents or within defined windows.
+syntax: |-
+  $avg: <field or expression>
+parameters:
+  - name: <field or expression>
+    type: string
+    required: true
+    description: |-
+      Specifies the field or expression to calculate the average. Non-numeric values are ignored.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "name": "First Up Consultants | Beverage Shop - Satterfieldmouth",
+      "sales": {
+        "totalSales": 75670,
+        "salesByCategory": [
+          { "categoryName": "Wine Accessories", "totalSales": 34440 },
+          { "categoryName": "Bitters", "totalSales": 39496 },
+          { "categoryName": "Rum", "totalSales": 1734 }
+        ]
+      }
+    }
+  items:
+    - title: Calculate the average sales by category
+      description: |-
+        Groups documents by sales category and calculates the average sales across all documents within each group.
+      explanation: |-
+        To calculate the average sales across all stores within each category, first run a query to group documents within each sales category. Then, calculate the average sales across all documents within each group.
+      query: |-
+        db.stores.aggregate([
+          { $unwind: "$sales.salesByCategory" },
+          {
+            $group: {
+              _id: "$sales.salesByCategory.categoryName",
+              avgSales: { $avg: "$sales.salesByCategory.totalSales" }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            { "_id": "Christmas Trees", "avgSales": 25987.96 },
+            { "_id": "Nuts", "avgSales": 25115.99 }
+          ]
+    - title: Using $avg in $bucket
+      description: |-
+        Creates buckets based on sales values and calculates the average sales within each bucket.
+      explanation: |-
+        To get the average sales within specific sales boundaries, this query creates buckets based on sales values and calculates the avg sales within each bucket.
+      query: |-
+        db.stores.aggregate([
+          {
+            $bucket: {
+              groupBy: "$sales.totalSales",
+              boundaries: [0, 1000, 5000, 10000],
+              default: "Other",
+              output: { avgSales: { $avg: "$sales.totalSales" } }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            { "_id": 1000, "avgSales": 3029.05 },
+            { "_id": "Other", "avgSales": 52169.85 }
+          ]
+related:
+  - reference: /operator/array-query/size

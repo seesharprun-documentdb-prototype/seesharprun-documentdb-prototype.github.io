@@ -1,0 +1,29 @@
+type: operator
+category: array-expression
+name: $zip
+description: |-
+  The `$zip` operator transposes an array of input arrays so that the first element of the output array contains an array of the first elements of the input arrays, the second element contains an array of the second elements, and so on.
+syntax: |-
+  {
+    $zip: {
+      inputs: [ <array1>, <array2>, ... ],
+      useLongestLength: <boolean>,
+      defaults: <array>
+    }
+  }
+parameters:
+  - name: inputs
+    type: string
+    required: true
+    description: |-
+      An array of expressions that resolve to arrays.
+  - name: useLongestLength
+    type: string
+    required: false
+    description: |-
+      A boolean which specifies whether the length of the longest array determines the number of output array elements.
+  - name: defaults
+    type: string
+    required: false
+    description: |-
+      An array of default values used if inputs contains arrays of different lengths.

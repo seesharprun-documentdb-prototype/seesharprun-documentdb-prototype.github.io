@@ -1,0 +1,95 @@
+type: operator
+category: aggregation
+name: $changeStream
+description: |-
+  The `$changeStream` stage returns a change stream cursor that tracks changes to a collection. Change streams allow applications to access real-time data changes without the complexity and risk of tailing the oplog.
+syntax: |-
+  {
+    $changeStream: {
+      fullDocument: <string>,
+      fullDocumentBeforeChange: <string>,
+      resumeAfter: <document>,
+      startAfter: <document>,
+      startAtOperationTime: <timestamp>
+    }
+  }
+parameters:
+  - name: fullDocument
+    type: string
+    required: false
+    description: |-
+      Optional. Specifies whether to return the full document for update operations. Options: "updateLookup", "whenAvailable", "required".
+  - name: fullDocumentBeforeChange
+    type: string
+    required: false
+    description: |-
+      Optional. Specifies whether to return the full document as it was before the change. Options: "whenAvailable", "required", "off".
+  - name: resumeAfter
+    type: object
+    required: false
+    description: |-
+      Optional. A resume token to resume the change stream after a specific change event.
+  - name: startAfter
+    type: object
+    required: false
+    description: |-
+      Optional. A resume token to start the change stream after a specific event, even if the token is invalidated.
+  - name: startAtOperationTime
+    type: object
+    required: false
+    description: |-
+      Optional. A timestamp to start the change stream from a specific point in time.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "name": "First Up Consultants | Beverage Shop",
+      "sales": { "totalSales": 75670 }
+    }
+  items:
+    - title: Watch for changes
+      explanation: |-
+        Open a change stream to monitor all changes to the collection.
+      description: |-
+        This query creates a change stream cursor for real-time updates.
+      query: |-
+        db.stores.aggregate([
+          { $changeStream: {} }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": { "_data": "..." },
+              "operationType": "insert",
+              "fullDocument": {
+                "_id": "new-store-id",
+                "name": "New Store"
+              }
+            }
+          ]
+    - title: Watch with full document lookup
+      explanation: |-
+        Monitor changes and return the full updated document.
+      description: |-
+        This query includes the complete document after updates.
+      query: |-
+        db.stores.aggregate([
+          { $changeStream: { fullDocument: "updateLookup" } }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": { "_data": "..." },
+              "operationType": "update",
+              "fullDocument": {
+                "_id": "store-id",
+                "name": "Updated Store Name",
+                "sales": { "totalSales": 80000 }
+              }
+            }
+          ]
+related:
+  - reference: /operator/aggregation/match
+  - reference: /operator/aggregation/projects

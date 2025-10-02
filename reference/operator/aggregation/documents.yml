@@ -1,0 +1,108 @@
+type: operator
+category: aggregation
+name: $documents
+description: |-
+  The `$documents` aggregation pipeline stage is used to create a pipeline from a set of provided documents. This stage is particularly useful when you want to process specific documents without querying a collection.
+syntax: |-
+  {
+    $documents: [
+      <document1>,
+      <document2>,
+      ...
+    ]
+  }
+parameters:
+  - name: document
+    type: object
+    required: true
+    description: |-
+      A JSON object representing a document to include in the pipeline.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "name": "First Up Consultants | Beverage Shop",
+      "sales": { "totalSales": 75670 }
+    }
+  items:
+    - title: Create a pipeline from specific documents
+      explanation: |-
+        Process predefined documents using the $documents stage.
+      description: |-
+        This query demonstrates how to process a set of provided documents.
+      query: |-
+        db.aggregate([{
+          $documents: [{
+            _id: "7954bd5c-9ac2-4c10-bb7a-2b79bd0963c5",
+            name: "Lakeshore Retail | Holiday Supply Hub",
+            location: { lat: 60.1441, lon: -141.5012 },
+            sales: { fullSales: 3700 },
+            tag: ["#ShopLocal", "#SeasonalSale"]
+          }, {
+            _id: "7e53ca0f-6e24-4177-966c-fe62a11e9af5",
+            name: "Contoso, Ltd. | Office Supply Deals",
+            location: { lat: 40.7128, lon: -74.0060 },
+            sales: { fullSales: 5400 },
+            tag: ["#TechDeals", "#FreeShipping"]
+          }]
+        }, {
+          $project: {
+            _id: 1,
+            name: 1,
+            "location.lat": 1,
+            "location.lon": 1,
+            "sales.fullSales": 1,
+            tags: "$tag"
+          }
+        }])
+      output:
+        value: |-
+          [
+            {
+              "_id": "7954bd5c-9ac2-4c10-bb7a-2b79bd0963c5",
+              "name": "Lakeshore Retail | Holiday Supply Hub",
+              "location": { "lat": 60.1441, "lon": -141.5012 },
+              "sales": { "fullSales": 3700 },
+              "tags": ["#ShopLocal", "#SeasonalSale"]
+            },
+            {
+              "_id": "7e53ca0f-6e24-4177-966c-fe62a11e9af5",
+              "name": "Contoso, Ltd. | Office Supply Deals",
+              "location": { "lat": 40.7128, "lon": -74.006 },
+              "sales": { "fullSales": 5400 },
+              "tags": ["#TechDeals", "#FreeShipping"]
+            }
+          ]
+    - title: Combine $documents with other pipeline stages
+      explanation: |-
+        Use $documents with $match and $sort stages.
+      description: |-
+        This query filters and sorts provided documents.
+      query: |-
+        db.aggregate([{
+          $documents: [{
+            _id: "7954bd5c-9ac2-4c10-bb7a-2b79bd0963c5",
+            name: "Lakeshore Retail",
+            sales: { fullSales: 3700 }
+          }, {
+            _id: "7e53ca0f-6e24-4177-966c-fe62a11e9af5",
+            name: "Contoso, Ltd.",
+            sales: { fullSales: 5400 }
+          }]
+        }, {
+          $match: { "sales.fullSales": { $gt: 4000 } }
+        }, {
+          $sort: { "sales.fullSales": -1 }
+        }])
+      output:
+        value: |-
+          [
+            {
+              "_id": "7e53ca0f-6e24-4177-966c-fe62a11e9af5",
+              "name": "Contoso, Ltd.",
+              "sales": { "fullSales": 5400 }
+            }
+          ]
+related:
+  - reference: /operator/aggregation/match
+  - reference: /operator/aggregation/project

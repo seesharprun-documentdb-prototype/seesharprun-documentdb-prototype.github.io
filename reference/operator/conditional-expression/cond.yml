@@ -1,0 +1,79 @@
+type: operator
+category: conditional-expression
+name: $cond
+description: The `$cond` operator is used to evaluate a condition and return one of two expressions based on the result. It's similar to the ternary operator in many programming languages.
+syntax: |
+  {
+     $cond: {
+        if: <boolean-expression>,
+        then: <true-case>,
+        else: <false-case>
+     }
+  }
+parameters:
+  - name: if
+    type: object
+    required: true
+    description: A boolean expression that is evaluated
+  - name: then
+    type: object
+    required: true
+    description: The expression to return if the `if` condition evaluates to true
+  - name: else
+    type: object
+    required: true
+    description: The expression to return if the `if` condition evaluates to false
+examples:
+  items:
+    - title: Determine high sales categories
+      description: This query determines if the sales for each category are considered "high" or "low" based on a threshold value of $250,000.
+      query: |
+        db.stores.aggregate([{
+                $project: {
+                    _id: 0,
+                    storeId: "$storeId",
+                    category: "$sales.salesByCategory.categoryName",
+                    sales: "$sales.salesByCategory.totalSales",
+                    salesCategory: {
+                        $cond: {
+                            if: { $gte: ["$sales.salesByCategory.totalSales", 250000] },
+                            then: "High",
+                            else: "Low"
+                        }
+                    }
+                }
+            },
+            { $limit: 3 }
+        ])
+      output:
+        value: |
+          [
+              { "sales": [35921, 1000], "category": ["DJ Headphones", "DJ Cables"], "salesCategory": "High" },
+              { "sales": [4760], "category": ["Guitars"], "salesCategory": "High" }
+          ]
+    - title: Determine full-time or part-time dominance
+      description: This query determines whether a store employs more full-time or part-time staff.
+      query: |
+        db.stores.aggregate([{
+                $project: {
+                    name: 1,
+                    staffType: {
+                        $cond: {
+                            if: { $gte: ["$staff.totalStaff.fullTime", "$staff.totalStaff.partTime"] },
+                            then: "More Full-Time",
+                            else: "More Part-Time"
+                        }
+                    }
+                }
+            },
+            { $limit: 3 }
+        ])
+      output:
+        value: |
+          [
+            { "_id": "7954bd5c-9ac2-4c10-bb7a-2b79bd0963c5", "name": "Lakeshore Retail | DJ Equipment Stop - Port Cecile", "staffType": "More Full-Time" }
+          ]
+related:
+  - reference: /operator/conditional-expression/ifnull
+  - reference: /operator/conditional-expression/switch
+  - reference: /operator/boolean-expression/and

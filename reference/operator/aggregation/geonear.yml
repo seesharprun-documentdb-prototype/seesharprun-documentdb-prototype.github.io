@@ -1,0 +1,122 @@
+type: operator
+category: aggregation
+name: $geoNear
+description: |-
+  The `$geoNear` aggregation stage calculates distances between a specified point and the location field in each document, sorts the documents by distance, and can optionally limit results by distance.
+syntax: |-
+  {
+    $geoNear: {
+      near: {
+        type: "Point",
+        coordinates: [<longitude>, <latitude>]
+      },
+      distanceField: <field to store distance>,
+      maxDistance: <optional maximum distance in meters>,
+      spherical: <boolean, must be true>
+    }
+  }
+parameters:
+  - name: near
+    type: object
+    required: true
+    description: |-
+      The point from which to calculate distances.
+  - name: distanceField
+    type: string
+    required: true
+    description: |-
+      The field that contains computed distance.
+  - name: maxDistance
+    type: number
+    required: false
+    description: |-
+      Optional. Maximum distance in meters from point.
+  - name: spherical
+    type: string
+    required: true
+    description: |-
+      Must be true for 2dsphere indexes.
+examples:
+  sample: |-
+    {
+      "_id": "2cf3f885-9962-4b67-a172-aa9039e9ae2f",
+      "name": "First Up Consultants | Bed and Bath Center",
+      "location": {
+        "lat": 60.7954,
+        "lon": -142.0012
+      }
+    }
+  items:
+    - title: Basic distance calculation
+      explanation: |-
+        Retrieve all stores near a specific location, sorted by distance.
+      description: |-
+        This query calculates distances from a point and sorts results by proximity.
+      query: |-
+        db.stores.aggregate([
+          {
+            $geoNear: {
+              near: {
+                type: "Point",
+                coordinates: [-141.9922, 16.8331]
+              },
+              distanceField: "distance",
+              spherical: true
+            }
+          },
+          {
+            $project: {
+              name: 1,
+              distance: 1
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "643b2756-c22d-4063-9777-0945b9926346",
+              "name": "Contoso, Ltd. | Outdoor Furniture Corner",
+              "distance": 5458613.28
+            }
+          ]
+    - title: With distance limits and query
+      explanation: |-
+        Retrieve stores within 30 KM that have more than 10 full-time staff.
+      description: |-
+        This query combines geospatial filtering with document filtering.
+      query: |-
+        db.stores.aggregate([
+          {
+            $geoNear: {
+              near: {
+                type: "Point",
+                coordinates: [69.7296, 70.1272]
+              },
+              distanceField: "distance",
+              maxDistance: 30000,
+              query: { "staff.totalStaff.fullTime": { $gt: 10 } },
+              spherical: true
+            }
+          },
+          {
+            $project: {
+              name: 1,
+              distance: 1,
+              "staff.totalStaff.fullTime": 1
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "bbec6d3e-1666-45b4-8803-8b7ef8544845",
+              "name": "First Up Consultants | Baby Products Bargains",
+              "staff": { "totalStaff": { "fullTime": 19 } },
+              "distance": 29934.72
+            }
+          ]
+related:
+  - reference: /operator/geospatial/near
+  - reference: /operator/aggregation/match

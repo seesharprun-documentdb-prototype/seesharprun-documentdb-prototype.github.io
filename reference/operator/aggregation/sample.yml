@@ -1,0 +1,46 @@
+type: operator
+category: aggregation
+name: $sample
+description: |-
+  The `$sample` stage is used in aggregation pipelines to randomly select a specified number of documents from a collection. The `$sample` command is useful during testing, data analysis, and generating random subsets of data for machine learning.
+syntax: |-
+  {
+    $sample: { size: <number> }
+  }
+parameters:
+  - name: size
+    type: number
+    required: true
+    description: |-
+      The number of documents to randomly select from the collection.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "name": "First Up Consultants | Beverage Shop",
+      "sales": { "totalSales": 75670 }
+    }
+  items:
+    - title: Randomly select five documents
+      explanation: |-
+        Randomly select five documents and project their IDs.
+      description: |-
+        This query returns a random sample of 5 document IDs.
+      query: |-
+        db.stores.aggregate([{
+          $sample: { size: 5 }
+        }, {
+          $project: { _id: 1 }
+        }])
+      output:
+        value: |-
+          [
+            { "_id": "f7ae8b40-0c66-4e80-9261-ab31bbabffb4" },
+            { "_id": "25350272-6797-4f98-91f8-fe79084755c7" },
+            { "_id": "c7fd1d22-1a29-4cb0-9155-1ad71d600c2b" },
+            { "_id": "e602b444-9519-42e3-a2e1-b5a3da5f6e64" },
+            { "_id": "189c239a-edca-434b-baae-aada3a27a2c5" }
+          ]
+related:
+  - reference: /operator/aggregation/match
+  - reference: /operator/aggregation/project

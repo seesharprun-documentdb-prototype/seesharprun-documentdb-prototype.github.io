@@ -1,0 +1,25 @@
+type: operator
+category: array-update
+name: $sort
+description: |-
+  The `$sort` modifier orders the elements of an array during a $push operation.
+syntax: |-
+  {
+    $push: {
+      field: {
+        $each: [ <value1>, <value2>, ... ],
+        $sort: <sort specification>
+      }
+    }
+  }
+parameters:
+  - name: field
+    type: string
+    required: true
+    description: |-
+      The field to update.
+  - name: <sort specification>
+    type: object
+    required: true
+    description: |-
+      A document that specifies the field or fields to sort by and the respective sort order. Use 1 for ascending, -1 for descending.

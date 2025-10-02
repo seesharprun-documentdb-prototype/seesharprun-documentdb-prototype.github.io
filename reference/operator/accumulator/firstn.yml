@@ -1,0 +1,132 @@
+type: operator
+category: accumulator
+name: $firstN
+description: |-
+  The `$firstN` operator returns the first N values in a group according to the group's sorting order. If no sorting order is specified, the order is undefined.
+syntax: |-
+  {
+    $firstN: {
+      input: [listOfFields],
+      sortBy: {
+        <fieldName>: <sortOrder>
+      },
+      n: <numDocumentsToReturn>
+    }
+  }
+parameters:
+  - name: listOfFields
+    type: object
+    required: true
+    description: |-
+      The list of fields to be returned for the first N documents in the result set.
+  - name: fieldName
+    type: string
+    required: true
+    description: |-
+      The field to use for sorting the result set.
+  - name: sortOrder
+    type: number
+    required: true
+    description: |-
+      1 or -1. 1 implies ascending order while -1 implies descending order.
+  - name: n
+    type: number
+    required: true
+    description: |-
+      The number of documents to return from the top of the sorted result set.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "name": "First Up Consultants | Beverage Shop",
+      "sales": {
+        "totalSales": 75670,
+        "salesByCategory": [
+          { "categoryName": "Wine Accessories", "totalSales": 34440 }
+        ]
+      }
+    }
+  items:
+    - title: Find first two stores by total sales
+      explanation: |-
+        Get the top two stores by total sales using $firstN accumulator.
+      description: |-
+        This query sorts stores by total sales in descending order and returns the first two.
+      query: |-
+        db.stores.aggregate([
+          {
+            $sort: { "sales.totalSales": -1 }
+          },
+          {
+            $group: {
+              _id: null,
+              topTwoStores: {
+                $firstN: {
+                  n: 2,
+                  input: {
+                    storeId: "$_id",
+                    storeName: "$name",
+                    totalSales: "$sales.totalSales"
+                  }
+                }
+              }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": null,
+              "topTwoStores": [
+                {
+                  "storeId": "ffe155dd-caa2-4ac1-8ec9-0342241a84a3",
+                  "storeName": "Lakeshore Retail | Electronics Stop",
+                  "totalSales": 399426
+                },
+                {
+                  "storeId": "cba62761-10f8-4379-9eea-a9006c667927",
+                  "storeName": "Fabrikam, Inc. | Electronics Nook",
+                  "totalSales": 374845
+                }
+              ]
+            }
+          ]
+    - title: Find first three sales categories
+      explanation: |-
+        Use $firstN as array expression to find the first three sales categories.
+      description: |-
+        This query projects the first three categories from the salesByCategory array.
+      query: |-
+        db.stores.aggregate([
+          { $match: {"_id": "40d6f4d7-50cd-4929-9a07-0a7a133c2e74"} },
+          {
+            $project: {
+              name: 1,
+              totalSales: "$sales.totalSales",
+              firstThreeCategories: {
+                $firstN: {
+                  input: "$sales.salesByCategory",
+                  n: 3
+                }
+              }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "40d6f4d7-50cd-4929-9a07-0a7a133c2e74",
+              "name": "Proseware, Inc. | Home Entertainment Hub",
+              "totalSales": 165000,
+              "firstThreeCategories": [
+                { "categoryName": "Sound Bars", "totalSales": 2120 },
+                null,
+                { "categoryName": "Game Controllers", "totalSales": 43522 }
+              ]
+            }
+          ]
+related:
+  - reference: /operator/accumulator/first
+  - reference: /operator/accumulator/lastn

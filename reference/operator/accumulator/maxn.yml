@@ -1,0 +1,104 @@
+type: operator
+category: accumulator
+name: $maxN
+description: |-
+  The `$maxN` operator is used to retrieve the top N values for a field based on a specified filtering criteria. It's useful for identifying the highest values in a dataset.
+syntax: |-
+  {
+    $maxN: {
+      input: <field or expression>,
+      n: <number of values to retrieve>
+    }
+  }
+parameters:
+  - name: input
+    type: object
+    required: true
+    description: |-
+      Specifies the field or expression to evaluate for maximum values.
+  - name: n
+    type: number
+    required: true
+    description: |-
+      Specifies the number of maximum values to retrieve. Must be a positive integer.
+examples:
+  sample: |-
+    {
+      "_id": "7954bd5c-9ac2-4c10-bb7a-2b79bd0963c5",
+      "name": "Lakeshore Retail | DJ Equipment Stop",
+      "sales": {
+        "salesByCategory": [
+          { "categoryName": "DJ Headphones", "totalSales": 35921 }
+        ],
+        "fullSales": 3700
+      }
+    }
+  items:
+    - title: Retrieve top two sales categories
+      explanation: |-
+        Retrieve the top two sales categories with the highest sales volume per store.
+      description: |-
+        This query uses $maxN as an accumulator to find the top two sales categories.
+      query: |-
+        db.stores.aggregate([
+          {
+            $project: {
+              topSalesCategories: {
+                $maxN: {
+                  input: "$sales.salesByCategory",
+                  n: 2
+                }
+              }
+            }
+          },
+          { $limit: 4 }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "a715ab0f-4c6e-4e9d-a812-f2fab11ce0b6",
+              "topSalesCategories": [
+                { "categoryName": "Stockings", "totalSales": 25731 }
+              ]
+            },
+            {
+              "_id": "94792a4c-4b03-466b-91f6-821c4a8b2aa4",
+              "topSalesCategories": [
+                { "categoryName": "Travel Backpacks", "totalSales": 13189 },
+                { "categoryName": "Suitcases", "totalSales": 37858 }
+              ]
+            }
+          ]
+    - title: Using $maxN as array-expression
+      explanation: |-
+        Retrieve the top three sales values from all sales categories for a specific store.
+      description: |-
+        This query uses $maxN as an array expression to find the top three sales values.
+      query: |-
+        db.stores.aggregate([
+          { $match: {"_id": "40d6f4d7-50cd-4929-9a07-0a7a133c2e74"} },
+          {
+            $project: {
+              name: 1,
+              topThreeSales: {
+                $maxN: {
+                  input: "$sales.salesByCategory.totalSales",
+                  n: 3
+                }
+              }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "40d6f4d7-50cd-4929-9a07-0a7a133c2e74",
+              "name": "Proseware, Inc. | Home Entertainment Hub",
+              "topThreeSales": [43522, 32272, 28946]
+            }
+          ]
+related:
+  - reference: /operator/accumulator/minn
+  - reference: /operator/accumulator/max

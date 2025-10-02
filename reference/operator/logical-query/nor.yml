@@ -1,0 +1,52 @@
+type: operator
+category: logical-query
+name: $nor
+description: The `$nor` operator performs a logical NOR operation on an array of expressions and selects documents that fail all the specified expressions.
+syntax: |
+  {
+      $nor: [{
+          <expression1>
+      }, {
+          <expression2>
+      }, ..., {
+          <expressionN>
+      }]
+  }
+parameters:
+  - name: expression
+    type: object
+    required: true
+    description: An array of expressions, all of which must be false for a document to be included
+examples:
+  items:
+    - title: Find stores failing all conditions
+      description: To find stores that neither have more than 15 full-time staff nor more than 20 part-time staff, run a query with the $nor operator.
+      query: |
+        db.stores.find({
+            $nor: [{ "staff.totalStaff.fullTime": { $gt: 15 } }, { "staff.totalStaff.partTime": { $gt: 20 } }]
+        }, { "name": 1, "staff": 1 })
+      output:
+        value: |
+          [
+              { "_id": "a715ab0f-4c6e-4e9d-a812-f2fab11ce0b6", "name": "Lakeshore Retail | Holiday Supply Hub - Marvinfort", "staff": { "totalStaff": { "fullTime": 9, "partTime": 18 } } },
+              { "_id": "923d2228-6a28-4856-ac9d-77c39eaf1800", "name": "Lakeshore Retail | Home Decor Hub - Franciscoton", "staff": { "totalStaff": { "fullTime": 7, "partTime": 6 } } }
+          ]
+    - title: Exclude multiple criteria
+      description: To find stores without sales over $100,000, without Digital Watches sales, or without September 2024 promotions.
+      query: |
+        db.stores.find({
+            $nor: [
+              { "sales.totalSales": { $gt: 100000 } },
+              { "sales.salesByCategory.categoryName": "Digital Watches" },
+              { "promotionEvents": { $elemMatch: { "promotionalDates.startDate.Month": 9, "promotionalDates.startDate.Year": 2024 } } }
+            ]
+        }, { "name": 1, "sales": 1, "promotionEvents": 1 })
+      output:
+        value: |
+          [
+              { "_id": "7954bd5c-9ac2-4c10-bb7a-2b79bd0963c5", "name": "Lakeshore Retail | DJ Equipment Stop - Port Cecile" }
+          ]
+related:
+  - reference: /operator/logical-query/and
+  - reference: /operator/logical-query/or
+  - reference: /operator/logical-query/not

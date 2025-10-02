@@ -1,0 +1,23 @@
+type: operator
+category: array-expression
+name: $range
+description: |-
+  The `$range` operator outputs an array containing a sequence of integers according to user-defined inputs.
+syntax: |-
+  { $range: [ <start>, <end>, <step> ] }
+parameters:
+  - name: <start>
+    type: number
+    required: true
+    description: |-
+      An integer that specifies the start of the sequence.
+  - name: <end>
+    type: number
+    required: true
+    description: |-
+      An integer that specifies the exclusive upper limit of the sequence.
+  - name: <step>
+    type: number
+    required: false
+    description: |-
+      Optional integer that specifies the increment value. Defaults to 1.

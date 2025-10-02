@@ -1,0 +1,47 @@
+type: operator
+category: bitwise-query
+name: $bitsAllClear
+description: |-
+  The `$bitsAllClear` operator is used to match documents where all the bit positions specified in a bitmask are clear (that is, 0). This operator is useful in scenarios where you need to filter documents based on specific bits being unset in a binary representation of a field.
+syntax: |-
+  {
+    <field>: { $bitsAllClear: <bitmask> }
+  }
+parameters:
+  - name: field
+    type: string
+    required: true
+    description: |-
+      The field in the document on which the bitwise operation is to be performed.
+  - name: <bitmask>
+    type: number
+    required: true
+    description: |-
+      A bitmask where each bit position specifies the corresponding bit position in the field's value that must be clear (0).
+examples:
+  sample: |-
+    {
+      "_id": "store1",
+      "name": "Store Name",
+      "storeFeatures": 5
+    }
+  items:
+    - title: Find stores where specific feature bits are clear
+      description: |-
+        Matches documents where all specified bit positions in the storeFeatures field are clear (0).
+      query: |-
+        db.stores.find({
+          storeFeatures: { $bitsAllClear: 2 }
+        })
+      output:
+        value: |-
+          [
+            {
+              "_id": "store1",
+              "name": "Store Name",
+              "storeFeatures": 5
+            }
+          ]
+related:
+  - reference: /operator/bitwise-query/bitsallset
+  - reference: /operator/bitwise-query/bitsanyclear

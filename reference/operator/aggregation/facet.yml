@@ -1,0 +1,82 @@
+type: operator
+category: aggregation
+name: $facet
+description: |-
+  The `$facet` stage allows for multiple parallel aggregations to be executed within a single pipeline stage. It's useful for performing multiple analyses on the same dataset in a single query.
+syntax: |-
+  {
+    $facet: {
+      "outputField1": [{ "stage1": {} }, { "stage2": {} }],
+      "outputField2": [{ "stage1": {} }, { "stage2": {} }]
+    }
+  }
+parameters:
+  - name: outputField
+    type: string
+    required: true
+    description: |-
+      The name of the output field for each parallel pipeline.
+  - name: stage
+    type: object
+    required: true
+    description: |-
+      The aggregation stages to be executed in each pipeline.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "name": "First Up Consultants | Beverage Shop",
+      "sales": {
+        "salesByCategory": [
+          { "categoryName": "Wine Accessories", "totalSales": 34440 }
+        ]
+      },
+      "promotionEvents": [
+        {
+          "discounts": [
+            { "categoryName": "Whiskey", "discountPercentage": 7 }
+          ]
+        }
+      ]
+    }
+  items:
+    - title: Faceted search on sales and promotions
+      explanation: |-
+        Perform simultaneous analyses on sales and promotions for specified product categories.
+      description: |-
+        This query runs two parallel pipelines analyzing sales totals and average discounts.
+      query: |-
+        db.stores.aggregate([
+          {
+            $facet: {
+              salesAnalysis: [
+                { $unwind: "$sales.salesByCategory" },
+                { $match: { "sales.salesByCategory.categoryName": { $in: ["Laptops", "Smartphones"] } } },
+                { $group: { _id: "$sales.salesByCategory.categoryName", totalSales: { $sum: "$sales.salesByCategory.totalSales" } } }
+              ],
+              promotionAnalysis: [
+                { $unwind: "$promotionEvents" },
+                { $unwind: "$promotionEvents.discounts" },
+                { $match: { "promotionEvents.discounts.categoryName": { $in: ["Laptops", "Smartphones"] } } },
+                { $group: { _id: "$promotionEvents.discounts.categoryName", avgDiscount: { $avg: "$promotionEvents.discounts.discountPercentage" } } }
+              ]
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "salesAnalysis": [
+                { "_id": "Smartphones", "totalSales": 440815 },
+                { "_id": "Laptops", "totalSales": 679453 }
+              ],
+              "promotionAnalysis": [
+                { "_id": "Smartphones", "avgDiscount": 14.32 },
+                { "_id": "Laptops", "avgDiscount": 14.78 }
+              ]
+            }
+          ]
+related:
+  - reference: /operator/aggregation/group
+  - reference: /operator/aggregation/unwind

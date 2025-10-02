@@ -1,0 +1,27 @@
+name: Validate structured content
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  yaml-schema-validation:
+    name: Validate YAML files against schemas
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - name: Install dependencies
+        run: |
+          npm install yaml-ls-check
+      - name: Validate YAML files
+        run: |
+          npx yaml-ls-check .\articles
+          npx yaml-ls-check .\blogs
+          npx yaml-ls-check .\reference

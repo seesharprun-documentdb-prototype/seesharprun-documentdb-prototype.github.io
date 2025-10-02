@@ -1,0 +1,104 @@
+type: operator
+category: accumulator
+name: $minN
+description: |-
+  The `$minN` operator is used to retrieve the bottom N values for a field based on a specified filtering criteria. It's useful for identifying the lowest values in a dataset.
+syntax: |-
+  {
+    $minN: {
+      input: <field or expression>,
+      n: <number of values to retrieve>
+    }
+  }
+parameters:
+  - name: input
+    type: object
+    required: true
+    description: |-
+      Specifies the field or expression to evaluate for minimum values.
+  - name: n
+    type: number
+    required: true
+    description: |-
+      Specifies the number of minimum values to retrieve. Must be a positive integer.
+examples:
+  sample: |-
+    {
+      "_id": "7954bd5c-9ac2-4c10-bb7a-2b79bd0963c5",
+      "name": "Lakeshore Retail | DJ Equipment Stop",
+      "sales": {
+        "salesByCategory": [
+          { "categoryName": "DJ Headphones", "totalSales": 35921 }
+        ],
+        "fullSales": 3700
+      }
+    }
+  items:
+    - title: Retrieve bottom two sales categories
+      explanation: |-
+        Retrieve the bottom two sales categories per store with the lowest sales volume.
+      description: |-
+        This query uses the $minN operator on the nested salesCategory field.
+      query: |-
+        db.stores.aggregate([
+          {
+            $project: {
+              bottomSalesCategories: {
+                $minN: {
+                  input: "$sales.salesByCategory",
+                  n: 2
+                }
+              }
+            }
+          },
+          { $limit: 4 }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "a715ab0f-4c6e-4e9d-a812-f2fab11ce0b6",
+              "bottomSalesCategories": [
+                { "categoryName": "Stockings", "totalSales": 25731 }
+              ]
+            },
+            {
+              "_id": "923d2228-6a28-4856-ac9d-77c39eaf1800",
+              "bottomSalesCategories": [
+                { "categoryName": "Lamps", "totalSales": 19880 },
+                { "categoryName": "Rugs", "totalSales": 20055 }
+              ]
+            }
+          ]
+    - title: Using $minN as array-expression
+      explanation: |-
+        Extract the two lowest sales values for a specific store document.
+      description: |-
+        This query uses $minN as an array expression to get the lowest two sales values.
+      query: |-
+        db.stores.aggregate([
+          { $match: {_id: "40d6f4d7-50cd-4929-9a07-0a7a133c2e74"} },
+          {
+            $project: {
+              name: 1,
+              lowestTwoSales: {
+                $minN: {
+                  input: "$sales.salesByCategory.totalSales",
+                  n: 2
+                }
+              }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "40d6f4d7-50cd-4929-9a07-0a7a133c2e74",
+              "name": "Proseware, Inc. | Home Entertainment Hub",
+              "lowestTwoSales": [28946, 3000]
+            }
+          ]
+related:
+  - reference: /operator/accumulator/maxn
+  - reference: /operator/accumulator/min

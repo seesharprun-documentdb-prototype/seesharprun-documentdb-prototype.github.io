@@ -1,0 +1,49 @@
+type: operator
+category: arithmetic-expression
+name: $pow
+description: |-
+  The `$pow` operator calculates the value of a number raised to a specified exponent.
+syntax: |-
+  { $pow: [ <number>, <exponent> ] }
+parameters:
+  - name: <number>
+    type: string
+    required: true
+    description: |-
+      The base number to be raised to the exponent.
+  - name: <exponent>
+    type: string
+    required: true
+    description: |-
+      The exponent to raise the base number to.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "sales": { "revenue": 75670 }
+    }
+  items:
+    - title: Calculate the square of total sales volume
+      description: |-
+        Calculate the square of the sales volume using the $pow operator.
+      query: |-
+        db.stores.aggregate([
+          { $match: { company: { $in: ["First Up Consultants"] } } },
+          {
+            $project: {
+              company: 1,
+              "sales.revenue": 1,
+              fullSalesSquare: { $pow: ["$sales.revenue", 2] }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "39acb3aa-f350-41cb-9279-9e34c004415a",
+              "sales": { "revenue": 279183 },
+              "company": "First Up Consultants",
+              "fullSalesSquare": 77943194489
+            }
+          ]

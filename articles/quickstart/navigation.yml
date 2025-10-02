@@ -1,0 +1,6 @@
+- title: Python Setup Guide
+  link: /docs/quickstart
+- title: VS Code Extension Quick Start
+  link: /docs/quickstart/extension
+- title: MongoDB Shell Quick Start
+  link: /docs/quickstart/mongodb-shell

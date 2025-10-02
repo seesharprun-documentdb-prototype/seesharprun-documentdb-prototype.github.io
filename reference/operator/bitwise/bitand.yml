@@ -1,0 +1,59 @@
+type: operator
+category: bitwise
+name: $bitAnd
+description: |-
+  The `$bitAnd` operator performs a bitwise AND operation on integer values. It compares each bit of the first operand to the corresponding bit of the second operand. If both bits are 1, the corresponding result bit is set to 1. Otherwise, the corresponding result bit is set to 0.
+syntax: |-
+  {
+    $bitAnd: [ <expression1>, <expression2>, ... ]
+  }
+parameters:
+  - name: expression1, expression2, ...
+    type: number
+    required: true
+    description: |-
+      Expressions that evaluate to integers. The $bitAnd operator performs a bitwise AND operation on all provided expressions.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "name": "First Up Consultants | Beverage Shop - Satterfieldmouth",
+      "staff": {
+        "totalStaff": {
+          "fullTime": 8,
+          "partTime": 20
+        }
+      }
+    }
+  items:
+    - title: Basic bitwise AND operation
+      description: |-
+        Computes a bitwise AND between the number of full-time and part-time staff to create permission flags.
+      query: |-
+        db.stores.aggregate([
+          { $match: { _id: "40d6f4d7-50cd-4929-9a07-0a7a133c2e74" } },
+          {
+            $project: {
+              name: 1,
+              fullTimeStaff: "$staff.totalStaff.fullTime",
+              partTimeStaff: "$staff.totalStaff.partTime",
+              staffPermissionFlag: {
+                $bitAnd: ["$staff.totalStaff.fullTime", "$staff.totalStaff.partTime"]
+              }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "40d6f4d7-50cd-4929-9a07-0a7a133c2e74",
+              "name": "Proseware, Inc. | Home Entertainment Hub - East Linwoodbury",
+              "fullTimeStaff": 19,
+              "partTimeStaff": 20,
+              "staffPermissionFlag": 16
+            }
+          ]
+related:
+  - reference: /operator/bitwise/bitor
+  - reference: /operator/bitwise/bitxnor

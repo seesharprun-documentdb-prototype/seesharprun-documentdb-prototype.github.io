@@ -1,0 +1,54 @@
+type: operator
+category: arithmetic-expression
+name: $ceil
+description: |-
+  The `$ceil` operator computes the ceiling of the input number. This operator returns the smallest integer value that is greater than or equal to the input.
+syntax: |-
+  { $ceil: <number> }
+parameters:
+  - name: <number>
+    type: string
+    required: true
+    description: |-
+      The input number whose ceiling needs to be returned. For a null or missing field, $ceil returns null.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "sales": { "totalSales": 75670 },
+      "staff": { "totalStaff": { "fullTime": 8, "partTime": 20 } }
+    }
+  items:
+    - title: Calculate the ceiling of average sales volume per employee
+      description: |-
+        Calculate the ceiling of the sales volume per employee by dividing total sales by number of staff.
+      query: |-
+        db.stores.aggregate([
+          { $match: { _id: "40d6f4d7-50cd-4929-9a07-0a7a133c2e74" } },
+          {
+            $project: {
+              name: 1,
+              totalSales: "$sales.totalSales",
+              totalStaff: { $add: ["$staff.totalStaff.fullTime", "$staff.totalStaff.partTime"] },
+              ceiledAverageSalesPerStaff: {
+                $ceil: {
+                  $divide: [
+                    "$sales.totalSales",
+                    { $add: ["$staff.totalStaff.fullTime", "$staff.totalStaff.partTime"] }
+                  ]
+                }
+              }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "40d6f4d7-50cd-4929-9a07-0a7a133c2e74",
+              "name": "Proseware, Inc. | Home Entertainment Hub",
+              "totalSales": 151864,
+              "totalStaff": 39,
+              "ceiledAverageSalesPerStaff": 3894
+            }
+          ]

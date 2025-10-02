@@ -1,0 +1,18 @@
+type: operator
+category: arithmetic-expression
+name: $mod
+description: |-
+  The `$mod` operator returns the remainder of the division of the first number by the second.
+syntax: |-
+  { $mod: [ <expression1>, <expression2> ] }
+parameters:
+  - name: <expression1>
+    type: string
+    required: true
+    description: |-
+      The dividend expression that resolves to a number.
+  - name: <expression2>
+    type: string
+    required: true
+    description: |-
+      The divisor expression that resolves to a number.

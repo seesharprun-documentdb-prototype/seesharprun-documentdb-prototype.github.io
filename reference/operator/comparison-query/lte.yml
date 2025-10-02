@@ -1,0 +1,39 @@
+type: operator
+category: comparison-query
+name: $lte
+description: The `$lte` operator retrieves documents where the value of a field is less than or equal to a specified value.
+syntax: |
+  { field: { $lte: <value> } }
+parameters:
+  - name: field
+    type: string
+    required: true
+    description: The field to be compared
+  - name: value
+    type: number
+    required: true
+    description: The value to compare against
+examples:
+  items:
+    - title: Find stores with sales <= $35,000
+      description: To find stores with sales less than or equal to $35,000, run a query using $lte on the sales.totalSales field.
+      query: |
+        db.stores.find({
+            "sales.totalSales": { $lte: 35000 }
+        }, { _id: 1 }, { limit: 1 })
+      output:
+        value: |
+          [{ "_id": "e6895a31-a5cd-4103-8889-3b95a864e5a6" }]
+    - title: Find stores with 12 or fewer full-time staff
+      description: To find stores with 12 or fewer full-time staff, run a query using $lte on the nested fullTime field.
+      query: |
+        db.stores.find({
+            "staff.totalStaff.fullTime": { $lte: 12 }
+        }, { name: 1, "staff.totalStaff.fullTime": 1 }, { limit: 1 })
+      output:
+        value: |
+          [{ "_id": "e6895a31-a5cd-4103-8889-3b95a864e5a6", "name": "VanArsdel, Ltd. | Picture Frame Store - Port Clevelandton", "staff": { "totalStaff": { "fullTime": 6 } } }]
+related:
+  - reference: /operator/comparison-query/lt
+  - reference: /operator/comparison-query/gte
+  - reference: /operator/comparison-query/eq

@@ -1,0 +1,81 @@
+type: operator
+category: accumulator
+name: $max
+description: |-
+  The `$max` operator returns the maximum value of a set of input values. It can be used as an accumulator operator in aggregation or as a field update operator to set a field to a value only if the new value is greater than the current value.
+syntax: |-
+  $max: <expression>
+parameters:
+  - name: expression
+    type: object
+    required: true
+    description: |-
+      Any valid expression that resolves to a value. The $max operator evaluates this expression to determine the maximum value.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "name": "First Up Consultants | Beverage Shop",
+      "sales": {
+        "totalSales": 75670,
+        "salesByCategory": [
+          { "categoryName": "Wine Accessories", "totalSales": 34440 }
+        ]
+      }
+    }
+  items:
+    - title: Calculate the highest sales by category
+      explanation: |-
+        Calculate the highest sales within each category across all stores.
+      description: |-
+        This query groups documents by sales category and returns the maximum sales per category.
+      query: |-
+        db.stores.aggregate([
+          { $unwind: "$sales.salesByCategory" },
+          {
+            $group: {
+              _id: "$sales.salesByCategory.categoryName",
+              maxSales: {
+                $max: "$sales.salesByCategory.totalSales"
+              }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            { "_id": "Christmas Trees", "maxSales": 49697 },
+            { "_id": "Nuts", "maxSales": 48020 },
+            { "_id": "Camping Tables", "maxSales": 48568 },
+            { "_id": "Music Theory Books", "maxSales": 46133 },
+            { "_id": "Fortified Wine", "maxSales": 49912 }
+          ]
+    - title: Using $max in $bucket
+      explanation: |-
+        Retrieve the highest sales within buckets of sales boundaries.
+      description: |-
+        This query creates sales buckets and finds the maximum sales in each bucket.
+      query: |-
+        db.stores.aggregate([
+          {
+            $bucket: {
+              groupBy: "$sales.totalSales",
+              boundaries: [0, 1000, 5000, 10000],
+              default: "Other",
+              output: {
+                maxSales: { $max: "$sales.totalSales" }
+              }
+            }
+          }
+        ])
+      output:
+        value: |-
+          [
+            { "_id": 1000, "maxSales": 4996 },
+            { "_id": "Other", "maxSales": 404106 },
+            { "_id": 0, "maxSales": 995 },
+            { "_id": 5000, "maxSales": 9999 }
+          ]
+related:
+  - reference: /operator/accumulator/min
+  - reference: /operator/aggregation/group

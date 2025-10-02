@@ -1,0 +1,47 @@
+type: operator
+category: bitwise-query
+name: $bitsAnySet
+description: |-
+  The `$bitsAnySet` operator is used to match documents where any of the specified bit positions are set (that is, are 1). This operator is useful for filtering documents based on at least one bit being set.
+syntax: |-
+  {
+    <field>: { $bitsAnySet: <bitmask> }
+  }
+parameters:
+  - name: field
+    type: string
+    required: true
+    description: |-
+      The field in the document on which the bitwise operation is to be performed.
+  - name: <bitmask>
+    type: number
+    required: true
+    description: |-
+      A bitmask indicating which bits should be checked for being set in the field's value.
+examples:
+  sample: |-
+    {
+      "_id": "store1",
+      "name": "Store Name",
+      "storeFeatures": 5
+    }
+  items:
+    - title: Find stores where any specific feature bit is set
+      description: |-
+        Matches documents where any of the specified bit positions in the storeFeatures field are set (1).
+      query: |-
+        db.stores.find({
+          storeFeatures: { $bitsAnySet: 3 }
+        })
+      output:
+        value: |-
+          [
+            {
+              "_id": "store1",
+              "name": "Store Name",
+              "storeFeatures": 5
+            }
+          ]
+related:
+  - reference: /operator/bitwise-query/bitsallset
+  - reference: /operator/bitwise-query/bitsanyclear

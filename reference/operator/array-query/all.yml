@@ -1,0 +1,18 @@
+type: operator
+category: array-query
+name: $all
+description: |-
+  The `$all` operator selects the documents where the value of a field is an array that contains all the specified elements.
+syntax: |-
+  { field: { $all: [ <value1>, <value2>, ... ] } }
+parameters:
+  - name: field
+    type: string
+    required: true
+    description: |-
+      The field to query.
+  - name: <value1>, <value2>
+    type: string
+    required: true
+    description: |-
+      The values that must all be present in the array field.

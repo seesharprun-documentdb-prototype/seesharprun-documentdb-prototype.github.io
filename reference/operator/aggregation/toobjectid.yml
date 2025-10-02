@@ -1,0 +1,56 @@
+type: operator
+category: aggregation
+name: $toObjectId
+description: |-
+  The `$toObjectId` operator converts a specified value into an ObjectId.
+syntax: |-
+  {
+    $toObjectId: <expression>
+  }
+parameters:
+  - name: expression
+    type: string
+    required: true
+    description: |-
+      The specified string value to convert into an ObjectId.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "name": "First Up Consultants | Beverage Shop"
+    }
+  items:
+    - title: Convert string to ObjectId
+      explanation: |-
+        Convert the first 24 alphanumeric characters in the _id field to ObjectId.
+      description: |-
+        This query removes dashes and converts a substring to ObjectId.
+      query: |-
+        db.stores.aggregate([{
+          $match: { _id: "b0107631-9370-4acd-aafa-8ac3511e623d" }
+        }, {
+          $project: {
+            idAsObjectId: {
+              $toObjectId: {
+                $substr: [{
+                  $replaceAll: {
+                    input: "$_id",
+                    find: "-",
+                    replacement: ""
+                  }
+                }, 0, 24]
+              }
+            }
+          }
+        }])
+      output:
+        value: |-
+          [
+            {
+              "_id": "b0107631-9370-4acd-aafa-8ac3511e623d",
+              "idAsObjectId": "ObjectId('b010763193704acdaafa8ac3')"
+            }
+          ]
+related:
+  - reference: /operator/aggregation/convert
+  - reference: /operator/aggregation/tostring

@@ -1,0 +1,62 @@
+type: operator
+category: aggregation
+name: $skip
+description: |-
+  The `$skip` stage in the aggregation pipeline is used to skip a specified number of documents from the input and pass the remaining documents to the next stage in the pipeline. This stage is useful for implementing pagination in queries.
+syntax: |-
+  {
+    $skip: <number>
+  }
+parameters:
+  - name: number
+    type: number
+    required: true
+    description: |-
+      The number of documents to skip before passing the remaining documents to the next stage.
+examples:
+  sample: |-
+    {
+      "_id": "0fcc0bf0-ed18-4ab8-b558-9848e18058f4",
+      "name": "First Up Consultants | Beverage Shop",
+      "sales": { "totalSales": 75670 }
+    }
+  items:
+    - title: Skipping documents in a collection
+      explanation: |-
+        Skip the first 2 documents and return the rest.
+      description: |-
+        This query skips 2 documents and returns all remaining documents.
+      query: |-
+        db.stores.aggregate([
+          { $skip: 2 }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "7954bd5c-9ac2-4c10-bb7a-2b79bd0963c5",
+              "store": { "name": "Downtown Store" }
+            }
+          ]
+    - title: Skipping documents and then limiting the result
+      explanation: |-
+        Skip the first 2 documents and then limit the result to the next 3 documents.
+      description: |-
+        This query combines $skip with $limit for pagination.
+      query: |-
+        db.stores.aggregate([
+          { $skip: 2 },
+          { $limit: 3 }
+        ])
+      output:
+        value: |-
+          [
+            {
+              "_id": "728c068a-638c-40af-9172-8ccfa7dddb49",
+              "name": "Contoso, Ltd. | Book Store",
+              "sales": { "revenue": 34879 }
+            }
+          ]
+related:
+  - reference: /operator/aggregation/limit
+  - reference: /operator/aggregation/sort

@@ -1,0 +1,18 @@
+type: operator
+category: array-query
+name: $elemMatch
+description: |-
+  The `$elemMatch` operator matches documents that contain an array field with at least one element that matches all the specified query criteria.
+syntax: |-
+  { field: { $elemMatch: { <query1>, <query2>, ... } } }
+parameters:
+  - name: field
+    type: string
+    required: true
+    description: |-
+      The field to query.
+  - name: <query1>, <query2>
+    type: string
+    required: true
+    description: |-
+      One or more query expressions that must all match at least one array element.
