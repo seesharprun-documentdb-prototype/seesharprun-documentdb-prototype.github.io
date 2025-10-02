@@ -1,3 +1,33 @@
 type: operator
 category: geospatial
 name: $maxDistance
+description: Specifies the maximum distance (in meters) that can exist between two points in a geospatial query, typically used with $near for radius-based location searches.
+syntax: '{ <location field>: { $near: { $geometry: { type: "Point", coordinates: [<longitude>, <latitude>] }, $maxDistance: <distance_in_meters> } } }'
+parameters:
+  - name: location field
+    type: string
+    required: true
+    description: The field containing the geospatial data
+  - name: coordinates
+    type: object
+    required: true
+    description: Array of [longitude, latitude] specifying the center point
+  - name: distance_in_meters
+    type: number
+    required: true
+    description: Maximum distance in meters from the center point
+examples:
+  items:
+    - title: Find stores within maximum distance
+      description: Find stores within 10 kilometers of a specific location
+      query: 'db.stores.find({ location: { $near: { $geometry: { type: "Point", coordinates: [-77.9951, -62.7339] }, $maxDistance: 10000 } } })'
+      output:
+        value: Stores within 10000 meters (10km) of the specified coordinates
+    - title: Distance-limited search with projection
+      description: Find nearby stores within distance limit and return specific fields
+      query: 'db.stores.find({ location: { $near: { $geometry: { type: "Point", coordinates: [-77.9951, -62.7339] }, $maxDistance: 5000 } } }, { name: 1, location: 1 })'
+      output:
+        value: Name and location of stores within 5000 meters of the center point
+related:
+  - reference: /reference/operator/near
+  - reference: /reference/operator/mindistance

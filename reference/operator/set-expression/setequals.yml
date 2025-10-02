@@ -1,3 +1,34 @@
 type: operator
 category: set-expression
 name: $setEquals
+description: Returns true if two arrays contain the same distinct elements, regardless of order or duplicates, performing set equality comparison.
+syntax: '{ $setEquals: [<array_expression1>, <array_expression2>] }'
+parameters:
+  - name: array_expression1
+    type: object
+    required: true
+    description: The first array expression to compare
+  - name: array_expression2
+    type: object
+    required: true
+    description: The second array expression to compare
+examples:
+  items:
+    - title: Compare array equality
+      description: Check if two arrays contain the same unique elements
+      query: 'db.products.aggregate([{ $project: { tagsMatch: { $setEquals: ["$currentTags", "$expectedTags"] } } }])'
+      output:
+        value: Documents with tagsMatch boolean indicating if tag arrays are equivalent
+    - title: Validate array contents
+      description: Verify that array contents match expected values
+      query: 'db.orders.aggregate([{ $project: { itemsComplete: { $setEquals: ["$orderedItems", "$deliveredItems"] } } }])'
+      output:
+        value: Documents with itemsComplete showing if ordered and delivered items match
+    - title: Compare user roles
+      description: Check if user has exact set of required roles
+      query: 'db.users.aggregate([{ $project: { rolesMatch: { $setEquals: ["$userRoles", "$requiredRoles"] } } }])'
+      output:
+        value: Documents with rolesMatch indicating if user roles exactly match requirements
+related:
+  - reference: /reference/operator/setintersection
+  - reference: /reference/operator/setissubset

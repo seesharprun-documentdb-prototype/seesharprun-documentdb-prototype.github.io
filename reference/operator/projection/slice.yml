@@ -1,3 +1,42 @@
 type: operator
 category: projection
 name: $slice
+description: Controls the number of elements returned from an array field, allowing you to limit array results or skip elements.
+syntax: '{ <field>: { $slice: <number> } } or { <field>: { $slice: [<skip>, <limit>] } }'
+parameters:
+  - name: field
+    type: string
+    required: true
+    description: Array field name to slice elements from
+  - name: number
+    type: number
+    required: false
+    description: Number of elements to return (negative for last N elements)
+  - name: skip
+    type: number
+    required: false
+    description: Number of elements to skip from beginning
+  - name: limit
+    type: number
+    required: false
+    description: Maximum number of elements to return after skip
+examples:
+  items:
+    - title: Limit array results
+      description: Return only first 3 elements from comments array
+      query: 'db.posts.find({}, { title: 1, comments: { $slice: 3 } })'
+      output:
+        value: Posts with title and only first 3 comments from comments array
+    - title: Get last elements
+      description: Return last 2 elements from array using negative slice
+      query: 'db.products.find({}, { name: 1, reviews: { $slice: -2 } })'
+      output:
+        value: Products with name and last 2 reviews from reviews array
+    - title: Skip and limit array elements
+      description: Skip first 5 elements and return next 10 from array
+      query: 'db.events.find({}, { eventName: 1, participants: { $slice: [5, 10] } })'
+      output:
+        value: Events with eventName and participants 6-15 (skip 5, take 10)
+related:
+  - reference: /reference/operator/elemmatch
+  - reference: /reference/operator/limit

@@ -1,3 +1,81 @@
 type: operator
 category: date-expression
 name: $dateToString
+description: Used to convert a date object to a string in a specified format. It's commonly used in aggregation pipelines to format date fields for reporting, querying, or display purposes. This operator is highly versatile and allows you to define custom date formats.
+syntax: "$dateToString: { format: <format_string>, date: <date_expression>, timezone: <timezone>, onNull: <replacement_value> }"
+parameters:
+  - name: format
+    type: string
+    required: true
+    description: A string that specifies the format of the output date.
+  - name: date
+    type: object
+    required: true
+    description: The date expression to format.
+  - name: timezone
+    type: string
+    required: false
+    description: Optional. A string that specifies the timezone. Defaults to UTC if not provided.
+  - name: onNull
+    type: object
+    required: false
+    description: Optional. A value to return if the date field is null or missing.
+examples:
+  items:
+    - title: Formatting a date field to an ISO-like string
+      description: This query uses $dateToString operator to format the lastUpdated timestamp into a YYYY-MM-DD string. It helps present dates in a readable format suitable for logs, reports, or UI.
+      query: |
+        db.stores.aggregate([
+          {
+            $match: { _id: "e6410bb3-843d-4fa6-8c70-7472925f6d0a" }
+          },
+          {
+            $project: {
+              _id: 0,
+              formattedDate: {
+                $dateToString: {
+                  format: "%Y-%m-%d",
+                  date: "$lastUpdated"
+                }
+              }
+            }
+          }
+        ])
+      output:
+        value: |
+          [
+            {
+              "formattedDate": "2024-12-04"
+            }
+          ]
+    - title: Handling Null Values
+      description: This query formats the nonexistent field lastUpdated_new timestamp as a YYYY-MM-DD string using $dateToString. Considering the date is missing or null, it substitutes a fallback string "No date available" via the onNull option.
+      query: |
+        db.stores.aggregate([
+          {
+            $match: { _id: "e6410bb3-843d-4fa6-8c70-7472925f6d0a" }
+          },
+          {
+            $project: {
+              _id: 0,
+              formattedDateOrDefault: {
+                $dateToString: {
+                  format: "%Y-%m-%d",
+                  date: "$lastUpdated_new",
+                  onNull: "No date available"
+                }
+              }
+            }
+          }
+        ])
+      output:
+        value: |
+          [
+            {
+              "formattedDateOrDefault": "No date available"
+            }
+          ]
+related:
+  - reference: $dateFromString
+  - reference: $dateFromParts
+  - reference: $toString

@@ -1,3 +1,41 @@
 type: operator
 category: date-expression
 name: $hour
+description: Returns the hour portion of a date as a number between 0 and 23. The operator accepts a date expression that resolves to a Date, Timestamp, or ObjectId.
+syntax: "$hour: <dateExpression>"
+parameters:
+  - name: dateExpression
+    type: object
+    required: true
+    description: An expression that resolves to a Date, Timestamp, or ObjectId. If the expression resolves to null or is missing, $hour returns null.
+examples:
+  items:
+    - title: Extract hour from current date
+      description: This query extracts the hour from the current date and time.
+      query: |
+        db.stores.aggregate([
+          { $match: { "_id": "e6410bb3-843d-4fa6-8c70-7472925f6d0a" } },
+          {
+            $project: {
+              name: 1,
+              storeOpeningDate: 1,
+              currentHour: { $hour: new Date() },
+              documentHour: { $hour: "$storeOpeningDate" }
+            }
+          }
+        ])
+      output:
+        value: |
+          [
+            {
+              "_id": "e6410bb3-843d-4fa6-8c70-7472925f6d0a",
+              "name": "Relecloud | Toy Collection - North Jaylan",
+              "storeOpeningDate": "2024-09-05T11:50:06.549Z",
+              "currentHour": 12,
+              "documentHour": 11
+            }
+          ]
+related:
+  - reference: $minute
+  - reference: $second
+  - reference: $dayOfMonth

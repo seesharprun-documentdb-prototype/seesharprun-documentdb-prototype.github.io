@@ -1,3 +1,30 @@
 type: operator
 category: object-expression
 name: $objectToArray
+description: Converts an object to an array of key-value pairs, where each element is a document with 'k' (key) and 'v' (value) fields.
+syntax: '{ $objectToArray: <object_expression> }'
+parameters:
+  - name: object_expression
+    type: object
+    required: true
+    description: Expression that resolves to an object to be converted to array format
+examples:
+  items:
+    - title: Convert object to array
+      description: Transform object fields into key-value pair array
+      query: 'db.products.aggregate([{ $project: { items: { $objectToArray: "$inventory" } } }])'
+      output:
+        value: Document with items array containing k/v pairs from inventory object
+    - title: Process object fields dynamically
+      description: Convert object to array for dynamic field processing
+      query: 'db.products.aggregate([{ $project: { pairs: { $objectToArray: "$attributes" } } }, { $unwind: "$pairs" }, { $match: { "pairs.v": { $gt: 100 } } }])'
+      output:
+        value: Documents with attribute pairs where values are greater than 100
+    - title: Transform nested object
+      description: Convert nested object structure to array format
+      query: 'db.sales.aggregate([{ $project: { monthlyData: { $objectToArray: "$salesByMonth" } } }])'
+      output:
+        value: Document with monthlyData array containing monthly sales key-value pairs
+related:
+  - reference: /reference/operator/arraytoobject
+  - reference: /reference/operator/mergeobjects

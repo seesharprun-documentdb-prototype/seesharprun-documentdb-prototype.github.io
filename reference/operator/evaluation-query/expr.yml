@@ -1,3 +1,40 @@
 type: operator
 category: evaluation-query
 name: $expr
+description: Allows the use of aggregation expressions within the query language for complex field comparisons and calculations.
+syntax: '{ $expr: { <expression> } }'
+parameters:
+  - name: expression
+    type: object
+    required: true
+    description: An aggregation expression that can include field references, operators, and computations
+examples:
+  items:
+    - title: Compare two fields in same document
+      description: Find stores where full-time staff is greater than part-time staff
+      query: 'db.stores.find({ $expr: { $gt: ["$staff.totalStaff.fullTime", "$staff.totalStaff.partTime"] } })'
+      output:
+        value: Documents where fullTime field value exceeds partTime field value
+    - title: Arithmetic calculations in queries
+      description: Find stores where total sales exceed twice the sum of individual category sales
+      query: 'db.stores.find({ $expr: { $gt: ["$sales.totalSales", { $multiply: [{ $sum: "$sales.salesByCategory.totalSales" }, 2] }] } })'
+      output:
+        value: Documents where totalSales is greater than double the sum of category sales
+    - title: Conditional expressions with $cond
+      description: Find stores based on conditional logic using staff size categories
+      query: 'db.stores.find({ $expr: { $gt: [{ $cond: { if: { $gte: ["$staff.totalStaff.fullTime", 10] }, then: 1, else: 0 } }, 0] } })'
+      output:
+        value: Documents where conditional expression evaluates to true (stores with 10+ full-time staff)
+    - title: Date comparison expressions
+      description: Compare date fields within the same document
+      query: 'db.stores.find({ $expr: { $gte: ["$lastUpdated", "$createdDate"] } })'
+      output:
+        value: Documents where lastUpdated is greater than or equal to createdDate
+    - title: Array operations in expressions
+      description: Find stores with more than 3 promotion events
+      query: 'db.stores.find({ $expr: { $gt: [{ $size: "$promotionEvents" }, 3] } })'
+      output:
+        value: Documents where the promotionEvents array has more than 3 elements
+related:
+  - reference: /reference/operator/cond
+  - reference: /docs/aggregation-expressions

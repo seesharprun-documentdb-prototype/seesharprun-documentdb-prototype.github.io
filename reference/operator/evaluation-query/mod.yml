@@ -1,3 +1,48 @@
 type: operator
 category: evaluation-query
 name: $mod
+description: Performs a modulo operation and matches documents where the field value modulo divisor equals the specified remainder.
+syntax: '{ <field>: { $mod: [<divisor>, <remainder>] } }'
+parameters:
+  - name: field
+    type: string
+    required: true
+    description: The numeric field to perform modulo operation on
+  - name: divisor
+    type: number
+    required: true
+    description: The number to divide by in the modulo operation
+  - name: remainder
+    type: number
+    required: true
+    description: The expected remainder value after the modulo operation
+examples:
+  items:
+    - title: Find even numbers
+      description: Find stores where total sales is an even number
+      query: 'db.stores.find({ "sales.totalSales": { $mod: [2, 0] } })'
+      output:
+        value: Documents where totalSales is divisible by 2 (even numbers)
+    - title: Find odd numbers
+      description: Find stores where staff count is an odd number
+      query: 'db.stores.find({ "staff.totalStaff.fullTime": { $mod: [2, 1] } })'
+      output:
+        value: Documents where fullTime staff count has remainder 1 when divided by 2 (odd numbers)
+    - title: Pagination with modulo
+      description: Use modulo for pagination or sampling every nth document
+      query: 'db.stores.find({ "sales.totalSales": { $mod: [10, 5] } })'
+      output:
+        value: Documents where totalSales ends in 5 (remainder 5 when divided by 10)
+    - title: Data partitioning
+      description: Partition data based on ID patterns using modulo
+      query: 'db.stores.find({ "staff.totalStaff.partTime": { $mod: [3, 0] } })'
+      output:
+        value: Documents where partTime staff count is divisible by 3
+    - title: Complex modulo queries
+      description: Combine modulo with other operators for complex filtering
+      query: 'db.stores.find({ $and: [{ "sales.totalSales": { $mod: [100, 50] } }, { "sales.totalSales": { $gt: 1000 } }] })'
+      output:
+        value: Documents where totalSales is greater than 1000 and has remainder 50 when divided by 100
+related:
+  - reference: /reference/operator/gt
+  - reference: /reference/operator/lt

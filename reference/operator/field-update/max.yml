@@ -1,3 +1,29 @@
 type: operator
 category: field-update
 name: $max
+description: Updates a field only if the specified value is greater than the current field value, useful for maintaining maximum values.
+syntax: '{ $max: { <field1>: <value1>, <field2>: <value2>, ... } }'
+parameters:
+  - name: field
+    type: string
+    required: true
+    description: Field name to update with maximum value
+  - name: value
+    type: object
+    required: true
+    description: Value to compare with current field value
+examples:
+  items:
+    - title: Update maximum score
+      description: Update high score only if new score is greater
+      query: 'db.players.updateOne({ playerId: "player123" }, { $max: { highScore: 1500 } })'
+      output:
+        value: Updates highScore to 1500 only if current value is less than 1500
+    - title: Track maximum temperature
+      description: Update maximum recorded temperature for a sensor
+      query: 'db.sensors.updateOne({ sensorId: "temp01" }, { $max: { maxTemp: 98.6, lastReading: new Date() } })'
+      output:
+        value: Updates maxTemp only if 98.6 is greater than current maximum temperature
+related:
+  - reference: /reference/operator/min
+  - reference: /reference/operator/set

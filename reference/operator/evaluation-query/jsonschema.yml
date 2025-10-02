@@ -1,0 +1,59 @@
+type: operator
+category: evaluation-query
+name: $jsonSchema
+description: Validates documents against a JSON Schema specification to ensure data structure and type conformity.
+syntax: '{ $jsonSchema: { bsonType: "object", required: [...], properties: {...} } }'
+parameters:
+  - name: bsonType
+    type: string
+    required: true
+    description: 'BSON type specification: "object", "array", "string", "int", "double", "bool", "date", etc.'
+  - name: required
+    type: object
+    required: false
+    description: Array of field names that must be present in the document
+  - name: properties
+    type: object
+    required: false
+    description: Object defining validation rules for specific fields
+  - name: minimum
+    type: number
+    required: false
+    description: Minimum value constraint for numeric fields
+  - name: maximum
+    type: number
+    required: false
+    description: Maximum value constraint for numeric fields
+  - name: minLength
+    type: number
+    required: false
+    description: Minimum string length constraint
+  - name: maxLength
+    type: number
+    required: false
+    description: Maximum string length constraint
+examples:
+  items:
+    - title: Basic structure validation
+      description: Validate documents with required name and valid coordinates
+      query: 'db.stores.find({ $jsonSchema: { bsonType: "object", properties: { name: { bsonType: "string", minLength: 5 }, location: { bsonType: "object", properties: { lat: { bsonType: "double", minimum: -90, maximum: 90 } } } } } })'
+      output:
+        value: Documents that conform to the specified schema structure
+    - title: Array validation with items schema
+      description: Validate sales data with proper array structure and item types
+      query: 'db.stores.find({ $jsonSchema: { properties: { sales: { bsonType: "object", properties: { salesByCategory: { bsonType: "array", minItems: 1, items: { bsonType: "object", properties: { categoryName: { bsonType: "string" }, totalSales: { bsonType: "int", minimum: 0 } } } } } } } } })'
+      output:
+        value: Documents with valid sales array structure containing proper category objects
+    - title: Numeric constraints validation
+      description: Validate staff numbers are positive integers
+      query: 'db.stores.find({ $jsonSchema: { properties: { staff: { bsonType: "object", properties: { totalStaff: { bsonType: "object", properties: { fullTime: { bsonType: "int", minimum: 0 }, partTime: { bsonType: "int", minimum: 0 } } } } } } } })'
+      output:
+        value: Documents where staff numbers are non-negative integers
+    - title: Combined validation with query operators
+      description: Use schema validation along with field queries
+      query: 'db.stores.find({ $and: [{ $jsonSchema: { properties: { name: { bsonType: "string", minLength: 10 } } } }, { "sales.totalSales": { $gt: 10000 } }] })'
+      output:
+        value: Documents that pass schema validation and have sales greater than 10000
+related:
+  - reference: /reference/operator/type
+  - reference: /docs/data-validation

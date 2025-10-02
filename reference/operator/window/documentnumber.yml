@@ -1,3 +1,21 @@
 type: operator
 category: window
 name: $documentNumber
+description: Assigns sequential document numbers to each document within a partition based on specified sort order, providing positional ranking.
+syntax: '{ $documentNumber: {} }'
+parameters: []
+examples:
+  items:
+    - title: Retrieve document number by total sales
+      description: Assign sequential numbers to stores sorted by sales within company
+      query: 'db.stores.aggregate([{ $match: { "company": { $in: ["First Up Consultants"] } } }, { $setWindowFields: { "partitionBy": "$company", "sortBy": { "sales.totalSales": -1 }, "output": { "documentNumber": { "$documentNumber": {} } } } }, { $project: { "company": 1, "documentNumber": 1 } }])'
+      output:
+        value: Stores with sequential document numbers based on sales ranking
+    - title: Number products by price
+      description: Assign document numbers to products sorted by price within categories
+      query: 'db.products.aggregate([{ $setWindowFields: { "partitionBy": "$category", "sortBy": { "price": 1 }, "output": { "pricePosition": { "$documentNumber": {} } } } }])'
+      output:
+        value: Products with sequential position numbers based on price ordering
+related:
+  - reference: /reference/operator/rank
+  - reference: /reference/operator/denserank

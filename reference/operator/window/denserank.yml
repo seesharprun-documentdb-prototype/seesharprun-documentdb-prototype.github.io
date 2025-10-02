@@ -1,3 +1,21 @@
 type: operator
 category: window
 name: $denseRank
+description: Assigns consecutive ranking positions to documents within a partition based on specified sort order, with no gaps in rank values for tied documents.
+syntax: '{ $denseRank: {} }'
+parameters: []
+examples:
+  items:
+    - title: Retrieve document rank for each store
+      description: Calculate dense rank for stores by sales volume within company partition
+      query: 'db.stores.aggregate([{ $match: { "company": { $in: ["First Up Consultants"] } } }, { $setWindowFields: { "partitionBy": "$company", "sortBy": { "sales.totalSales": -1 }, "output": { "denseRank": { "$denseRank": {} } } } }, { $project: { "company": 1, "sales.totalSales": 1, "denseRank": 1 } }])'
+      output:
+        value: Stores ordered by sales with consecutive dense rank values
+    - title: Rank products by rating
+      description: Dense rank products within categories by customer rating
+      query: 'db.products.aggregate([{ $setWindowFields: { "partitionBy": "$category", "sortBy": { "rating": -1 }, "output": { "ratingRank": { "$denseRank": {} } } } }])'
+      output:
+        value: Products with dense ranking based on customer ratings within categories
+related:
+  - reference: /reference/operator/rank
+  - reference: /reference/operator/documentnumber

@@ -1,3 +1,39 @@
 type: operator
 category: field-update
 name: $setOnInsert
+description: Sets field values only when an upsert operation results in inserting a new document, having no effect when updating existing documents.
+syntax: '{ $setOnInsert: { <field1>: <value1>, <field2>: <value2> } }'
+parameters:  
+  - name: field
+    type: string
+    required: true
+    description: The name of the field to set only on insert (supports dot notation for nested fields)
+  - name: value
+    type: object
+    required: true
+    description: The value to assign to the field only when inserting a new document (any valid BSON type)
+examples:
+  items:
+    - title: Basic setOnInsert usage
+      description: Set initialization fields only when creating new store records
+      query: 'db.stores.updateOne({ "_id": "new-store-001" }, { $set: { "name": "Electronics Store" }, $setOnInsert: { "createdDate": new Date(), "status": "new", "version": 1 } }, { upsert: true })'
+      output:
+        value: Creates new document with both $set and $setOnInsert fields, or updates existing with only $set fields
+    - title: Initialize nested structures
+      description: Set complex nested objects only during document creation
+      query: 'db.stores.updateOne({ "name": "Gaming Paradise" }, { $set: { "location": { "city": "Seattle" } }, $setOnInsert: { "staff": { "totalStaff": { "fullTime": 5, "partTime": 8 } }, "sales": { "totalSales": 0 } } }, { upsert: true })'
+      output:
+        value: Initializes complex nested structures only when creating new documents
+    - title: Set default arrays and objects
+      description: Initialize arrays and default values for new documents
+      query: 'db.stores.updateOne({ "city": "Portland" }, { $set: { "status": "active" }, $setOnInsert: { "categories": ["electronics", "gadgets"], "ratings": { "average": 0, "count": 0 }, "inventory": [] } }, { upsert: true })'
+      output:
+        value: Creates new document with default arrays and objects, or updates existing document without modifying these fields
+    - title: Combine with multiple operators
+      description: Use setOnInsert alongside other update operators
+      query: 'db.stores.updateOne({ "_id": "multi-op-store" }, { $inc: { "sales.totalSales": 1000 }, $setOnInsert: { "establishedDate": new Date(), "initialSales": 1000 }, $currentDate: { "lastUpdated": true } }, { upsert: true })'
+      output:
+        value: Applies all operators for new documents, but only $inc and $currentDate for existing documents
+related:
+  - reference: /reference/operator/set
+  - reference: /docs/upsert-operations

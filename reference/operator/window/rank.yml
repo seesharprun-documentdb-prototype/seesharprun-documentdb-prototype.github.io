@@ -1,3 +1,21 @@
 type: operator
 category: window
 name: $rank
+description: Assigns rank to each document within a partition based on specified sort order, with gaps in ranking for tied values.
+syntax: '{ $rank: {} }'
+parameters: []
+examples:
+  items:
+    - title: Ranking stores by sales volume
+      description: Rank stores within company partition by total sales in descending order
+      query: 'db.stores.aggregate([{ $match: { "company": { $in: ["First Up Consultants"] } } }, { $setWindowFields: { "partitionBy": "$company", "sortBy": { "sales.totalSales": -1 }, "output": { "rankBySales": { "$rank": {} } } } }, { $project: { "company": 1, "name": 1, "rankBySales": 1 } }])'
+      output:
+        value: Stores ranked by sales volume with potential gaps for tied values
+    - title: Rank students by test scores
+      description: Assign rankings to students based on examination scores
+      query: 'db.students.aggregate([{ $setWindowFields: { "partitionBy": "$class", "sortBy": { "testScore": -1 }, "output": { "scoreRank": { "$rank": {} } } } }])'
+      output:
+        value: Students with rankings based on test scores, including gaps for ties
+related:
+  - reference: /reference/operator/denserank
+  - reference: /reference/operator/documentnumber

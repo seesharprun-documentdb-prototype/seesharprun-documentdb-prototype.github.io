@@ -1,3 +1,39 @@
 type: operator
 category: field-update
 name: $currentDate
+description: Sets the value of a field to the current date, either as a Date or a timestamp, useful for tracking document modifications.
+syntax: '{ $currentDate: { <field1>: <typeSpecification1>, <field2>: <typeSpecification2> } }'
+parameters:
+  - name: field
+    type: string
+    required: true
+    description: The name of the field to set to the current date
+  - name: typeSpecification
+    type: object
+    required: false
+    description: 'Type specification: true for Date type, { $type: "timestamp" } for timestamp type (default: true)'
+examples:
+  items:
+    - title: Set current date field
+      description: Add a lastUpdated field with current date as Date object
+      query: 'db.stores.updateOne({ "_id": "store-001" }, { $currentDate: { "lastUpdated": true } })'
+      output:
+        value: Updates the document with lastUpdated field containing current date
+    - title: Set timestamp field
+      description: Add both date and timestamp fields for modification tracking
+      query: 'db.stores.updateOne({ "_id": "store-001" }, { $currentDate: { "lastModified": true, "lastModifiedTimestamp": { $type: "timestamp" } } })'
+      output:
+        value: Updates document with both Date and Timestamp fields
+    - title: Update nested fields
+      description: Set current date for nested fields in document structure
+      query: 'db.stores.updateOne({ "_id": "store-001" }, { $currentDate: { "sales.lastSalesUpdate": true, "staff.lastStaffUpdate": { $type: "timestamp" } } })'
+      output:
+        value: Updates nested fields with current date and timestamp values
+    - title: Bulk update with current date
+      description: Update multiple documents with current date
+      query: 'db.stores.updateMany({ "status": "active" }, { $currentDate: { "lastChecked": true } })'
+      output:
+        value: Updates all active stores with current date in lastChecked field
+related:
+  - reference: /reference/operator/set
+  - reference: /docs/update-operators

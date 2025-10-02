@@ -1,3 +1,74 @@
 type: operator
 category: date-expression
 name: $year
+description: Returns the year for a date as a four-digit number (for example, 2024). If the date is null or missing, $year returns null.
+syntax: "$year: <dateExpression>"
+parameters:
+  - name: dateExpression
+    type: object
+    required: true
+    description: Any expression that resolves to a Date, Timestamp, or ObjectId.
+  - name: timezone
+    type: string
+    required: false
+    description: Optional. The timezone to use for the calculation. Can be an Olson Timezone Identifier (for example, "America/New_York") or a UTC offset (for example, "+0530").
+examples:
+  items:
+    - title: Extract year from store opening date
+      description: This query extracts the year when the store was opened.
+      query: |
+        db.stores.aggregate([
+          { $match: { _id: "905d1939-e03a-413e-a9c4-221f74055aac" } },
+          {
+            $project: {
+              name: 1,
+              storeOpeningDate: 1,
+              openingYear: { $year: { $toDate: "$storeOpeningDate" } }
+            }
+          }
+        ])
+      output:
+        value: |
+          [
+            {
+              "_id": "905d1939-e03a-413e-a9c4-221f74055aac",
+              "name": "Trey Research | Home Office Depot - Lake Freeda",
+              "storeOpeningDate": "2024-12-30T22:55:25.779Z",
+              "openingYear": 2024
+            }
+          ]
+    - title: Find stores opened in specific year
+      description: This query retrieves all stores that were opened in 2021.
+      query: |
+        db.stores.aggregate([
+          {
+            $match: {
+              $expr: {
+                $eq: [{ $year: { $toDate: "$storeOpeningDate" } }, 2021]
+              }
+            }
+          },
+          {
+            $project: {
+              name: 1,
+              city: 1,
+              openingYear: { $year: { $toDate: "$storeOpeningDate" } },
+              storeOpeningDate: 1
+            }
+          }
+        ])
+      output:
+        value: |
+          [
+            {
+              "_id": "2cf3f885-9962-4b67-a172-aa9039e9ae2f",
+              "city": "South Amir",
+              "storeOpeningDate": "2021-10-03T00:00:00.000Z",
+              "name": "First Up Consultants | Bed and Bath Center - South Amir",
+              "openingYear": 2021
+            }
+          ]
+related:
+  - reference: $month
+  - reference: $dayOfMonth
+  - reference: $dayOfWeek

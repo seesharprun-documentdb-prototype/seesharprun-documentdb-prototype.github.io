@@ -1,3 +1,30 @@
 type: operator
 category: set-expression
 name: $setIntersection
+description: Returns an array containing elements that exist in all input arrays, performing set intersection operation to find common elements.
+syntax: '{ $setIntersection: [<array_expression1>, <array_expression2>, ...] }'
+parameters:
+  - name: array_expressions
+    type: object
+    required: true
+    description: Two or more array expressions to find common elements between
+examples:
+  items:
+    - title: Find common elements
+      description: Get elements that exist in both arrays
+      query: 'db.products.aggregate([{ $project: { commonTags: { $setIntersection: ["$productTags", "$categoryTags"] } } }])'
+      output:
+        value: Documents with commonTags containing tags found in both arrays
+    - title: Multiple array intersection
+      description: Find elements common to multiple arrays
+      query: 'db.analysis.aggregate([{ $project: { sharedFeatures: { $setIntersection: ["$featuresA", "$featuresB", "$featuresC"] } } }])'
+      output:
+        value: Documents with sharedFeatures containing elements present in all three arrays
+    - title: User permission intersection
+      description: Find permissions that exist in both required and available sets
+      query: 'db.users.aggregate([{ $project: { grantedPermissions: { $setIntersection: ["$requestedPermissions", "$availablePermissions"] } } }])'
+      output:
+        value: Documents with grantedPermissions showing overlap between requested and available
+related:
+  - reference: /reference/operator/setunion
+  - reference: /reference/operator/setdifference

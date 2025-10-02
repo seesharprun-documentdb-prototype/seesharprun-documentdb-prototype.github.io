@@ -1,3 +1,88 @@
 type: operator
 category: date-expression
 name: $dateDiff
+description: Calculates the difference between two dates in various units such as years, months, days, etc. It's useful for determining the duration between two timestamps in your dataset.
+syntax: "$dateDiff: { startDate: <expression>, endDate: <expression>, unit: <string>, timezone: <string>, startOfWeek: <string> }"
+parameters:
+  - name: startDate
+    type: object
+    required: true
+    description: The beginning date for the calculation.
+  - name: endDate
+    type: object
+    required: true
+    description: The ending date for the calculation.
+  - name: unit
+    type: string
+    required: true
+    description: The unit of time to measure the difference. Valid values include year, quarter, month, week, day, hour, minute, second, millisecond.
+  - name: timezone
+    type: string
+    required: false
+    description: Optional. The timezone to use for the calculation.
+  - name: startOfWeek
+    type: string
+    required: false
+    description: Optional. The starting day of the week. Valid values are Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday.
+examples:
+  items:
+    - title: Calculate duration in days between two dates
+      description: This query uses $dateDiff to compute the number of units (e.g., days, months) between two date fields. It helps measure durations like event length or time since a given date.
+      query: |
+        db.stores.aggregate([
+          { $match: { _id: "e6410bb3-843d-4fa6-8c70-7472925f6d0a" } },
+          { $unwind: "$promotionEvents" },
+          {
+            $project: {
+              eventName: "$promotionEvents.eventName",
+              startDate: {
+                $dateFromParts: {
+                  year: "$promotionEvents.promotionalDates.startDate.Year",
+                  month: "$promotionEvents.promotionalDates.startDate.Month",
+                  day: "$promotionEvents.promotionalDates.startDate.Day"
+                }
+              },
+              endDate: {
+                $dateFromParts: {
+                  year: "$promotionEvents.promotionalDates.endDate.Year",
+                  month: "$promotionEvents.promotionalDates.endDate.Month",
+                  day: "$promotionEvents.promotionalDates.endDate.Day"
+                }
+              },
+              durationInDays: {
+                $dateDiff: {
+                  startDate: {
+                    $dateFromParts: {
+                      year: "$promotionEvents.promotionalDates.startDate.Year",
+                      month: "$promotionEvents.promotionalDates.startDate.Month",
+                      day: "$promotionEvents.promotionalDates.startDate.Day"
+                    }
+                  },
+                  endDate: {
+                    $dateFromParts: {
+                      year: "$promotionEvents.promotionalDates.endDate.Year",
+                      month: "$promotionEvents.promotionalDates.endDate.Month",
+                      day: "$promotionEvents.promotionalDates.endDate.Day"
+                    }
+                  },
+                  unit: "day"
+                }
+              }
+            }
+          }
+        ])
+      output:
+        value: |
+          [
+             {
+               "_id": "e6410bb3-843d-4fa6-8c70-7472925f6d0a",
+               "eventName": "Massive Markdown Mania",
+               "startDate": "2024-09-21T00:00:00.000Z",
+               "endDate": "2024-09-29T00:00:00.000Z",
+               "durationInDays": 8
+             }
+          ]
+related:
+  - reference: $dateAdd
+  - reference: $dateFromParts
+  - reference: $dateToString

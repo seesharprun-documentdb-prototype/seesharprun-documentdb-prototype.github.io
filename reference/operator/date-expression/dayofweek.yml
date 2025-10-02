@@ -1,3 +1,37 @@
 type: operator
 category: date-expression
 name: $dayOfWeek
+description: Extracts the day of the week from a date value, where 1 represents Sunday and 7 represents Saturday. It's useful for grouping or filtering documents based on the day of the week.
+syntax: "$dayOfWeek: <dateExpression>"
+parameters:
+  - name: dateExpression
+    type: object
+    required: true
+    description: The date expression from which to extract the day of the week.
+examples:
+  items:
+    - title: Extract day of the week
+      description: This query uses the $dayOfWeek operator to extract the day of the week from the lastUpdated timestamp. The returned value ranges from 1 (Sunday) to 7 (Saturday), based on ISO-8601 ordering.
+      query: |
+        db.stores.aggregate([
+          {
+            $match: { _id: "e6410bb3-843d-4fa6-8c70-7472925f6d0a" }
+          },
+          {
+            $project: {
+              _id: 0,
+              dayOfWeek: { $dayOfWeek: "$lastUpdated" }
+            }
+          }
+        ])
+      output:
+        value: |
+          [
+            {
+              "dayOfWeek": "4"
+            }
+          ]
+related:
+  - reference: $dayOfMonth
+  - reference: $dayOfYear
+  - reference: $month

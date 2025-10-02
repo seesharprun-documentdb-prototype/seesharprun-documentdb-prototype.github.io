@@ -1,3 +1,41 @@
 type: operator
 category: date-expression
 name: $millisecond
+description: Extracts the milliseconds portion from a date value, returning a number between 0 and 999. This operator is useful for precise timestamp analysis and filtering operations that require millisecond-level granularity.
+syntax: "$millisecond: <dateExpression>"
+parameters:
+  - name: dateExpression
+    type: object
+    required: true
+    description: An expression that resolves to a Date, a Timestamp, or an ObjectId. If the expression resolves to null or is missing, $millisecond returns null.
+examples:
+  items:
+    - title: Extract milliseconds from store opening date
+      description: This query extracts the milliseconds portion from the store opening date.
+      query: |
+        db.stores.aggregate([
+          { $match: {_id: "905d1939-e03a-413e-a9c4-221f74055aac"} },
+          {
+            $project: {
+              name: 1,
+              storeOpeningDate: 1,
+              openingMilliseconds: {
+                $millisecond: "$storeOpeningDate"
+              }
+            }
+          }
+        ])
+      output:
+        value: |
+          [
+            {
+              "_id": "905d1939-e03a-413e-a9c4-221f74055aac",
+              "name": "Trey Research | Home Office Depot - Lake Freeda",
+              "storeOpeningDate": ISODate("2024-09-26T22:55:25.779Z"),
+              "openingMilliseconds": 779
+            }
+          ]
+related:
+  - reference: $second
+  - reference: $minute
+  - reference: $hour

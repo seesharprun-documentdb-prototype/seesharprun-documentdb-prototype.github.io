@@ -1,3 +1,33 @@
 type: operator
 category: geospatial
 name: $center
+description: Specifies a circle using legacy coordinate pairs for $geoWithin queries, defining a circle for geospatial query on a flat, Euclidean plane.
+syntax: '{ $geoWithin: { $center: [ [<x>, <y>], <radius> ] } }'
+parameters:
+  - name: x
+    type: number
+    required: true
+    description: The x-coordinate of the circle's center point
+  - name: y
+    type: number
+    required: true
+    description: The y-coordinate of the circle's center point
+  - name: radius
+    type: number
+    required: true
+    description: The radius of the circle in the same units as the coordinates
+examples:
+  items:
+    - title: Find stores within circular area
+      description: Find stores within a 50-degree radius using flat plane calculations
+      query: 'db.stores.find({ location: { $geoWithin: { $center: [[-112.7858, -29.1866], 50] } } })'
+      output:
+        value: Stores within 50-degree radius using Euclidean plane calculations
+    - title: Circular area query with projection
+      description: Find stores within circular area and return specific fields
+      query: 'db.stores.find({ location: { $geoWithin: { $center: [[-82.5543, -65.105], 5] } } }, { name: 1, location: 1 })'
+      output:
+        value: Limited projection of stores within 5-degree radius circle
+related:
+  - reference: /reference/operator/centersphere
+  - reference: /reference/operator/geowithin

@@ -1,3 +1,89 @@
 type: operator
 category: date-expression
 name: $isoWeek
+description: Returns the week number of the year in ISO 8601 format, ranging from 1 to 53. The operator accepts a date expression that resolves to a Date, Timestamp, or ObjectId. In ISO 8601, weeks start on Monday and the first week of the year is the week that contains the first Thursday of the year.
+syntax: "$isoWeek: <dateExpression>"
+parameters:
+  - name: dateExpression
+    type: object
+    required: true
+    description: An expression that resolves to a Date, Timestamp, or ObjectId. If the expression resolves to null or is missing, $isoWeek returns null.
+examples:
+  items:
+    - title: Get ISO week number for promotion events
+      description: This query extracts the ISO week number for promotion event start dates.
+      query: |
+        db.stores.aggregate([
+          { $match: {"_id": "40d6f4d7-50cd-4929-9a07-0a7a133c2e74"} },
+          { $unwind: "$promotionEvents" },
+          {
+            $project: {
+              eventName: "$promotionEvents.eventName",
+              startDate: {
+                $dateFromParts: {
+                  year: "$promotionEvents.promotionalDates.startDate.Year",
+                  month: "$promotionEvents.promotionalDates.startDate.Month",
+                  day: "$promotionEvents.promotionalDates.startDate.Day"
+                }
+              }
+            }
+          },
+          {
+            $project: {
+              eventName: 1,
+              startDate: 1,
+              isoWeekNumber: { $isoWeek: "$startDate" },
+              year: { $year: "$startDate" }
+            }
+          }
+        ])
+      output:
+        value: |
+          [
+            {
+              "_id": "40d6f4d7-50cd-4929-9a07-0a7a133c2e74",
+              "eventName": "Massive Markdown Mania",
+              "startDate": "2023-06-29T00:00:00.000Z",
+              "isoWeekNumber": 26,
+              "year": 2023
+            },
+            {
+              "_id": "40d6f4d7-50cd-4929-9a07-0a7a133c2e74",
+              "eventName": "Fantastic Deal Days",
+              "startDate": "2023-09-27T00:00:00.000Z",
+              "isoWeekNumber": 39,
+              "year": 2023
+            },
+            {
+              "_id": "40d6f4d7-50cd-4929-9a07-0a7a133c2e74",
+              "eventName": "Discount Delight Days",
+              "startDate": "2023-12-26T00:00:00.000Z",
+              "isoWeekNumber": 52,
+              "year": 2023
+            },
+            {
+              "_id": "40d6f4d7-50cd-4929-9a07-0a7a133c2e74",
+              "eventName": "Super Sale Spectacular",
+              "startDate": "2024-03-25T00:00:00.000Z",
+              "isoWeekNumber": 13,
+              "year": 2024
+            },
+            {
+              "_id": "40d6f4d7-50cd-4929-9a07-0a7a133c2e74",
+              "eventName": "Grand Deal Days",
+              "startDate": "2024-06-23T00:00:00.000Z",
+              "isoWeekNumber": 25,
+              "year": 2024
+            },
+            {
+              "_id": "40d6f4d7-50cd-4929-9a07-0a7a133c2e74",
+              "eventName": "Major Bargain Bash",
+              "startDate": "2024-09-21T00:00:00.000Z",
+              "isoWeekNumber": 38,
+              "year": 2024
+            }
+          ]
+related:
+  - reference: $isoDayOfWeek
+  - reference: $isoWeekYear
+  - reference: $week

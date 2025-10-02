@@ -1,3 +1,34 @@
 type: operator
 category: miscellaneous
 name: $getField
+description: Returns the value of a specified field from a document, with support for dynamically determined field names using expressions and variables.
+syntax: '{ $getField: { field: <field_name>, input: <input_expression> } }'
+parameters:
+  - name: field
+    type: string
+    required: true
+    description: The name of the field to retrieve, can be a string or expression
+  - name: input
+    type: object
+    required: false
+    description: The input document expression, defaults to $$ROOT (current document)
+examples:
+  items:
+    - title: Get field with dynamic name
+      description: Retrieve field value where field name is determined by another field
+      query: 'db.products.aggregate([{ $addFields: { fieldValue: { $getField: { field: "$fieldName", input: "$$ROOT" } } } }])'
+      output:
+        value: Document with additional fieldValue containing the dynamically selected field
+    - title: Get field from nested document
+      description: Extract field value from a nested document object
+      query: 'db.products.aggregate([{ $addFields: { itemName: { $getField: { field: "name", input: "$item" } } } }])'
+      output:
+        value: Document with itemName field containing the name from the nested item object
+    - title: Get field using variable
+      description: Use variable to specify field name for retrieval
+      query: 'db.products.aggregate([{ $addFields: { value: { $getField: { field: { $literal: "$price" }, input: "$$ROOT" } } } }])'
+      output:
+        value: Document with value field containing the price field value
+related:
+  - reference: /reference/operator/setfield
+  - reference: /reference/operator/unsetfield

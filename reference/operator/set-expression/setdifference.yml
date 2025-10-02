@@ -1,3 +1,34 @@
 type: operator
 category: set-expression
 name: $setDifference
+description: Returns an array containing elements that exist in the first set but not in the second set, performing set subtraction operation.
+syntax: '{ $setDifference: [<array_expression1>, <array_expression2>] }'
+parameters:
+  - name: array_expression1
+    type: object
+    required: true
+    description: The first array expression (elements to keep)
+  - name: array_expression2
+    type: object
+    required: true
+    description: The second array expression (elements to subtract)
+examples:
+  items:
+    - title: Find unique elements
+      description: Get elements that exist in first array but not in second
+      query: 'db.products.aggregate([{ $project: { uniqueTags: { $setDifference: ["$allTags", "$commonTags"] } } }])'
+      output:
+        value: Documents with uniqueTags containing tags not found in commonTags array
+    - title: Exclude specific values
+      description: Remove specific values from an array using set difference
+      query: 'db.inventory.aggregate([{ $project: { filteredItems: { $setDifference: ["$items", ["discontinued", "obsolete"]] } } }])'
+      output:
+        value: Documents with filteredItems array excluding discontinued and obsolete items
+    - title: Compare user permissions
+      description: Find permissions that exist in required but not in current
+      query: 'db.users.aggregate([{ $project: { missingPermissions: { $setDifference: ["$requiredPermissions", "$currentPermissions"] } } }])'
+      output:
+        value: Documents with missingPermissions array showing what permissions user lacks
+related:
+  - reference: /reference/operator/setintersection
+  - reference: /reference/operator/setunion

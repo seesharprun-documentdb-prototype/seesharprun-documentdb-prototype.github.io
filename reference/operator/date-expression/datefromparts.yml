@@ -1,3 +1,75 @@
 type: operator
 category: date-expression
 name: $dateFromParts
+description: Constructs a date from individual components such as year, month, day, hour, minute, second, and millisecond. This operator can be useful when dealing with data that stores date components separately.
+syntax: "$dateFromParts: { year: <year>, month: <month>, day: <day>, hour: <hour>, minute: <minute>, second: <second>, millisecond: <millisecond>, timezone: <timezone> }"
+parameters:
+  - name: year
+    type: number
+    required: true
+    description: The year component of the date.
+  - name: month
+    type: number
+    required: true
+    description: The month component of the date.
+  - name: day
+    type: number
+    required: true
+    description: The day component of the date.
+  - name: hour
+    type: number
+    required: false
+    description: The hour component of the date.
+  - name: minute
+    type: number
+    required: false
+    description: The minute component of the date.
+  - name: second
+    type: number
+    required: false
+    description: The second component of the date.
+  - name: millisecond
+    type: number
+    required: false
+    description: The millisecond component of the date.
+  - name: timezone
+    type: string
+    required: false
+    description: Optional. A timezone specification.
+examples:
+  items:
+    - title: Constructing a start date
+      description: This query constructs precise startDate and endDate values from nested fields using $dateFromParts, then calculates the event duration in days. It helps standardize and analyze event timelines stored in fragmented date formats.
+      query: |
+        db.stores.aggregate([
+          { 
+            $match: { _id: "e6410bb3-843d-4fa6-8c70-7472925f6d0a" } 
+          },
+          { 
+            $unwind: "$promotionEvents" 
+          },
+          {
+            $project: {
+              _id: 1,
+              startDate: {
+                $dateFromParts: {
+                  year: "$promotionEvents.promotionalDates.startDate.Year",
+                  month: "$promotionEvents.promotionalDates.startDate.Month",
+                  day: "$promotionEvents.promotionalDates.startDate.Day"
+                }
+              }
+            }
+          }
+        ])
+      output:
+        value: |
+          [
+            {
+              "_id": "e6410bb3-843d-4fa6-8c70-7472925f6d0a",
+              "startDate": "2024-09-21T00:00:00.000Z"
+            }
+          ]
+related:
+  - reference: $dateToString
+  - reference: $dateToParts
+  - reference: $dateAdd

@@ -1,3 +1,103 @@
 type: operator
 category: date-expression
 name: $isoDayOfWeek
+description: Returns the weekday number in ISO 8601 format, ranging from 1 (Monday) to 7 (Sunday). The operator accepts a date expression that resolves to a Date, Timestamp, or ObjectId.
+syntax: "$isoDayOfWeek: <dateExpression>"
+parameters:
+  - name: dateExpression
+    type: object
+    required: true
+    description: An expression that resolves to a Date, Timestamp, or ObjectId. If the expression resolves to null or is missing, $isoDayOfWeek returns null.
+examples:
+  items:
+    - title: Analyze promotion events by day of week
+      description: This query reviews promotion events to see which days of the week they started on.
+      query: |
+        db.stores.aggregate([
+          { $match: {"_id": "40d6f4d7-50cd-4929-9a07-0a7a133c2e74"} },
+          { $unwind: "$promotionEvents" },
+          {
+            $project: {
+              eventName: "$promotionEvents.eventName",
+              startDate: {
+                $dateFromParts: {
+                  year: "$promotionEvents.promotionalDates.startDate.Year",
+                  month: "$promotionEvents.promotionalDates.startDate.Month",
+                  day: "$promotionEvents.promotionalDates.startDate.Day"
+                }
+              }
+            }
+          },
+          {
+            $group: {
+              _id: { $isoDayOfWeek: "$startDate" },
+              eventCount: { $sum: 1 },
+              events: { $push: "$eventName" }
+            }
+          },
+          {
+            $project: {
+              _id: 1,
+              dayName: {
+                $switch: {
+                  branches: [
+                    { case: { $eq: ["$_id", 1] }, then: "Monday" },
+                    { case: { $eq: ["$_id", 2] }, then: "Tuesday" },
+                    { case: { $eq: ["$_id", 3] }, then: "Wednesday" },
+                    { case: { $eq: ["$_id", 4] }, then: "Thursday" },
+                    { case: { $eq: ["$_id", 5] }, then: "Friday" },
+                    { case: { $eq: ["$_id", 6] }, then: "Saturday" },
+                    { case: { $eq: ["$_id", 7] }, then: "Sunday" }
+                  ]
+                }
+              },
+              eventCount: 1,
+              events: 1
+            }
+          },
+          { $sort: { "_id": 1 } }
+        ])
+      output:
+        value: |
+          [
+            {
+              "_id": 1,
+              "eventCount": 1,
+              "events": ["Super Sale Spectacular"],
+              "dayName": "Monday"
+            },
+            {
+              "_id": 2,
+              "eventCount": 1,
+              "events": ["Discount Delight Days"],
+              "dayName": "Tuesday"
+            },
+            {
+              "_id": 3,
+              "eventCount": 1,
+              "events": ["Fantastic Deal Days"],
+              "dayName": "Wednesday"
+            },
+            {
+              "_id": 4,
+              "eventCount": 1,
+              "events": ["Massive Markdown Mania"],
+              "dayName": "Thursday"
+            },
+            {
+              "_id": 6,
+              "eventCount": 1,
+              "events": ["Major Bargain Bash"],
+              "dayName": "Saturday"
+            },
+            {
+              "_id": 7,
+              "eventCount": 1,
+              "events": ["Grand Deal Days"],
+              "dayName": "Sunday"
+            }
+          ]
+related:
+  - reference: $dayOfWeek
+  - reference: $isoWeek
+  - reference: $isoWeekYear

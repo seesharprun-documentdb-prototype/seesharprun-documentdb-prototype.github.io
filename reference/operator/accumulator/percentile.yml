@@ -1,0 +1,35 @@
+type: operator
+category: accumulator
+name: $percentile
+description: Calculates the percentile of numerical values that match a filtering criteria, useful for identifying statistical thresholds such as median or percentiles.
+syntax: |-
+  { $percentile: { input: <field_or_expression>, p: [<percentile_values>], method: <method> } }
+parameters:
+  - name: input
+    type: expression
+    required: true
+    description: Specifies the numerical data to calculate the percentile from
+  - name: p
+    type: array
+    required: true
+    description: Array of percentile values (between 0 and 1) to calculate
+  - name: method
+    type: string
+    required: true
+    description: Interpolation method to use - "approximate" or "continuous"
+examples:
+  items:
+    - title: Calculate the 50th percentile of sales volume
+      description: Calculate the 50th percentile (median) of total sales volume within sales categories
+      query: 'db.stores.aggregate([{ $unwind: "$sales.salesByCategory" }, { $group: { _id: null, medianSales: { $percentile: { input: "$sales.salesByCategory.totalSales", p: [0.5], method: "approximate" } } } }])'
+      output:
+        value: Documents with medianSales array containing the 50th percentile value
+    - title: Calculate multiple percentiles
+      description: Calculate the 25th, 50th, and 75th percentiles of total sales across all stores
+      query: 'db.stores.aggregate([{ $group: { _id: null, percentiles: { $percentile: { input: "$sales.totalSales", p: [0.25, 0.5, 0.75], method: "approximate" } } } }])'
+      output:
+        value: Documents with percentiles array containing 25th, 50th, and 75th percentile values
+related:
+  - reference: /reference/operator/median
+  - reference: /reference/operator/avg
+  - reference: /reference/operator/stddevpop

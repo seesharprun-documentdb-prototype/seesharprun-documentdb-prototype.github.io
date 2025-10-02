@@ -1,3 +1,25 @@
 type: operator
 category: field-update
 name: $unset
+description: Removes specified fields from documents, effectively deleting the field and its value entirely.
+syntax: '{ $unset: { <field1>: "", <field2>: "", ... } }'
+parameters:
+  - name: field
+    type: string
+    required: true
+    description: Field name to remove from document
+examples:
+  items:
+    - title: Remove sensitive information
+      description: Delete fields containing sensitive data from user documents
+      query: 'db.users.updateOne({ userId: "user123" }, { $unset: { ssn: "", creditCard: "" } })'
+      output:
+        value: Removes ssn and creditCard fields completely from the user document
+    - title: Clean up temporary fields
+      description: Remove temporary or deprecated fields from documents
+      query: 'db.products.updateMany({}, { $unset: { tempField: "", oldDescription: "", deprecated: "" } })'
+      output:
+        value: Removes specified temporary fields from all product documents
+related:
+  - reference: /reference/operator/set
+  - reference: /reference/operator/rename

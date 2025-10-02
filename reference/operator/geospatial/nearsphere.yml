@@ -1,3 +1,42 @@
 type: operator
 category: geospatial
 name: $nearSphere
+description: Returns documents with location fields near a specified point on a sphere, calculating distances using spherical geometry, more accurate for Earth-based calculations than $near.
+syntax: '{ <location field>: { $nearSphere: { $geometry: { type: "Point", coordinates: [<longitude>, <latitude>] }, $maxDistance: <distance>, $minDistance: <distance> } } }'
+parameters:
+  - name: location field
+    type: string
+    required: true
+    description: The field containing the GeoJSON Point
+  - name: geometry
+    type: object
+    required: true
+    description: GeoJSON Point object specifying the center point
+  - name: maxDistance
+    type: number
+    required: false
+    description: Optional maximum distance in meters on a spherical surface
+  - name: minDistance
+    type: number
+    required: false
+    description: Optional minimum distance in meters on a spherical surface
+examples:
+  items:
+    - title: Basic spherical search
+      description: Find stores closest to a point using spherical Earth calculations
+      query: 'db.stores.find({ location: { $nearSphere: { $geometry: { type: "Point", coordinates: [-141.9922, 16.8331] } } } })'
+      output:
+        value: Stores ordered by spherical distance from the specified point
+    - title: Spherical search with distance range
+      description: Find stores within specific distance range using spherical geometry
+      query: 'db.stores.aggregate([{ $geoNear: { near: { type: "Point", coordinates: [65.3765, -44.8674] }, distanceField: "sphericalDistance", minDistance: 20, maxDistance: 200, spherical: true } }])'
+      output:
+        value: Stores between 20-200 meters using accurate spherical distance calculations
+    - title: Near sphere with field projection
+      description: Find nearest stores using spherical geometry and return specific fields
+      query: 'db.stores.find({ location: { $nearSphere: { $geometry: { type: "Point", coordinates: [-141.9922, 16.8331] } } } }, { name: 1, location: 1 })'
+      output:
+        value: Name and location of stores ordered by spherical proximity
+related:
+  - reference: /reference/operator/near
+  - reference: /reference/operator/centersphere

@@ -1,3 +1,33 @@
 type: operator
 category: window
 name: $shift
+description: Shifts values within a partition and returns the shifted value, useful for comparing values from adjacent documents in sorted partitions.
+syntax: '{ $shift: { output: <expression>, by: <number>, default: <expression> } }'
+parameters:
+  - name: output
+    type: object
+    required: true
+    description: Field or expression whose value will be shifted
+  - name: by
+    type: number
+    required: true
+    description: Number of positions to shift (positive for forward, negative for backward)
+  - name: default
+    type: object
+    required: false
+    description: Default value to return if shift operation goes out of bounds
+examples:
+  items:
+    - title: Shifting sales data
+      description: Calculate previous sales value for each document in sorted partition
+      query: 'db.collection.aggregate([{ $setWindowFields: { partitionBy: "$sales.salesByCategory.categoryName", sortBy: { "sales.salesByCategory.totalSales": 1 }, output: { previousSales: { $shift: { output: "$sales.salesByCategory.totalSales", by: -1, default: null } } } } }])'
+      output:
+        value: Documents with previous sales values shifted by one position backward
+    - title: Shifting promotional event dates
+      description: Get previous promotional event start date for comparison
+      query: 'db.promotionEvents.aggregate([{ $setWindowFields: { partitionBy: null, sortBy: { "promotionalDates.startDate": 1 }, output: { previousStartDate: { $shift: { output: "$promotionalDates.startDate", by: -1, default: null } } } } }])'
+      output:
+        value: Promotion events with previous event start dates for temporal analysis
+related:
+  - reference: /reference/operator/lag
+  - reference: /reference/operator/lead

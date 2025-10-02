@@ -1,3 +1,108 @@
 type: operator
 category: date-expression
 name: $dateFromString
+description: Used to convert a date/time string to a date object. This operation can be useful when dealing with string representations of dates that need to be manipulated or queried as date objects.
+syntax: "$dateFromString: { dateString: <string>, format: <string>, timezone: <string>, onError: <expression>, onNull: <expression> }"
+parameters:
+  - name: dateString
+    type: string
+    required: true
+    description: The date/time string to convert to a date object.
+  - name: format
+    type: string
+    required: false
+    description: Optional. The date format specification of the dateString.
+  - name: timezone
+    type: string
+    required: false
+    description: Optional. The timezone to use to format the date.
+  - name: onError
+    type: object
+    required: false
+    description: Optional. The value to return if an error occurs while parsing the dateString.
+  - name: onNull
+    type: object
+    required: false
+    description: Optional. The value to return if the dateString is null or missing.
+examples:
+  items:
+    - title: Convert promotional event dates to ISO dates
+      description: This query constructs full ISO date strings from individual year, month, and day fields using $concat and converts them to startDate and endDate using $dateFromString.
+      query: |
+        db.stores.aggregate([
+          {
+            $match: { _id: "e6410bb3-843d-4fa6-8c70-7472925f6d0a" }
+          },
+          {
+            $unwind: "$promotionEvents"
+          },
+          {
+            $project: {
+              eventName: "$promotionEvents.eventName",
+              startDate: {
+                $dateFromString: {
+                  dateString: {
+                    $concat: [
+                      { $toString: "$promotionEvents.promotionalDates.startDate.Year" },
+                      "-",
+                      {
+                        $cond: {
+                          if: { $lt: ["$promotionEvents.promotionalDates.startDate.Month", 10] },
+                          then: { $concat: ["0", { $toString: "$promotionEvents.promotionalDates.startDate.Month" }] },
+                          else: { $toString: "$promotionEvents.promotionalDates.startDate.Month" }
+                        }
+                      },
+                      "-",
+                      {
+                        $cond: {
+                          if: { $lt: ["$promotionEvents.promotionalDates.startDate.Day", 10] },
+                          then: { $concat: ["0", { $toString: "$promotionEvents.promotionalDates.startDate.Day" }] },
+                          else: { $toString: "$promotionEvents.promotionalDates.startDate.Day" }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              endDate: {
+                $dateFromString: {
+                  dateString: {
+                    $concat: [
+                      { $toString: "$promotionEvents.promotionalDates.endDate.Year" },
+                      "-",
+                      {
+                        $cond: {
+                          if: { $lt: ["$promotionEvents.promotionalDates.endDate.Month", 10] },
+                          then: { $concat: ["0", { $toString: "$promotionEvents.promotionalDates.endDate.Month" }] },
+                          else: { $toString: "$promotionEvents.promotionalDates.endDate.Month" }
+                        }
+                      },
+                      "-",
+                      {
+                        $cond: {
+                          if: { $lt: ["$promotionEvents.promotionalDates.endDate.Day", 10] },
+                          then: { $concat: ["0", { $toString: "$promotionEvents.promotionalDates.endDate.Day" }] },
+                          else: { $toString: "$promotionEvents.promotionalDates.endDate.Day" }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        ])
+      output:
+        value: |
+          [
+            {
+              "_id": "e6410bb3-843d-4fa6-8c70-7472925f6d0a",
+              "eventName": "Massive Markdown Mania",
+              "startDate": "2024-09-21T00:00:00.000Z",
+              "endDate": "2024-09-29T00:00:00.000Z"
+            }
+          ]
+related:
+  - reference: $dateToString
+  - reference: $dateFromParts
+  - reference: $toString

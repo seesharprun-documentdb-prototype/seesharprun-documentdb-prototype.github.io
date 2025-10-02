@@ -1,3 +1,44 @@
 type: operator
 category: field-update
 name: $mul
+description: Multiplies the value of a field by a specified number, creating the field with value zero if it doesn't exist, useful for scaling and percentage operations.
+syntax: '{ $mul: { <field1>: <number1>, <field2>: <number2> } }'
+parameters:
+  - name: field
+    type: string
+    required: true
+    description: The name of the field to multiply
+  - name: number
+    type: number
+    required: true
+    description: The number to multiply the field value by
+examples:
+  items:
+    - title: Apply percentage increase
+      description: Apply a 10% increase to total sales (multiply by 1.1)
+      query: 'db.stores.updateOne({ "_id": "store-001" }, { $mul: { "sales.totalSales": 1.1 } })'
+      output:
+        value: Increases totalSales by 10% through multiplication
+    - title: Apply discount
+      description: Apply a 20% discount to sales figures (multiply by 0.8)
+      query: 'db.stores.updateOne({ "_id": "store-001" }, { $mul: { "sales.totalSales": 0.8 } })'
+      output:
+        value: Reduces totalSales by 20% through multiplication
+    - title: Multiple field operations
+      description: Apply different multipliers to multiple fields simultaneously
+      query: 'db.stores.updateOne({ "_id": "store-001" }, { $mul: { "staff.totalStaff.fullTime": 1.5, "staff.totalStaff.partTime": 2, "sales.totalSales": 1.25 } })'
+      output:
+        value: Applies different scaling factors to staff counts and sales
+    - title: Array element multiplication
+      description: Apply multipliers to specific elements within arrays
+      query: 'db.stores.updateOne({ "_id": "store-001", "sales.salesByCategory.categoryName": "Electronics" }, { $mul: { "sales.salesByCategory.$.totalSales": 1.15 } })'
+      output:
+        value: Increases sales for the matching category by 15%
+    - title: Handle negative and zero values
+      description: Apply negative multipliers and zero values for special operations
+      query: 'db.stores.updateOne({ "_id": "store-001" }, { $mul: { "sales.totalSales": -1, "staff.totalStaff.fullTime": 0 } })'
+      output:
+        value: Makes totalSales negative and sets fullTime to zero
+related:
+  - reference: /reference/operator/inc
+  - reference: /docs/update-operators

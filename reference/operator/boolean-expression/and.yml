@@ -1,3 +1,25 @@
 type: operator
 category: boolean-expression
 name: $and
+description: Performs logical AND operation on array of expressions, returning true only if all expressions evaluate to true.
+syntax: '{ $and: [<expression1>, <expression2>, ...] }'
+parameters:
+  - name: expressions
+    type: object
+    required: true
+    description: Array of expressions to evaluate with logical AND operation
+examples:
+  items:
+    - title: Combine multiple conditions
+      description: Use logical AND to combine multiple boolean conditions
+      query: 'db.products.aggregate([{ $project: { name: 1, isAvailable: { $and: [{ $gt: ["$quantity", 0] }, { $eq: ["$status", "active"] }] } } }])'
+      output:
+        value: Products with isAvailable field true only when quantity > 0 AND status is active
+    - title: Multiple field validation
+      description: Validate multiple fields meet criteria using AND logic
+      query: 'db.users.aggregate([{ $project: { username: 1, isValid: { $and: [{ $ne: ["$email", null] }, { $gte: ["$age", 18] }, { $eq: ["$verified", true] }] } } }])'
+      output:
+        value: Users with isValid field indicating all validation criteria are met
+related:
+  - reference: /reference/operator/or
+  - reference: /reference/operator/not

@@ -1,3 +1,28 @@
 type: operator
 category: window
 name: $covariancePop
+description: Calculates the population covariance of two numerical expressions within a specified document window, used in statistical analysis to measure how two variables change together.
+syntax: '{ $covariancePop: [<numericalExpression1>, <numericalExpression2>] }'
+parameters:
+  - name: numericalExpression1
+    type: object
+    required: true
+    description: First numerical expression for covariance calculation within the document window
+  - name: numericalExpression2
+    type: object
+    required: true
+    description: Second numerical expression for covariance calculation within the document window
+examples:
+  items:
+    - title: Calculate covariance in sales volume
+      description: Get population covariance between time and sales within company partition
+      query: 'db.stores.aggregate([{ $match: { "company": { $in: ["First Up Consultants"] } } }, { $setWindowFields: { "partitionBy": "$company", "sortBy": { "lastUpdated": 1 }, "output": { "covariancePopForSales": { "$covariancePop": [{ "$hour": "$lastUpdated" }, "$sales.totalSales"], "window": { "documents": ["unbounded", "current"] } } } } }, { $project: { "company": 1, "name": 1, "sales.totalSales": 1, "covariancePopForSales": 1 } }])'
+      output:
+        value: Documents with population covariance calculation between hour and total sales
+    - title: Multi-field covariance analysis
+      description: Calculate covariance between different numerical fields
+      query: 'db.products.aggregate([{ $setWindowFields: { "partitionBy": "$category", "sortBy": { "price": 1 }, "output": { "priceQuantityCovariance": { "$covariancePop": ["$price", "$quantity"] } } } }])'
+      output:
+        value: Products with covariance between price and quantity fields
+related:
+  - reference: /reference/operator/covariancesamp

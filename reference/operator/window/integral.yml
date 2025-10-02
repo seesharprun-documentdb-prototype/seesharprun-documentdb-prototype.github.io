@@ -1,3 +1,28 @@
 type: operator
 category: window
 name: $integral
+description: Calculates the area under a curve based on specified range of documents sorted by a specific field, useful for cumulative analysis.
+syntax: '{ $integral: { input: <expression>, unit: <timeWindow> } }'
+parameters:
+  - name: input
+    type: object
+    required: true
+    description: Field in documents to use for integral calculation
+  - name: unit
+    type: string
+    required: true
+    description: Specified time unit for the integral calculation
+examples:
+  items:
+    - title: Calculate integral of total sales
+      description: Compute integral of sales from first to current document within company partition
+      query: 'db.stores.aggregate([{ $match: { "company": { $in: ["First Up Consultants"] } } }, { $setWindowFields: { "partitionBy": "$company", "sortBy": { "storeOpeningDate": 1 }, "output": { "salesIntegral": { "$integral": { "input": "$sales.revenue", "unit": "hour" }, "window": { "range": ["unbounded", "current"], "unit": "hour" } } } } }])'
+      output:
+        value: Stores with integral calculation of revenue over time in hourly units
+    - title: Cumulative revenue integration
+      description: Calculate area under revenue curve for business analysis
+      query: 'db.financial.aggregate([{ $setWindowFields: { "partitionBy": "$department", "sortBy": { "month": 1 }, "output": { "cumulativeRevenue": { "$integral": { "input": "$monthlyRevenue", "unit": "month" } } } } }])'
+      output:
+        value: Financial records with integrated revenue calculations over monthly periods
+related:
+  - reference: /reference/operator/derivative

@@ -1,3 +1,33 @@
 type: operator
 category: geospatial
 name: $minDistance
+description: Specifies the minimum distance (in meters) that must exist between two points in a geospatial query, useful for finding locations outside a certain radius.
+syntax: '{ <location field>: { $near: { $geometry: { type: "Point", coordinates: [<longitude>, <latitude>] }, $minDistance: <distance_in_meters> } } }'
+parameters:
+  - name: location field
+    type: string
+    required: true
+    description: The field containing the geospatial data
+  - name: coordinates
+    type: object
+    required: true
+    description: Array of [longitude, latitude] specifying the center point
+  - name: distance_in_meters
+    type: number
+    required: true
+    description: Minimum distance in meters from the center point
+examples:
+  items:
+    - title: Find stores beyond minimum distance
+      description: Find stores at least 500 kilometers away from a reference point
+      query: 'db.stores.find({ location: { $near: { $geometry: { type: "Point", coordinates: [69.7296, 70.1272] }, $minDistance: 500000 } } })'
+      output:
+        value: Stores located at least 500000 meters (500km) from the specified coordinates
+    - title: Minimum distance with field selection
+      description: Find distant stores and return only specific fields
+      query: 'db.stores.find({ location: { $near: { $geometry: { type: "Point", coordinates: [69.7296, 70.1272] }, $minDistance: 100000 } } }, { name: 1, location: 1 })'
+      output:
+        value: Name and location of stores at least 100km from the center point
+related:
+  - reference: /reference/operator/maxdistance
+  - reference: /reference/operator/near

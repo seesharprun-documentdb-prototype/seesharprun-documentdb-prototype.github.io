@@ -1,3 +1,36 @@
 type: operator
 category: data-size
 name: $binarysize
+description: The `$binarySize` operator is used to return the size of a binary data field. This can be useful when dealing with binary data stored, such as images, files, or any other binary content.
+syntax: |
+  { $binarySize: "<field>" }
+parameters:
+  - name: field
+    type: string
+    required: true
+    description: The field for which you want to get the binary size
+examples:
+  items:
+    - title: Calculate the size of a string or binary data in bytes
+      description: This query calculates the binary size of the name field for each document in the stores collection.
+      query: |
+        db.stores.aggregate([
+          {
+            $project: {
+              name: 1,          
+              dataSize: {
+                $binarySize: "$name"
+              }
+            }
+          },
+          { $limit: 3 }  
+        ])
+      output:
+        value: |
+          [
+            { "_id": "7e53ca0f-6e24-4177-966c-fe62a11e9af5", "name": "Contoso, Ltd. | Office Supply Deals - South Shana", "dataSize": 49 },
+            { "_id": "923d2228-6a28-4856-ac9d-77c39eaf1800", "name": "Lakeshore Retail | Home Decor Hub - Franciscoton", "dataSize": 48 },
+            { "_id": "a715ab0f-4c6e-4e9d-a812-f2fab11ce0b6", "name": "Lakeshore Retail | Holiday Supply Hub - Marvinfort", "dataSize": 50 }
+          ]
+related:
+  - reference: /operator/data-size/bsonsize

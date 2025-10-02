@@ -1,3 +1,39 @@
 type: operator
 category: field-update
 name: $rename
+description: Renames fields in documents during update operations, removing the old field name and creating a new field with the same value.
+syntax: '{ $rename: { <field1>: <newName1>, <field2>: <newName2> } }'
+parameters:
+  - name: field
+    type: string
+    required: true
+    description: The current name of the field to be renamed
+  - name: newName
+    type: string
+    required: true
+    description: The new name for the field
+examples:
+  items:
+    - title: Rename top-level fields
+      description: Rename name field to storeName and location to storeLocation
+      query: 'db.stores.updateOne({ "_id": "store-001" }, { $rename: { "name": "storeName", "location": "storeLocation" } })'
+      output:
+        value: Renames specified fields while preserving their values
+    - title: Rename nested fields
+      description: Rename nested fields using dot notation
+      query: 'db.stores.updateOne({ "_id": "store-001" }, { $rename: { "location.lat": "location.latitude", "location.lon": "location.longitude" } })'
+      output:
+        value: Renames nested coordinate fields to more descriptive names
+    - title: Restructure field naming
+      description: Update field names to follow new naming conventions
+      query: 'db.stores.updateOne({ "_id": "store-001" }, { $rename: { "staff.totalStaff.fullTime": "staff.totalStaff.fullTimeEmployees" } })'
+      output:
+        value: Updates field name to more descriptive convention
+    - title: Bulk rename operations
+      description: Rename fields across multiple documents using updateMany
+      query: 'db.stores.updateMany({}, { $rename: { "sales.totalSales": "sales.revenue", "staff.totalStaff": "staff.employeeCount" } })'
+      output:
+        value: Applies field name changes across all documents in collection
+related:
+  - reference: /reference/operator/set
+  - reference: /docs/schema-migration

@@ -1,3 +1,24 @@
 type: operator
 category: miscellaneous
 name: $comment
+description: Adds a comment to a query without affecting the query execution, useful for documentation and debugging purposes.
+syntax: '{ $comment: <comment_string> }'
+parameters:
+  - name: comment_string
+    type: string
+    required: true
+    description: Comment text to attach to the query for documentation
+examples:
+  items:
+    - title: Document query purpose
+      description: Add explanatory comment to describe query intent
+      query: 'db.products.find({ price: { $gt: 100 }, $comment: "Find expensive products over $100" })'
+      output:
+        value: Returns products with price > 100, comment appears in query logs for documentation
+    - title: Debug complex aggregation
+      description: Add comments to complex aggregation stages for debugging
+      query: 'db.sales.aggregate([{ $match: { date: { $gte: new Date("2024-01-01") }, $comment: "Filter sales from 2024 onwards" } }, { $group: { _id: "$category", total: { $sum: "$amount" }, $comment: "Group by category and sum amounts" } }])'
+      output:
+        value: Aggregation with comments for each stage to aid in debugging and maintenance
+related:
+  - reference: /reference/operator/explain

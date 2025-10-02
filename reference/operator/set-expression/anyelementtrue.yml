@@ -1,3 +1,30 @@
 type: operator
 category: set-expression
 name: $anyElementTrue
+description: Returns true if any element in an array is true, treating null, undefined, and missing values as false. Empty arrays return false.
+syntax: '{ $anyElementTrue: [<array_expression>] }'
+parameters:
+  - name: array_expression
+    type: object
+    required: true
+    description: Expression that resolves to an array of boolean values
+examples:
+  items:
+    - title: Check any condition true
+      description: Verify that at least one boolean value in array is true
+      query: 'db.surveys.aggregate([{ $project: { anyPassed: { $anyElementTrue: ["$testResults"] } } }])'
+      output:
+        value: Documents with anyPassed field indicating if any test result is true
+    - title: Check for any valid elements
+      description: Determine if any elements meet specific criteria
+      query: 'db.products.aggregate([{ $project: { hasInStock: { $anyElementTrue: [{ $map: { input: "$items", as: "item", in: { $gt: ["$$item.quantity", 0] } } }] } } }])'
+      output:
+        value: Documents with hasInStock field indicating if any items have positive quantity
+    - title: Any element validation
+      description: Check if any array elements pass boolean test
+      query: 'db.students.aggregate([{ $project: { passedAny: { $anyElementTrue: ["$examResults"] } } }])'
+      output:
+        value: Documents with passedAny field showing if student passed any exam
+related:
+  - reference: /reference/operator/allelementstrue
+  - reference: /reference/operator/setunion

@@ -1,3 +1,28 @@
 type: operator
 category: window
 name: $derivative
+description: Calculates the average rate of change of a field between the first and last documents within a specified window, useful for trend analysis.
+syntax: '{ $derivative: { input: <expression>, unit: <timeWindow> } }'
+parameters:
+  - name: input
+    type: object
+    required: true
+    description: Expression or field to calculate the rate of change for
+  - name: unit
+    type: string
+    required: true
+    description: Time window unit for the rate of change calculation
+examples:
+  items:
+    - title: Calculate derivative for total sales
+      description: Compute average rate of sales change within company partition over time
+      query: 'db.stores.aggregate([{ $match: { "company": { $in: ["First Up Consultants"] }, "$and": [{ "lastUpdated": { "$gt": ISODate("2024-12-01T03:06:24.180Z") } }, { "lastUpdated": { "$lt": ISODate("2025-12-01T03:55:17.557Z") } }] } }, { $setWindowFields: { "partitionBy": "$company", "sortBy": { "lastUpdated": 1 }, "output": { "storeAverageSales": { "$derivative": { "input": "$sales.totalSales", "unit": "week" }, "window": { "range": [-1, 0], "unit": "week" } } } } }])'
+      output:
+        value: Documents with calculated derivative showing average sales rate of change per week
+    - title: Price change derivative
+      description: Calculate rate of price change over monthly periods
+      query: 'db.products.aggregate([{ $setWindowFields: { "partitionBy": "$productId", "sortBy": { "priceDate": 1 }, "output": { "priceChangeRate": { "$derivative": { "input": "$price", "unit": "month" } } } } }])'
+      output:
+        value: Products with price change rates calculated over monthly intervals
+related:
+  - reference: /reference/operator/integral

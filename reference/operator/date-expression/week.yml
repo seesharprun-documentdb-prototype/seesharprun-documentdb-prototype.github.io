@@ -1,3 +1,85 @@
 type: operator
 category: date-expression
 name: $week
+description: Returns the week number for a date as a value between 0 and 53. Week 0 begins on January 1, and subsequent weeks begin on Sundays. If the date is null or missing, $week returns null.
+syntax: "$week: <dateExpression>"
+parameters:
+  - name: dateExpression
+    type: object
+    required: true
+    description: Any expression that resolves to a Date, Timestamp, or ObjectId.
+  - name: timezone
+    type: string
+    required: false
+    description: Optional. The timezone to use for the calculation. Can be an Olson Timezone Identifier (for example, "America/New_York") or a UTC offset (for example, "+0530").
+examples:
+  items:
+    - title: Get week number for store opening date
+      description: This query extracts the week number from the store opening date.
+      query: |
+        db.stores.aggregate([
+          { $match: { _id: "905d1939-e03a-413e-a9c4-221f74055aac" } },
+          {
+            $project: {
+              name: 1,
+              storeOpeningDate: 1,
+              openingWeek: { $week: { $toDate: "$storeOpeningDate" } }
+            }
+          }
+        ])
+      output:
+        value: |
+          [
+            {
+              "_id": "905d1939-e03a-413e-a9c4-221f74055aac",
+              "name": "Trey Research | Home Office Depot - Lake Freeda",
+              "storeOpeningDate": ISODate("2024-12-30T22:55:25.779Z"),
+              "openingWeek": 52
+            }
+          ]
+    - title: Group stores by opening week
+      description: This query groups stores by the week they were opened for analysis.
+      query: |
+        db.stores.aggregate([
+          {
+            $project: {
+              name: 1,
+              openingWeek: { $week: { $toDate: "$storeOpeningDate" } },
+              openingYear: { $year: { $toDate: "$storeOpeningDate" } }
+            }
+          },
+          {
+            $group: {
+              _id: { week: "$openingWeek", year: "$openingYear" },
+              storeCount: { $sum: 1 },
+              stores: { $push: "$name" }
+            }
+          },
+          { $sort: { "_id.year": 1, "_id.week": -1 } },
+          { $limit : 3 } ])
+      output:
+        value: |
+          [
+            {
+              "_id": { "week": 40, "year": 2021 },
+              "storeCount": 1,
+              "stores": [ "First Up Consultants | Bed and Bath Center - South Amir" ]
+            },
+            {
+              "_id": { "week": 52, "year": 2024 },
+              "storeCount": 1,
+              "stores": [ "Trey Research | Home Office Depot - Lake Freeda" ]
+            },
+            {
+              "_id": { "week": 50, "year": 2024 },
+              "storeCount": 2,
+              "stores": [
+                "Fourth Coffee | Paper Product Bazaar - Jordanechester",
+                "Adatum Corporation | Pet Supply Center - West Cassie"
+              ]
+            }
+          ]
+related:
+  - reference: $isoWeek
+  - reference: $year
+  - reference: $month

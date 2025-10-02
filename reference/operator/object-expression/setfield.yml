@@ -1,3 +1,38 @@
 type: operator
 category: object-expression
 name: $setField
+description: Adds, updates, or removes fields in a document, allowing dynamic field manipulation with support for computed field names and conditional operations.
+syntax: '{ $setField: { field: <field_name>, input: <input_document>, value: <field_value> } }'
+parameters:
+  - name: field
+    type: string
+    required: true
+    description: The name of the field to set, can be a string or expression
+  - name: input
+    type: object
+    required: true
+    description: The input document to modify
+  - name: value
+    type: object
+    required: true
+    description: The value to set for the field, use $$REMOVE to delete field
+examples:
+  items:
+    - title: Add new field dynamically
+      description: Add a new field with computed name and value
+      query: 'db.products.aggregate([{ $addFields: { result: { $setField: { field: "computedPrice", input: "$$ROOT", value: { $multiply: ["$price", 1.1] } } } } }])'
+      output:
+        value: Document with result containing the original document plus computedPrice field
+    - title: Update existing field
+      description: Modify an existing field value using setField
+      query: 'db.products.aggregate([{ $addFields: { updated: { $setField: { field: "status", input: "$$ROOT", value: "processed" } } } }])'
+      output:
+        value: Document with updated field containing document with modified status
+    - title: Remove field conditionally
+      description: Remove field from document using $$REMOVE value
+      query: 'db.products.aggregate([{ $addFields: { cleaned: { $setField: { field: "tempField", input: "$$ROOT", value: "$$REMOVE" } } } }])'
+      output:
+        value: Document with cleaned field containing document without tempField
+related:
+  - reference: /reference/operator/getfield
+  - reference: /reference/operator/unsetfield

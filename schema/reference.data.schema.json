@@ -120,7 +120,9 @@
               "object",
               "string",
               "number",
-              "pattern"
+              "pattern",
+              "array",
+              "expression"
             ],
             "description": "The data type of the parameter, such as string, object, number, or pattern. This helps validate and document expected input."
           },

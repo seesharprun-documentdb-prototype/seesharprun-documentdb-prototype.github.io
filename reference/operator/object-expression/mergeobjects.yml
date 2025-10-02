@@ -1,3 +1,30 @@
 type: operator
 category: object-expression
 name: $mergeObjects
+description: Combines multiple documents into a single document, merging fields from the input documents with later documents overriding fields from earlier documents.
+syntax: '{ $mergeObjects: [<expression1>, <expression2>, ...] }'
+parameters:
+  - name: expressions
+    type: object
+    required: true
+    description: Array of expressions that resolve to documents to be merged
+examples:
+  items:
+    - title: Merge two documents
+      description: Combine two document objects into one
+      query: 'db.products.aggregate([{ $project: { merged: { $mergeObjects: ["$details", "$specifications"] } } }])'
+      output:
+        value: Document with merged field containing combined details and specifications
+    - title: Merge with literal values
+      description: Merge document with literal field values
+      query: 'db.products.aggregate([{ $project: { result: { $mergeObjects: ["$item", { status: "processed", timestamp: new Date() }] } } }])'
+      output:
+        value: Document with result field containing merged item and literal fields
+    - title: Conditional merge
+      description: Merge documents conditionally based on field existence
+      query: 'db.products.aggregate([{ $project: { combined: { $mergeObjects: [{ $ifNull: ["$primary", {}] }, { $ifNull: ["$secondary", {}] }] } } }])'
+      output:
+        value: Document with combined field merging primary and secondary objects
+related:
+  - reference: /reference/operator/objecttoarray
+  - reference: /reference/operator/setfield
