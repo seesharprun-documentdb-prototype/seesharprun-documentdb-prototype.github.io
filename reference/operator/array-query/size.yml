@@ -2,6 +2,19 @@ type: operator
 category: array-query
 name: $size
 description: |-
-  The `$size` operator is used to query documents where an array field has a specified number of elements. This operator is useful when you need to find documents based on the size of an array field, such as finding documents with some items in a list.
+  The `$size` operator matches any array with the specified number of elements.
+syntax: |-
+  { field: { $size: <number> } }
+parameters:
+  - name: field
+    type: string
+    required: true
+    description: |-
+      The field to query.
+  - name: <number>
+    type: number
+    required: true
+    description: |-
+      The number of elements the array must contain.
 related:
   - reference: /operator/evaluation-query/regex

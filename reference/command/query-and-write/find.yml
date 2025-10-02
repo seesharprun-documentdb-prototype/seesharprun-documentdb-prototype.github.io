@@ -3,7 +3,6 @@ category: query-and-write
 name: find
 description: |-
   The `find` command is used to query documents within a collection. This command is fundamental for data retrieval operations and can be customized with filters, projections, and query options to fine-tune the results.
-  The find command in Azure Cosmos DB for MongoDB (vCore) is used to query documents within a collection. This command is fundamental for data retrieval operations and can be customized with filters, projections, and query options to fine-tune the results.
 summary: Returns documents that match a specified filter criteria in a collection.
 syntax: db.collection.find(query, projection, options)
 parameters:
