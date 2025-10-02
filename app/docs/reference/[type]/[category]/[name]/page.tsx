@@ -3,8 +3,7 @@ import { notFound } from 'next/navigation';
 import Code from '../../../../../components/Code';
 import Breadcrumb from '../../../../../components/Breadcrumb';
 import { getAllReferenceParams, getReferenceByPath } from '../../../../../services/referenceService';
-import pluralize from 'pluralize';
-import { capitalCase } from 'change-case';
+import { kebabCase } from 'change-case';
 
 export async function generateMetadata({ params }: { params: Promise<{ type: string; category: string; name: string }> }) {
   const { type, category, name } = await params;
@@ -49,6 +48,7 @@ export default async function ReferencePage({ params }: { params: Promise<{ type
       {/* Syntax Section */}
       {data.syntax && data.syntax.length > 0 && (
         <section className="mb-8">
+          <a className="invisible scroll-mt-24" id={'syntax'} />
           <h2 className="text-2xl font-bold text-white mb-4">Syntax</h2>
           <div className="bg-neutral-900 rounded-lg p-6 border border-neutral-700/50 overflow-x-auto">
             <Code code={data.syntax} />
@@ -59,6 +59,7 @@ export default async function ReferencePage({ params }: { params: Promise<{ type
       {/* Parameters Section */}
       {data.parameters && data.parameters.length > 0 && (
         <section className="mb-8">
+          <a className="invisible scroll-mt-24" id={'parameters'} />
           <h2 className="text-2xl font-bold text-white mb-4">Parameters</h2>
           <div className="space-y-4">
             {data.parameters.map((param, index) => (
@@ -86,11 +87,13 @@ export default async function ReferencePage({ params }: { params: Promise<{ type
       {/* Examples Section */}
       {data.examples && (
         <section className="mb-8">
+          <a className="invisible scroll-mt-24" id={'examples'} />
           <h2 className="text-2xl font-bold text-white mb-4">Examples</h2>
 
           {/* Sample Data */}
           {data.examples.sample && (
             <div className="mb-6">
+              <a className="invisible scroll-mt-24" id={'sample-data'} />
               <h3 className="text-lg font-semibold text-gray-200 mb-3">Sample Data</h3>
               <div className="bg-neutral-900 rounded-lg p-6 border border-neutral-700/50 overflow-x-auto">
                 <Code code={typeof data.examples.sample === 'string' ? data.examples.sample : JSON.stringify(data.examples.sample, null, 2)} language='json' />
@@ -103,6 +106,7 @@ export default async function ReferencePage({ params }: { params: Promise<{ type
             <div className="space-y-6">
               {data.examples.items.map((example, index) => (
                 <div key={index} className="bg-neutral-800/30 rounded-lg border border-neutral-700/50 p-6">
+                  <a className="invisible scroll-mt-24" id={kebabCase(example.title)} />
                   <h3 className="text-xl font-semibold text-white mb-3">{example.title}</h3>
 
                   {example.explanation && (
@@ -142,7 +146,8 @@ export default async function ReferencePage({ params }: { params: Promise<{ type
       {/* Related Section */}
       {data.related && data.related.length > 0 && (
         <section className="mb-8">
-          <h2 className="text-2xl font-bold text-white mb-4">Related References</h2>
+          <a className="invisible scroll-mt-24" id={'related'} />
+          <h2 className="text-2xl font-bold text-white mb-4">Related</h2>
           <div className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
             <ul className="space-y-2">
               {data.related.map((rel, index) => (

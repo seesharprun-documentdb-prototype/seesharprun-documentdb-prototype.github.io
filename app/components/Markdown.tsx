@@ -5,6 +5,7 @@ import remarkGfm from "remark-gfm";
 import { useMemo } from 'react';
 import type { ReactElement } from 'react';
 import Code from './Code';
+import { kebabCase } from 'change-case';
 
 export default function Markdown({ content }: { content: string }) {
   const processedContent = useMemo(() => {
@@ -35,9 +36,10 @@ export default function Markdown({ content }: { content: string }) {
 
         elements.push(
           <div key={`section-${index}`} className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-6">
-            <h3 className="text-2xl font-semibold text-white mb-4">
+            <a className="invisible scroll-mt-24" id={kebabCase(title)} />
+            <h2 className="text-2xl font-semibold text-white mb-4">
               {title}
-            </h3>
+            </h2>
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               components={getMarkdownComponents()}
@@ -66,16 +68,16 @@ function getMarkdownComponents() {
 
     // H3 sections (subsections within H2 cards)
     h3: ({ children, ...props }: any) => (
-      <h4 className="text-lg font-medium text-white mb-3 mt-6">
+      <h3 className="text-lg font-medium text-white mb-3 mt-6">
         {children}
-      </h4>
+      </h3>
     ),
 
     // H4 subsections
     h4: ({ children, ...props }: any) => (
-      <h5 className="text-base font-medium text-white mb-2 mt-4">
+      <h4 className="text-base font-medium text-white mb-2 mt-4">
         {children}
-      </h5>
+      </h4>
     ),
 
     // Unordered lists with blue round bullets
