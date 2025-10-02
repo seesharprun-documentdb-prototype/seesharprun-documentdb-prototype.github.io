@@ -1,5 +1,5 @@
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 export default function Index({
   code,
@@ -12,7 +12,7 @@ export default function Index({
     <section className="text-sm">
       <SyntaxHighlighter
         language={language}
-        style={tomorrow}
+        style={atomDark}
         customStyle={{
           margin: 0,
           padding: 0,

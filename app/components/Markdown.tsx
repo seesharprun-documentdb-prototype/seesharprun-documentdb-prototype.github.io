@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useEffect, useState } from 'react';
 import type { ReactElement } from 'react';
+import Code from './Code';
 
 export default function Markdown({ content }: {
   content: string;
@@ -83,66 +84,157 @@ function getMarkdownComponents() {
 
     // Unordered lists with blue round bullets
     ul: ({ depth, ...props }: any) => (
-      <ul className={depth > 0 ? "ml-6 space-y-2 text-gray-300 mb-4" : "space-y-2 text-gray-300 mb-4"} {...props} />
+      <ul
+        className={depth > 0 ? "ml-6 space-y-2 text-gray-300 mb-4 list-disc list-inside" : "space-y-2 text-gray-300 mb-4 list-disc list-inside"}
+        {...props}
+      />
     ),
 
     // Ordered lists with blue numbers
-    ol: ({ ...props }: any) => (
-      <ol className="space-y-2 text-gray-300 mb-4" {...props} />
+    ol: ({ ...props }) => (
+      <ol
+        className="space-y-2 text-gray-300 mb-4 list-decimal list-inside"
+        {...props}
+      />
     ),
 
-    // List items with custom styling
-    li: ({ children, ordered, index, ...props }: any) => {
-      if (ordered) {
-        return (
-          <li className="flex items-start" {...props}>
-            <span className="text-blue-400 mr-3 flex-shrink-0">1.</span>
-            <span>{children}</span>
-          </li>
-        );
-      }
-
-      return (
-        <li className="flex items-start" {...props}>
-          <span className="text-blue-400 mr-3 mt-1 flex-shrink-0">•</span>
-          <span>{children}</span>
-        </li>
-      );
-    },
+    // List items
+    li: ({ ...props }) => (
+      <li className="marker:text-blue-400 marker:mr-3 marker:flex-shrink-0" {...props} />
+    ),
 
     // Inline code
     code: ({ inline, children, ...props }: any) => {
-      if (inline) {
-        return (
-          <code className="bg-neutral-900/50 px-2 py-1 rounded text-green-400 font-mono text-sm" {...props}>
-            {children}
-          </code>
-        );
-      }
       return (
-        <code className="text-green-400 font-mono text-sm" {...props}>
+        <code className="bg-neutral-900/50 px-2 py-1 rounded text-green-400 font-mono text-sm" {...props}>
           {children}
         </code>
       );
     },
 
     // Code blocks
-    pre: ({ children, ...props }: any) => (
-      <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30 mb-4">
-        <pre className="text-green-400 font-mono text-sm overflow-x-auto" {...props}>
-          {children}
-        </pre>
-      </div>
-    ),
+    pre: ({ children, ...props }: any) => {
+      // children is usually a single <code> element
+      const codeElement = Array.isArray(children) ? children[0] : children;
+      const codeString = codeElement?.props?.children
+        ? String(codeElement.props.children).replace(/\n$/, '')
+        : '';
+      const lang =
+        codeElement?.props?.className?.replace('language-', '') || 'javascript';
 
-    // Blockquotes (notes)
-    blockquote: ({ children, ...props }: any) => (
-      <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4 mb-4">
-        <div className="text-blue-200 text-sm">
+      return (
+        <div
+          className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30 mb-4"
+          {...props}
+        >
+          <Code code={codeString} language={lang} />
+        </div>
+      );
+    },
+
+    // Blockquotes (notes with GitHub-style alerts)
+    blockquote: ({ children, ...props }: any) => {
+      // Try to extract text content to check for alert type
+      let alertType: string | null = null;
+      let modifiedChildren = children;
+
+      // Get the text content from the first child
+      const getTextContent = (node: any): string => {
+        if (typeof node === 'string') return node;
+        if (Array.isArray(node)) return node.map(getTextContent).join('');
+        if (node?.props?.children) return getTextContent(node.props.children);
+        return '';
+      };
+
+      const textContent = getTextContent(children);
+
+      // Check for alert markers
+      if (textContent.trim().startsWith('[!NOTE]')) {
+        alertType = 'note';
+      } else if (textContent.trim().startsWith('[!WARNING]')) {
+        alertType = 'warning';
+      } else if (textContent.trim().startsWith('[!IMPORTANT]')) {
+        alertType = 'important';
+      } else if (textContent.trim().startsWith('[!TIP]')) {
+        alertType = 'tip';
+      } else if (textContent.trim().startsWith('[!CAUTION]')) {
+        alertType = 'caution';
+      }
+
+      // If we found an alert type, remove the marker from the content
+      if (alertType) {
+        const removeMarker = (node: any): any => {
+          if (typeof node === 'string') {
+            // Remove marker from any string node
+            return node.replace(/^\[!(NOTE|WARNING|IMPORTANT|TIP|CAUTION)\]\s*/, '');
+          }
+          if (Array.isArray(node)) {
+            // Recursively process all children
+            return node.map(removeMarker);
+          }
+          if (node?.props?.children) {
+            // Recursively process children of React elements
+            return {
+              ...node,
+              props: {
+                ...node.props,
+                children: removeMarker(node.props.children)
+              }
+            };
+          }
+          return node;
+        };
+
+        modifiedChildren = removeMarker(children);
+      }
+
+      // Style based on alert type
+      const styles = {
+        note: {
+          container: 'bg-blue-900/20 border-blue-500/30',
+          text: 'text-blue-200',
+          title: 'Note'
+        },
+        warning: {
+          container: 'bg-yellow-900/20 border-yellow-500/30',
+          text: 'text-yellow-200',
+          title: 'Warning'
+        },
+        important: {
+          container: 'bg-purple-900/20 border-purple-500/30',
+          text: 'text-purple-200',
+          title: 'Important'
+        },
+        tip: {
+          container: 'bg-green-900/20 border-green-500/30',
+          text: 'text-green-200',
+          title: 'Tip'
+        },
+        caution: {
+          container: 'bg-red-900/20 border-red-500/30',
+          text: 'text-red-200',
+          title: 'Caution'
+        }
+      };
+
+      const style = alertType ? styles[alertType as keyof typeof styles] : null;
+
+      if (style) {
+        return (
+          <div className={`${style.container} ${style.text} border rounded-lg p-4 mb-4 [&_p]:text-sm [&_p]:mb-0 [&_p]:leading-relaxed [&_code]:text-xs [&_code]:bg-opacity-30`} {...props}>
+            <div className="font-semibold mb-2">{style.title}</div>
+            {modifiedChildren}
+          </div>
+        );
+      }
+
+      // Default blockquote style (blue note)
+      return (
+        <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4 mb-4 [&_p]:text-sm [&_p]:mb-0 [&_p]:leading-relaxed [&_code]:text-xs" {...props}>
           {children}
         </div>
-      </div>
-    ),
+      );
+    },
 
     // Links
     a: ({ children, href, ...props }: any) => (
