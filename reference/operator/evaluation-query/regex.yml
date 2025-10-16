@@ -82,7 +82,6 @@ examples:
       query: |-
         db.stores.find({ "name": { "$regex": /Home/ }}, { name: 1 })
       output:
-        devlang: bson
         value: |-
           [
             {
@@ -102,7 +101,6 @@ examples:
       query: |-
         db.stores.find({ "name": { $regex: /outlet/, $options: "i" }}, { name: 1 })
       output:
-        devlang: bson
         value: |-
           [
             {

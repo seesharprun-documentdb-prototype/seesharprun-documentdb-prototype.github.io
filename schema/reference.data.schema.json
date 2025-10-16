@@ -180,15 +180,6 @@
                   "value"
                 ],
                 "properties": {
-                  "devlang": {
-                    "type": "string",
-                    "enum": [
-                      "bson",
-                      "json",
-                      "plaintext"
-                    ],
-                    "description": "The format of the output, such as BSON, JSON, or plaintext. This helps users interpret the results."
-                  },
                   "value": {
                     "type": "string",
                     "description": "The output produced by the query or command, shown in the specified format."

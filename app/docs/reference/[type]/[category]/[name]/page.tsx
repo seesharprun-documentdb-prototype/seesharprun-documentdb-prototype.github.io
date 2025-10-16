@@ -66,9 +66,9 @@ export default async function ReferencePage({ params }: { params: Promise<{ type
               <div key={index} className="bg-neutral-800/50 backdrop-blur-sm rounded-lg border border-neutral-700/50 p-5">
                 <div className="flex items-center gap-3 mb-2">
                   <code className="text-blue-300 font-mono font-semibold text-lg">{param.name}</code>
-                  <span className="text-xs px-2 py-1 rounded bg-purple-900/40 text-purple-300 border border-purple-700/50">
+                  {param.type ? <span className="text-xs px-2 py-1 rounded bg-purple-900/40 text-purple-300 border border-purple-700/50">
                     {param.type}
-                  </span>
+                  </span> : <></>}
                   {param.required && (
                     <span className="text-xs px-2 py-1 rounded bg-red-900/40 text-red-300 border border-red-700/50">
                       required
