@@ -10,7 +10,7 @@ export const getMetadata = ({ title, description, extraKeywords = [] }: { title:
     description,
     images: [
       {
-        url: 'https://seesharprun-documentdb-prototype.github.io/images/social-card.png',
+        url: 'https://documentdb.io/images/social-card.png',
       }
     ]
   },
@@ -20,7 +20,7 @@ export const getMetadata = ({ title, description, extraKeywords = [] }: { title:
     description,
     images: [
       {
-        url: 'https://seesharprun-documentdb-prototype.github.io/images/social-card.png',
+        url: 'https://documentdb.io/images/social-card.png',
       }
     ]
   },
