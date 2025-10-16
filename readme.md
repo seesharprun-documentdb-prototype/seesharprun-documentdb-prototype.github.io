@@ -42,6 +42,11 @@ You can develop and preview the site in a fully configured environment using Git
 
 - The environment includes Node.js, Next.js, and Tailwind CSS setup for instant development and preview.
 
+- Install packages with `npm install`
+
 - Use `npm run dev` to start the local server and preview changes.
 
 - The environment also includes the required Visual Studio Code extensions to edit the Markdown and YAML files with full completion support.
+
+  > [!TIP]
+  > You can use these same steps if you opt to develop on your local machine. Ensure that you are using at least the latest LTS version of Node.js
