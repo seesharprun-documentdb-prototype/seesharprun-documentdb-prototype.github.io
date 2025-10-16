@@ -12,12 +12,10 @@ syntax: |-
   );
 parameters:
   - name: query
-    type: object
     required: true
     description: |-
       A document specifying the selection criteria using query operators.
   - name: options
-    type: object
     required: false
     description: |-
       A document specifying options including, but not limited to `limit` and `skip`.
@@ -98,4 +96,4 @@ examples:
         value: |-
           1
 related:
-  - reference: /command/query-and-write/find
+  - reference: /operator/evaluation-query/regex

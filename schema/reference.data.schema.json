@@ -106,7 +106,6 @@
         "type": "object",
         "required": [
           "name",
-          "type",
           "required"
         ],
         "properties": {
