@@ -3,15 +3,17 @@ import { notFound } from 'next/navigation';
 import Code from '../../../../../components/Code';
 import Breadcrumb from '../../../../../components/Breadcrumb';
 import { getAllReferenceParams, getReferenceByPath } from '../../../../../services/referenceService';
+import { getMetadata } from "../../../../../services/metadataService";
 import { kebabCase } from 'change-case';
 
 export async function generateMetadata({ params }: { params: Promise<{ type: string; category: string; name: string }> }) {
   const { type, category, name } = await params;
   const data = getReferenceByPath(type, category, name);
-  return {
+  return getMetadata({
     title: `${data?.name || 'Reference'} - DocumentDB MQL Reference`,
-    description: data?.description || data?.summary || undefined,
-  };
+    description: data?.description || data?.summary || '',
+    extraKeywords: ['reference', type, category, name]
+  });
 }
 
 export async function generateStaticParams(): Promise<{ type: string; category: string; name: string }[]> {

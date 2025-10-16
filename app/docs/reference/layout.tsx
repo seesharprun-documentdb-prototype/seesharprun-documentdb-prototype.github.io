@@ -1,6 +1,14 @@
+import { Metadata } from 'next';
 import Link from 'next/link';
 import Index from '../../components/Index';
 import { getReferencesGroupedByTypeAndCategory } from '../../services/referenceService';
+import { getMetadata } from "../../services/metadataService";
+
+export const metadata: Metadata = getMetadata({
+  title: 'DocumentDB MQL Reference', 
+  description: 'MongoDB Query Language (MQL) reference for DocumentDB. DocumentDB is a powerful, scalable open-source database solution with MongoDB query compatibility.',
+  extraKeywords: ['reference']
+});
 
 export default function ReferenceLayout({
   children,

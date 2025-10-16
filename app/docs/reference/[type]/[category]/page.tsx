@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import ReferenceTable from '../../../../components/Grid';
 import Breadcrumb from '../../../../components/Breadcrumb';
 import { getReferencesByTypeGroupedByCategory, getAllTypeCategoryCombinations, isValidTypeCategoryCombination, getCategoryDescription } from '../../../../services/referenceService';
+import { getMetadata } from "../../../../services/metadataService";
 import pluralize from 'pluralize';
 import { capitalCase } from 'change-case';
 
@@ -14,10 +15,11 @@ export async function generateMetadata({ params }: { params: Promise<{ type: str
   const { type, category } = await params;
   const title = `${capitalCase(category)} ${capitalCase(pluralize(type))}`;
   const description = getCategoryDescription(type, category);
-  return {
-    title: `${title} - DocumentDB MQL Reference`,
-    description: description || undefined,
-  };
+  return getMetadata({
+    title: `${title} - DocumentDB MQL Reference`, 
+    description: description || '',
+    extraKeywords: ['reference', type, category]
+  });
 }
 
 export default async function CommandReferencePage({ params }: { params: Promise<{ type: string, category: string }> }) {

@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
+import { getMetadata } from "./services/metadataService";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "DocumentDB - Open Source Document Database",
-  description: "A powerful, scalable open-source document database solution",
-};
+export const metadata: Metadata = getMetadata({
+  title: 'DocumentDB - Open Source Document Database', 
+  description: 'A powerful, scalable open-source document database solution. Built on the principles of transparency, developer freedom, and standardization, our mission is to build a MongoDB compatible open source document database based on PostgreSQL.',
+});
 
 export default function RootLayout({
   children,
