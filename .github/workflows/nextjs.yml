@@ -24,28 +24,37 @@ concurrency:
 jobs:
   # Build job
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Install required packages
         run: |
           until sudo apt-get update; do sleep 1; done
-          sudo apt-get install -y createrepo-c dpkg-dev gnupg2 python3
+          sudo apt-get install -y createrepo-c dpkg-dev dpkg-sig gnupg2 python3
       - name: Setup GPG
         id: import_gpg
         uses: crazy-max/ghaction-import-gpg@v6
         with:
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
         continue-on-error: true
-      - name: Set GPG fingerprint
+      - name: Set GPG fingerprint and version config
         run: |
+          # Configure GPG signing
           if [ -n "${{ steps.import_gpg.outputs.fingerprint }}" ]; then
             echo "GPG_FINGERPRINT=${{ steps.import_gpg.outputs.fingerprint }}" >> $GITHUB_ENV
-            echo "✓ GPG key loaded: ${{ steps.import_gpg.outputs.fingerprint }}"
+            echo "✅ GPG key loaded successfully"
+            echo "   Fingerprint: ${{ steps.import_gpg.outputs.fingerprint }}"
+            echo "   Key ID: ${{ steps.import_gpg.outputs.keyid }}"
+            echo "   User ID: ${{ steps.import_gpg.outputs.name }} <${{ steps.import_gpg.outputs.email }}>"
           else
-            echo "⚠ No GPG key configured - packages will not be signed"
+            echo "⚠️ No GPG key configured - packages will not be signed"
+            echo "   To enable signing, add GPG_PRIVATE_KEY to repository secrets"
           fi
+          
+          # Configure DocumentDB version (can be overridden by repository variables)
+          echo "DOCUMENTDB_VERSION=${{ vars.DOCUMENTDB_VERSION || 'latest' }}" >> $GITHUB_ENV
+          echo "MULTI_VERSION=${{ vars.MULTI_VERSION || 'true' }}" >> $GITHUB_ENV
       - name: Detect package manager
         id: detect-package-manager
         run: |
