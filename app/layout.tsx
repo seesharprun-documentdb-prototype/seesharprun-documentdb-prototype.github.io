@@ -2,19 +2,20 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
+import { getMetadata } from "./services/metadataService";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "DocumentDB - Open Source Document Database",
-  description: "A powerful, scalable open-source document database solution",
-};
+export const metadata: Metadata = getMetadata({
+  title: 'DocumentDB - Open Source Document Database', 
+  description: 'A powerful, scalable open-source document database solution. Built on the principles of transparency, developer freedom, and standardization, our mission is to build a MongoDB compatible open source document database based on PostgreSQL.',
+});
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -25,7 +26,7 @@ export default function RootLayout({
             <div className="text-center">
               <p className="text-gray-400 text-sm">
                 Copyright © DocumentDB a Series of LF Projects, LLC.
-For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
+                For web site terms of use, trademark policy and other project policies please see https://lfprojects.org.
               </p>
             </div>
           </div>

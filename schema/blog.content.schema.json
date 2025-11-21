@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Blog Post Link",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "featured": {
+        "type": "boolean",
+        "description": "Indicates if the blog post should be highlighted as a featured article. This property is only included when its value is true, and featured posts may be displayed more prominently in listings or on the homepage."
+      },
+      "title": {
+        "type": "string",
+        "description": "The main headline or title of the blog post. This should be a concise, attention-grabbing summary of the article's content, suitable for display in blog listings and search results."
+      },
+      "category": {
+        "type": "string",
+        "description": "A unique identifier representing the source or topical category of the blog post. This value determines which section or feed the post appears in. Must be one of: microsoft-open-source-blog, aws-blog, azure-cosmos-db-blog, yugabytedb-blog.",
+        "enum": [
+          "microsoft-open-source-blog",
+          "aws-blog",
+          "azure-cosmos-db-blog",
+          "yugabytedb-blog"
+        ]
+      },
+      "description": {
+        "type": "string",
+        "description": "A brief summary or abstract of the blog post, typically one or two sentences. This should provide readers with a clear idea of the article's main topic, purpose, and value, and is used in previews, search results, and social sharing."
+      },
+      "tags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "minItems": 0,
+        "maxItems": 4,
+        "description": "A set of up to four keywords or phrases that describe the main topics, technologies, or themes covered in the blog post. Tags help users filter and discover related content, and improve search relevance."
+      },
+      "uri": {
+        "type": "string",
+        "description": "The full URL or path to the original blog post or article. This should be a valid, accessible link that directs users to the complete content, whether hosted internally or on an external site."
+      }
+    },
+    "required": [
+      "title",
+      "category",
+      "description",
+      "tags",
+      "uri"
+    ]
+  }
+}

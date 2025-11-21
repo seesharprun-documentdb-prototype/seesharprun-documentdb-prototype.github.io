@@ -1,0 +1,21 @@
+{
+  "yaml.schemas": {
+    "./schema/blog.content.schema.json": [
+      "blogs/content.{yml,yaml}"
+    ],
+    "./schema/reference.content.schema.json": [
+      "reference/content.{yml,yaml}"
+    ],
+    "./schema/reference.data.schema.json": [
+      "reference/*/**/*.{yml,yaml}"
+    ],
+    "./schema/articles.content.schema.json": [
+      "articles/**/content.{yml,yaml}"
+    ],
+    "./schema/articles.navigation.schema.json": [
+      "articles/**/navigation.{yml,yaml}"
+    ]
+  },
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true
+}
