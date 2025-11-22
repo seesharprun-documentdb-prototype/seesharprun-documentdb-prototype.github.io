@@ -1,0 +1,114 @@
+type: command
+category: aggregation
+name: aggregate
+description: |-
+  The aggregate command is used to process data records and return computed results.
+summary: |-
+  The `aggregate` command is used to process data records and return computed results. It performs operations on the data, such as filtering, grouping, and sorting, and can transform the data in various ways. The `aggregate` command is highly versatile and is commonly used for data analysis and reporting.
+syntax: |-
+  db.collection.aggregate(pipeline, options)
+parameters:
+- name: pipeline
+  required: true
+  description: |-
+    An array of aggregation stages that process and transform the data.
+- name: options
+  required: false
+  description: |-
+    Optional. Specifies more options for the aggregation, such as `explain`, `allowDiskUse`, and `cursor`.
+examples:
+  items:
+  - title: Calculate total sales by category
+    description: |-
+      This example demonstrates how to calculate the total sales for each category in the `stores` collection.
+    query: |-
+      db.stores.aggregate([
+        {
+          $unwind: "$sales.salesByCategory"
+        },
+        {
+          $group: {
+            _id: "$sales.salesByCategory.categoryName",
+            totalSales: { $sum: "$sales.salesByCategory.totalSales" }
+          }
+        }
+      ])
+    output:
+      value: |-
+        [
+          { _id: 'Christmas Trees', totalSales: 3147281 },
+          { _id: 'Nuts', totalSales: 3002332 },
+          { _id: 'Camping Tables', totalSales: 4431667 }
+        ]
+  - title: Find stores with full-time staff greater than 10
+    description: |-
+      This example shows how to filter stores where the number of full-time staff is greater than 10.
+    query: |-
+      db.stores.aggregate([
+        {
+          $match: {
+            "staff.totalStaff.fullTime": { $gt: 10 }
+          }
+        }
+      ])
+    output:
+      value: |-
+        [
+          {
+            _id: '7954bd5c-9ac2-4c10-bb7a-2b79bd0963c5',
+            name: "Lenore's DJ Equipment Store",
+            location: { lat: -9.9399, lon: -0.334 },
+            staff: { totalStaff: { fullTime: 18, partTime: 7 } },
+            sales: {
+              totalSales: 35911,
+              salesByCategory: [ { categoryName: 'DJ Headphones', totalSales: 35911 } ]
+            },
+            promotionEvents: [
+              {
+                discounts: [
+                  { categoryName: 'DJ Turntables', discountPercentage: 18 },
+                  { categoryName: 'DJ Mixers', discountPercentage: 15 }
+                ]
+              }
+            ],
+            tag: [ '#SeasonalSale', '#FreeShipping', '#MembershipDeals' ]
+          }
+        ]
+  - title: List all promotion events with discounts greater than 15%
+    description: |-
+      This example lists all promotion events where any discount is greater than 15%.
+    query: |-
+      db.stores.aggregate([
+        {
+          $unwind: "$promotionEvents"
+        },
+        {
+          $unwind: "$promotionEvents.discounts"
+        },
+        {
+          $match: {
+            "promotionEvents.discounts.discountPercentage": { $gt: 15 }
+          }
+        },
+        {
+          $group: {
+            _id: "$promotionEvents.eventName",
+            discounts: { $push: "$promotionEvents.discounts" }
+          }
+        }
+      ])
+    output:
+      value: |-
+        [
+          {
+            [
+              { categoryName: 'Basketball Gear', discountPercentage: 23 },
+              { categoryName: 'Wool Carpets', discountPercentage: 22 },
+              {
+                categoryName: 'Portable Bluetooth Speakers',
+                discountPercentage: 24
+              }
+            ]
+          }
+        ]
+related: []
