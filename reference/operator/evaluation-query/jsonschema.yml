@@ -1,0 +1,228 @@
+type: operator
+category: evaluation-query
+name: $jsonSchema
+description: |-
+  The $jsonSchema operator validates documents against a JSON Schema definition for data validation and structure enforcement. Discover supported features and limitations.
+summary: |-
+  The `$jsonSchema` operator is used to validate documents against a JSON Schema specification. It ensures that documents conform to a predefined structure, data types, and validation rules.
+syntax: |-
+  db.createCollection("collectionName", {
+    validator: {
+      $jsonSchema: {
+        bsonType: "object",
+        required: ["field1", "field2"],
+        properties: {
+          field1: {
+            bsonType: "string",
+            description: "Description of field1 requirements"
+          },
+          field2: {
+            bsonType: "int",
+            minimum: 0,
+            description: "Description of field2 requirements"
+          }
+        }
+      }
+    },
+    validationLevel: "strict", // Optional: "strict" or "moderate"
+    validationAction: "error"   // Optional: "error" or "warn"
+  })
+parameters:
+- name: bsonType
+  required: true
+  description: |-
+    Specifies the Binary JSON (BSON) types that the field must match. Accepts string aliases used by the $type operator.
+- name: properties
+  required: true
+  description: |-
+    Object defining validation rules for specific fields.
+- name: minimum/maximum
+  required: true
+  description: |-
+    Numeric constraints for number fields.
+- name: minLength/maxLength
+  required: true
+  description: |-
+    String length constraints.
+- name: minItems/maxItems
+  required: true
+  description: |-
+    Array length constraints.
+- name: pattern
+  required: true
+  description: |-
+    Regular expression pattern for string validation.
+- name: items
+  required: true
+  description: |-
+    Schema validation for array elements.
+- name: uniqueItems
+  required: true
+  description: |-
+    Boolean indicating if array items must be unique.
+examples:
+  sample: >-
+    {
+      "_id": "2cf3f885-9962-4b67-a172-aa9039e9ae2f",
+      "name": "First Up Consultants | Bed and Bath Center - South Amir",
+      "location": {
+        "lat": 60.7954,
+        "lon": -142.0012
+      },
+      "staff": {
+        "totalStaff": {
+          "fullTime": 18,
+          "partTime": 17
+        }
+      },
+      "sales": {
+        "totalSales": 37701,
+        "salesByCategory": [
+          {
+            "categoryName": "Mattress Toppers",
+            "totalSales": 37701
+          }
+        ]
+      }
+    }
+  items:
+  - title: Basic Structure Validation
+    description: |-
+      This query retrieves all stores with names between 5 and 100 characters long, and that geographic coordinates fall within valid ranges: latitude between -90 and 90, and longitude between -180 and 180.
+    query: |-
+      db.stores.find({
+        $jsonSchema: {
+          bsonType: "object",
+          properties: {
+            _id: {
+              bsonType: "string"
+            },
+            name: {
+              bsonType: "string",
+              minLength: 5,
+              maxLength: 100
+            },
+            location: {
+              bsonType: "object",
+              properties: {
+                lat: {
+                  bsonType: "double",
+                  minimum: -90,
+                  maximum: 90
+                },
+                lon: {
+                  bsonType: "double",
+                  minimum: -180,
+                  maximum: 180
+                }
+              }
+            }
+          }
+        }
+      }).limit(1)
+  - title: Sales Validation with Array Items
+    description: |-
+      This query retrieves all store documents where the sales field is a valid object containing a non-negative totalSales value and a salesByCategory array with at least one item.
+    query: |-
+      db.stores.find({
+        $jsonSchema: {
+          bsonType: "object",
+          properties: {
+            sales: {
+              bsonType: "object",
+              properties: {
+                totalSales: {
+                  bsonType: "int",
+                  minimum: 0
+                },
+                salesByCategory: {
+                  bsonType: "array",
+                  minItems: 1,
+                  items: {
+                    bsonType: "object",
+                    properties: {
+                      categoryName: {
+                        bsonType: "string",
+                        minLength: 1
+                      },
+                      totalSales: {
+                        bsonType: "int",
+                        minimum: 0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }).limit(1)
+    output:
+      value: |-
+        [
+          {
+            _id: 'new-store-001',
+            name: 'Adatum Corporation - Downtown Branch',
+            sales: { totalSales: 5000 },
+            createdDate: ISODate('2025-06-11T11:11:32.262Z'),
+            status: 'new',
+            staff: { totalStaff: { fullTime: 0, partTime: 0 } },
+            version: 1,
+            storeOpeningDate: ISODate('2025-06-11T11:11:32.262Z'),
+            storeFeatures: 213
+          }
+        ]
+  - title: Combining with Query Operators
+    description: |-
+      This query retrieves all store documents where the staff field is a valid object that includes a totalStaff subobject with at least one full-time staff member (fullTime ≥ 1) and sales.totalSales greater than 10,000.
+    query: |-
+      db.stores.find({
+        $and: [
+          {
+            $jsonSchema: {
+              properties: {
+                staff: {
+                  bsonType: "object",
+                  properties: {
+                    totalStaff: {
+                      bsonType: "object",
+                      properties: {
+                        fullTime: {
+                          bsonType: "int",
+                          minimum: 1
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          // Additional query constraints
+          {
+            "sales.totalSales": { $gt: 10000 }
+          }
+        ]
+      }).limit(1)
+    output:
+      value: |-
+        [
+          {
+            _id: 'future-electronics-001',
+            address: { city: 'New Tech City' },
+            name: 'Boulder Innovations - Future Electronics Hub',
+            sales: { totalSales: 25000 },
+            establishedDate: ISODate('2025-06-11T11:14:23.147Z'),
+            categories: [ 'electronics', 'gadgets', 'smart-home' ],
+            promotionEvents: [],
+            ratings: { average: 0, count: 0, reviews: [] },
+            inventory: {
+              lastUpdated: ISODate('2025-06-11T11:14:23.147Z'),
+              totalItems: 0,
+              lowStockAlerts: []
+            },
+            storeOpeningDate: ISODate('2025-06-11T11:11:32.262Z'),
+            storeFeatures: 120
+          }
+        ]
+related: []
