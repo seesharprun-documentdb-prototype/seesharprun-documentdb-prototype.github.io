@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { ReferencePage } from '../services/referenceService';
 import { capitalCase } from 'change-case';
+import pluralize from 'pluralize';
 
 export default function Index({
   groupedReferences
@@ -34,7 +35,7 @@ export default function Index({
                   <Option
                     key={type}
                     target={`/docs/reference/${type}`}
-                    display={capitalCase(type) + 's'}
+                    display={pluralize(capitalCase(type))}
                     className="uppercase"
                     currentPath={pathname}
                   />

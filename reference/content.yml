@@ -19,7 +19,11 @@
       description: |-
         Aggregation operators process and transform data within aggregation pipelines. These operators enable you to perform complex data manipulations, including grouping, filtering, reshaping, and computing derived values from your document collections.
     - category: arithmetic-expression
+      description: |-
+        Arithmetic expression operators perform mathematical calculations on numeric values in your documents. These operators support standard mathematical operations such as absolute value, exponentiation, rounding, and other numeric computations within aggregation pipelines and queries.
     - category: array-expression
+      description: |-
+        Array expression operators manipulate and transform array data within aggregation expressions. These operators allow you to perform operations like filtering array elements, mapping transformations, reducing arrays, and extracting specific elements or slices from arrays.
     - category: array-query
       description: |-
         Array query operators allow you to perform operations on array fields within your documents. These operators enable you to filter, manipulate, and analyze array data effectively, making it easier to work with complex data structures in your queries.
