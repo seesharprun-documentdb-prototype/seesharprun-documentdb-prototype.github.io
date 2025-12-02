@@ -7,11 +7,11 @@ import { getMetadata } from "../../../services/metadataService";
 import pluralize from 'pluralize';
 import { capitalCase } from 'change-case';
 
-const allowed_types = ['operator', 'command'];
+const allowed_types = ['operators', 'commands'];
 
 export const generateStaticParams = async (): Promise<{ type: string }[]> => [
-  { type: 'operator' },
-  { type: 'command' }
+  { type: 'operators' },
+  { type: 'commands' }
 ];
 
 export async function generateMetadata({ params }: { params: Promise<{ type: string }> }) {

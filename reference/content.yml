@@ -1,4 +1,4 @@
-- type: command
+- type: commands
   description: |-
     MongoDB Query Language (MQL) commands are direct instructions for managing and interacting with your database server. They are essential for performing administrative tasks, optimizing performance, and maintaining security.
   categories:
@@ -8,7 +8,7 @@
     - category: query-and-write
       description: |-
         Query and write operations allow you to retrieve, insert, update, and delete documents in your DocumentDB collections. These operations are fundamental for interacting with your data, enabling you to perform CRUD (Create, Read, Update, Delete) tasks efficiently.
-- type: operator
+- type: operators
   description: |-
     MongoDB Query Language (MQL) operators enable powerful filtering, comparison, and data manipulation within queries. Mastering these operators helps you write expressive queries to efficiently retrieve and update documents in your collections.
   categories:

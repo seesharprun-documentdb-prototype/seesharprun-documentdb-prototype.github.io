@@ -9,8 +9,8 @@
       "type": {
         "type": "string",
         "enum": [
-          "operator",
-          "command"
+          "operators",
+          "commands"
         ]
       },
       "description": {
