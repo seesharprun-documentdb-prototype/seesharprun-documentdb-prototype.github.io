@@ -1,5 +1,5 @@
 ---
-title: Count command usage in DocumentDB
+title: count
 description: Count command is used to count the number of documents in a collection that match a specified query.
 type: commands
 category: aggregation
