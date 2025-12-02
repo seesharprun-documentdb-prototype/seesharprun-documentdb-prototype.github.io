@@ -1,99 +1,87 @@
-type: command
+---
+title: Count
+description: Count command is used to count the number of documents in a collection that match a specified query.
+type: commands
 category: aggregation
-name: count
-description: |-
-  The `count` command is used to count the number of documents in a collection that match specific criteria.
-summary: |-
-  This command is useful for obtaining quick statistics about the data stored in your collections, such as the number of documents that meet certain criteria.
-syntax: |-
-  db.collection.count(
-    <query>,
-    <options>
-  );
-parameters:
-  - name: query
-    required: true
-    description: |-
-      A document specifying the selection criteria using query operators.
-  - name: options
-    required: false
-    description: |-
-      A document specifying options including, but not limited to `limit` and `skip`.
-examples:
-  sample: |-
-    [
-      {
-        "_id": "00000000-0000-0000-0000-000000003001",
-        "name": "Proseware, Inc. | Home Entertainment Hub - East Linwoodbury",
-        "promotionEvents": [
-          {
-            "eventName": "Unbeatable Bargain Bash"
-          },
-          {
-            "eventName": "Steal of a Deal Days"
-          }
-        ]
-      },
-      {
-        "_id": "00000000-0000-0000-0000-000000003002",
-        "name": "Fabrikam, Inc. | Home Accessory Outlet - West Adele",
-        "promotionEvents": [
-          {
-            "eventName": "Incredible Discount Days"
-          },
-          {
-            "eventName": "Steal of a Deal Days"
-          }
-        ],
-        "location": {
-          "lat": -89.2384,
-          "lon": -46.4012
-        }
-      },
-      {
-        "_id": "00000000-0000-0000-0000-000000003003",
-        "name": "Wide World Importers | Fitness Equipment Outlet - Reillyborough",
-        "promotionEvents": [
-          {
-            "eventName": "Incredible Discount Days"
-          }
-        ],
-        "location": {
-          "lat": -2.4111,
-          "lon": 72.1041
-        }
-      }
-    ]
-  items:
-    - title: Counting all documents in a collection
-      explanation: |-
-        Use the `count` command with an empty document to count **all** documents in a collection.
-      description: |-
-        In this example, all documents in the `stores` collection are counted.
-      query: |-
-        db.stores.count({ "_id": "00000000-0000-0000-0000-000000003002" })
-      output:
-        value: |-
-          1
-    - title: Counting documents that match nested criteria
-      explanation: |-
-        The `query` parameter supports nested parameters.
-      description: |-
-        In this example, the command counts documents that match the string value `"Incredible Discount Days"` for the `promotionEvents.eventName` field.
-      query: |-
-        db.stores.count({ "promotionEvents.eventName": "Incredible Discount Days" })
-      output:
-        value: |-
-          2
-    - title: Counting documents that match multiple criteria
-      explanation: |-
-        The `query` parameter also supports multiple parameters.
-      description: |-
-        In this example, the `locationLatitude` and `locationLongitude` parameters are used to count documents that match on these specific values.
-      query: |-
-        db.stores.count({ "location.lat": -2.4111, "location.lon": 72.1041 })
-      output:
-        value: |-
-          1
-related:
-  - reference: /operator/evaluation-query/regex
+---
+
+# count
+
+The `count` command is used to count the number of documents in a collection that match a specified query. This command is useful for obtaining quick statistics about the data stored in your collections, such as the number of documents that meet certain criteria.
+
+## Syntax
+
+The syntax for the `count` command is as follows:
+
+```
+db.collection.count(query, options)
+```
+
+- `query`: A document specifying the selection criteria using query operators.
+- `options`: Optional. A document specifying options, such as `limit` and `skip`.
+
+## Examples
+
+Here are some examples to demonstrate the usage of the `count` command:
+
+### Example 1. Counting all documents in a collection
+
+To count all documents in the `stores` collection:
+
+```javascript
+db.stores.count({})
+```
+
+#### Sample output
+
+```javascript
+[mongos] StoreData> db.stores.countDocuments({})
+60570
+```
+
+### Example 2. Counting documents with specific criteria
+
+To count the number of stores with a specific `_id` store ID:
+
+```javascript
+db.stores.count({ "_id": "e5767a9f-cd95-439c-9ec4-7ddc13d22926" })
+```
+
+#### Sample output
+
+```javascript
+[mongos] StoreData> db.stores.count({ "_id": "e5767a9f-cd95-439c-9ec4-7ddc13d22926" })
+1
+```
+
+### Example 3. Counting documents with nested criteria
+
+To count the number of stores that have a specific promotion event:
+
+```javascript
+db.stores.count({ "promotionEvents.eventName": "Incredible Discount Days" })   
+```
+
+#### Sample output
+
+```javascript
+[mongos] StoreData> db.stores.count({ "promotionEvents.eventName": "Incredible Discount Days" })
+2156
+```
+
+### Example 4. Counting documents with multiple criteria
+
+To count the number of stores located at a specific latitude and longitude:
+
+```javascript
+db.stores.count({ "location.lat": -2.4111, "location.lon": 72.1041 })
+```
+
+#### Sample output
+
+```javascript
+[mongos] StoreData> db.stores.count({ "location.lat": -2.4111, "location.lon": 72.1041 })
+1
+```
+
+## Related content
