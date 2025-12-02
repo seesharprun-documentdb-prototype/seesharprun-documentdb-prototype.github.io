@@ -1,5 +1,5 @@
 ---
-title: find()
+title: find
 description: The find command in DocumentDB returns documents that match a specified filter criteria
 type: commands
 category: query-and-write
@@ -345,5 +345,5 @@ One of the documents returned shows the specified array elements projected in th
 
 ## Related content
 
-- [insert with DocumentDB](insert.md)
-- [update with DocumentDB](update.md)
+- [insert with DocumentDB](insert)
+- [update with DocumentDB](update)

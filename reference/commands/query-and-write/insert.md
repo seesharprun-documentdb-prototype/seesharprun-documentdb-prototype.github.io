@@ -1,5 +1,5 @@
 ---
-title: insert()
+title: insert
 description: The insert command in DocumentDB creates new documents in a collection
 type: commands
 category: query-and-write
@@ -352,5 +352,5 @@ The ordered insert command returns a response confirming the order in which docu
 
 ## Related content
 
-- [update with DocumentDB](update.md)
-- [find with DocumentDB](find.md)
+- [update with DocumentDB](update)
+- [find with DocumentDB](find)
