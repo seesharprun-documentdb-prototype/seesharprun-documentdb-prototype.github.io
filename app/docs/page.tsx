@@ -609,38 +609,30 @@ docker image rm -f ghcr.io/microsoft/documentdb/documentdb-local:latest || echo 
                           <li className="flex items-start">
                             <span className="text-blue-400 mr-3 mt-1">•</span>
                             <span>
-                              Locate and select the DocumentDB icon in the primary VS Code sidebar on the left-hand side.
+                              Click the DocumentDB icon in the VS Code sidebar
                             </span>
                           </li>
                           <li className="flex items-start">
                             <span className="text-blue-400 mr-3 mt-1">•</span>
-                            <div>
-                              <span className="block mb-2">Add a new connection to your DocumentDB:</span>
-                              <ul className="space-y-1 ml-4">
-                                <li className="flex items-start">
-                                  <span className="text-gray-500 mr-2 mt-1">•</span>
-                                  <span>In the DocumentDB Connections area, locate and expand the DocumentDB Local node.</span>
-                                </li>
-                                <li className="flex items-start">
-                                  <span className="text-gray-500 mr-2 mt-1">•</span>
-                                  <span>Select the New Local Connection option.</span>
-                                </li>
-                                <li className="flex items-start">
-                                  <span className="text-gray-500 mr-2 mt-1">•</span>
-                                  <span>Confirm the port (default value 10260), username, password, and choose the Disable TLS/SSL option.</span>
-                                </li>
-                                <li className="flex items-start">
-                                  <span className="text-gray-500 mr-2 mt-1">•</span>
-                                  <span><strong>Note:</strong> TLS/SSL can be enabled, but this walkthrough skips those steps for simplicity.</span>
-                                </li>
-                                <li className="flex items-start">
-                                  <span className="text-gray-500 mr-2 mt-1">•</span>
-                                  <span>A new DocumentDB Local entry will be added and listed in your DocumentDB Connections area.</span>
-                                </li>
-                              </ul>
-                            </div>
+                            <span>Click "Add New Connection"</span>
+                          </li>
+                          <li className="flex items-start">
+                            <span className="text-blue-400 mr-3 mt-1">•</span>
+                            <span>
+                              On the navigation bar, click on "Connection
+                              String"
+                            </span>
+                          </li>
+                          <li className="flex items-start">
+                            <span className="text-blue-400 mr-3 mt-1">•</span>
+                            <span>Paste your connection string:</span>
                           </li>
                         </ul>
+                        <div className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30">
+                          <code className="text-green-400 font-mono text-sm break-all">
+                            mongodb://&lt;YOUR_USERNAME&gt;:&lt;YOUR_PASSWORD&gt;@localhost:10260/?tls=true&tlsAllowInvalidCertificates=true&authMechanism=SCRAM-SHA-256
+                          </code>
+                        </div>
                       </div>
 
                       <div>
