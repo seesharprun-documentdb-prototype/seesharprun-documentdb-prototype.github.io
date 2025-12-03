@@ -41,14 +41,16 @@ docker image rm -f ghcr.io/microsoft/documentdb/documentdb-local:latest || echo 
 
 ### 2. Connecting to your database
 
-- Click the DocumentDB icon in the VS Code sidebar
-- Click "Add New Connection"
-- On the navigation bar, click on "Connection String"
-- Paste your connection string:
+- Locate and select the DocumentDB icon in the primary Visual Studio Code sidebar.
+- Select "Add New Connection"
+- In the DocumentDB "Connections" pane, locate and expand the DocumentDB Local node.
+- Select the "New Local Conenction" option.
+- Confirm the port (default value 10260), username, password, and choose the Disable TLS/SSL option.
+  - **NOTE**: TLS/SSL can be enabled, but this walkthrough skips those steps for simplicity. 
+- A new DocumentDB Local entry will be added and listed in your DocumentDB Connections area.
 
-```
-mongodb://<YOUR_USERNAME>:<YOUR_PASSWORD>@localhost:10260/?tls=true&tlsAllowInvalidCertificates=true&authMechanism=SCRAM-SHA-256
-```
+> [!NOTE]
+> Atlernatively, onn the navigation bar, click on "Connection String". Then, paste a variation of this connection string with the `<USERNAME>` and `<PASSWORD>` placeholders modified to values for your cluster: `mongodb://<YOUR_USERNAME>:<YOUR_PASSWORD>@localhost:10260/?tls=true&tlsAllowInvalidCertificates=true&authMechanism=SCRAM-SHA-256`.
 
 ### 3. Creating your first database and collection
 
