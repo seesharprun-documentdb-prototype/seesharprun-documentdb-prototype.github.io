@@ -322,7 +322,7 @@ export default function Home() {
             <div className="mt-6 w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-5 gap-4 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 items-center">
             {/* Microsoft Azure */}
             <div className="group relative">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl blur-lg group-hover:blur-xl transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
@@ -413,6 +413,25 @@ export default function Home() {
                 <div className="text-center">
                   <h3 className="text-sm font-bold text-white group-hover:text-blue-300 transition-colors mb-1">
                     AB InBev
+                  </h3>
+                </div>
+              </div>
+            </div>
+            
+            {/* Ferret DB */}
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl blur-lg group-hover:blur-xl transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
+              <div className="relative flex flex-col items-center justify-center p-8 bg-neutral-800/80 backdrop-blur-sm rounded-xl border border-neutral-700/50 hover:border-blue-500/50 transition-all duration-300 group-hover:transform group-hover:scale-105">
+                <div className="w-21 h-20 flex items-center justify-center mb-4">
+                  <img
+                    src="/images/FerretDBLogo-inverse.png"
+                    alt="Ferret DB"
+                    className="w-15 h-12 group-hover:scale-110 transition-transform"
+                  />
+                </div>
+                <div className="text-center">
+                  <h3 className="text-sm font-bold text-white group-hover:text-blue-300 transition-colors mb-1">
+                    Ferret DB
                   </h3>
                 </div>
               </div>
