@@ -1,10 +1,10 @@
-"use client";
+'use client'
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { capitalCase } from 'change-case';
 import pluralize from 'pluralize';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 type ReferencePage = {
   name: string;
@@ -41,6 +41,27 @@ export default function Index({
   groupedReferences: Record<string, Record<string, ReferencePage[]>>;
 }) {
   const pathname = usePathname();
+  const activeItemRef = useRef<HTMLAnchorElement>(null);
+  const containerRef = useRef<HTMLElement>(null);
+  
+  // Auto-scroll to active item when pathname changes
+  useEffect(() => {
+    if (activeItemRef.current && containerRef.current) {
+      const container = containerRef.current;
+      const activeItem = activeItemRef.current;
+      
+      // Calculate position to scroll within the container
+      const containerRect = container.getBoundingClientRect();
+      const itemRect = activeItem.getBoundingClientRect();
+      const scrollOffset = itemRect.top - containerRect.top - (containerRect.height / 2) + (itemRect.height / 2);
+      
+      // Instant scroll without animation
+      container.scrollBy({
+        top: scrollOffset,
+        behavior: 'instant'
+      });
+    }
+  }, [pathname]);
   
   // Convert old structure to new structure
   const navigationStructure: NavigationStructure = Object.entries(groupedReferences)
@@ -64,7 +85,7 @@ export default function Index({
   const currentName = pathParts[4] ? decodeURIComponent(pathParts[4]) : undefined; // /docs/reference/[type]/[category]/[name]
 
   return (
-    <section className="flex-1 overflow-y-auto p-4">
+    <section ref={containerRef} className="flex-1 overflow-y-auto p-4 min-h-0">
       <nav className="space-y-1">
         {navigationStructure.map((typeSection, typeIndex) => {
           // Types are always expanded
@@ -92,6 +113,7 @@ export default function Index({
                 </div>
                 <Link
                   href={`/docs/reference/${typeSection.type}`}
+                  ref={isTypeActive ? activeItemRef : null}
                   className={`flex-1 px-3 py-3 rounded-lg text-sm font-semibold uppercase transition-all duration-200 ${
                     isTypeActive
                       ? "bg-blue-500/20 text-blue-300 border border-blue-500/30"
@@ -124,6 +146,7 @@ export default function Index({
                       </div>
                       <Link
                         href={`/docs/reference/${typeSection.type}/${categorySection.category}`}
+                        ref={isCategoryActive ? activeItemRef : null}
                         className={`flex-1 px-3 py-3 rounded-lg text-sm transition-all duration-200 ${
                           isCategoryActive
                             ? "bg-blue-500/20 text-blue-300 border border-blue-500/30"
@@ -143,6 +166,7 @@ export default function Index({
                         <div key={item.reference} className="flex items-center pl-10 ml-4">
                           <Link
                             href={itemPath}
+                            ref={isItemActive ? activeItemRef : null}
                             className={`flex-1 px-3 py-3 rounded-lg text-sm transition-all duration-200 ${
                               isItemActive
                                 ? "bg-blue-500/20 text-blue-300 border border-blue-500/30"
