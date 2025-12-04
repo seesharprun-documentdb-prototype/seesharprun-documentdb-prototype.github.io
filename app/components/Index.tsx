@@ -159,8 +159,11 @@ export default function Index({
 
                     {/* Individual reference items */}
                     {isCategoryExpanded && categorySection.items.map((item) => {
-                      const itemPath = `/docs/reference/${typeSection.type}/${categorySection.category}/${item.reference.split('/').pop()}`;
-                      const isItemActive = pathname === itemPath;
+                      const itemFilename = item.reference.split('/').pop();
+                      const itemPath = `/docs/reference/${typeSection.type}/${categorySection.category}/${itemFilename}`;
+                      // Decode pathname to match against the constructed path
+                      const decodedPathname = decodeURIComponent(pathname);
+                      const isItemActive = decodedPathname === itemPath || pathname === itemPath;
 
                       return (
                         <div key={item.reference} className="flex items-center pl-10 ml-4">
