@@ -1,6 +1,6 @@
 export interface Entity {
   url: string;           // Relative URL path (e.g., '/docs/quickstart')
-  slug?: string;         // Where to save assets (relative path)
+  slug: string;          // Where to save assets (relative path)
   title: string;         // Page title
   description: string;   // Page description
   section?: string;      // Section category (e.g., 'docs', 'blog', 'reference')
