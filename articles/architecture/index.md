@@ -6,13 +6,13 @@ layout: coming-soon
 
 We're building something amazing! The technical architecture documentation is coming soon.
 
-Here's some example code:
+Pull the latest DocumentDB Docker container image:
 
 ```bash
-npx run-something-amazing-with-documentdb
+docker pull ghcr.io/documentdb/documentdb/documentdb-local:latest
 ```
 
-And a Mermaid diagram:
+Here's a Mermaid diagram of a sample application you can build with DocumentDB:
 
 ```mermaid
 graph LR
@@ -20,3 +20,7 @@ graph LR
     B[🚀 API Service] -->|MongoDB Protocol| D
     C[⚙️ Worker Service] -->|MongoDB Protocol| D
 ```
+
+Here's a screenshot of DocumentDB's [Visual Studio Code extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-documentdb):
+
+![Screenshot of DocumentDB extension in Visual Studio Code.](media/index/vscode-extension-documentdb.png)
