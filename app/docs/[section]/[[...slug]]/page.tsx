@@ -56,6 +56,9 @@ export default async function ArticlePage({ params }: PageProps) {
     // Use title from frontmatter if available, otherwise fall back to navigation title or section name
     const pageTitle = frontmatter.title || selectedNavItem?.title || section;
 
+    // Build the current path for the markdown component to resolve relative links
+    const currentPath = file === 'index' ? `${section}/index` : `${section}/${slug.join('/')}`;
+
     return (
         <div className="min-h-screen bg-neutral-900 relative overflow-hidden">
             {/* Background elements */}
@@ -141,7 +144,7 @@ export default async function ArticlePage({ params }: PageProps) {
                         {frontmatter.layout === 'coming-soon' && <ComingSoon />}
 
                         {/* Markdown Content */}
-                        <Markdown content={content} />
+                        <Markdown content={content} currentPath={currentPath} />
                     </div>
                 </div>
             </div>
