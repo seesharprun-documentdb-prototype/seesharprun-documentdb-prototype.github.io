@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "dev": "npm run generate && next dev --turbopack",
+    "build": "npm run generate && next build --turbopack",
+    "generate": "npm run generate:media",
+    "generate:media": "tsx scripts/copy-article-media.tsx",
     "start": "next start",
     "lint": "eslint"
   },
@@ -15,8 +17,8 @@
     "js-yaml": "^4.1.0",
     "next": "^15.5.4",
     "pluralize": "^8.0.0",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
     "react-markdown": "^10.1.0",
     "react-syntax-highlighter": "^16.1.0",
     "remark-gfm": "^4.0.1"
@@ -33,7 +35,10 @@
     "autoprefixer": "^10.0.1",
     "eslint": "^9",
     "eslint-config-next": "15.5.4",
+    "ink": "^6.5.1",
+    "minimatch": "^10.1.1",
     "tailwindcss": "^4",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }

@@ -234,6 +234,21 @@ function getMarkdownComponents() {
       );
     },
 
+    // Images
+    img: ({ src, alt, ...props }: any) => {
+      // Convert relative media paths to absolute paths
+      const imageSrc = src?.startsWith('media/') ? `/${src}` : src;
+      
+      return (
+        <img
+          src={imageSrc}
+          alt={alt}
+          className="rounded-lg my-4 max-w-full h-auto"
+          {...props}
+        />
+      );
+    },
+
     // Links
     a: ({ children, href, ...props }: any) => (
       <a
