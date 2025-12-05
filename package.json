@@ -15,12 +15,14 @@
     "gray-matter": "^4.0.3",
     "handlebars": "^4.7.8",
     "js-yaml": "^4.1.0",
+    "mermaid": "^11.12.2",
     "next": "^15.5.4",
     "pluralize": "^8.0.0",
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "react-markdown": "^10.1.0",
     "react-syntax-highlighter": "^16.1.0",
+    "react-x-mermaid": "^0.0.10",
     "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
