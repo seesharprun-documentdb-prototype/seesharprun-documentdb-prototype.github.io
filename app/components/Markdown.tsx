@@ -179,7 +179,6 @@ function getMarkdownComponents(currentPath?: string) {
 
       return (
         <div
-          className="bg-neutral-900/50 rounded-lg p-4 border border-neutral-600/30 mb-4"
           {...props}
         >
           <Code code={codeString} language={lang} />
