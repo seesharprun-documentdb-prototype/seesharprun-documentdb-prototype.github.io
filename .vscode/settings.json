@@ -6,9 +6,6 @@
     "./schema/reference.content.schema.json": [
       "reference/content.{yml,yaml}"
     ],
-    "./schema/reference.data.schema.json": [
-      "reference/*/**/*.{yml,yaml}"
-    ],
     "./schema/articles.content.schema.json": [
       "articles/**/content.{yml,yaml}"
     ],
