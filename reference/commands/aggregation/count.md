@@ -83,6 +83,3 @@ db.stores.count({ "location.lat": -2.4111, "location.lon": 72.1041 })
 [mongos] StoreData> db.stores.count({ "location.lat": -2.4111, "location.lon": 72.1041 })
 1
 ```
-
-## Related content
-
