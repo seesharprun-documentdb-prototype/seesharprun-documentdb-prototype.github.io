@@ -180,3 +180,14 @@ export function getCategoryDescription(type: string, category: string): string |
   
   return undefined;
 }
+
+export function getReferenceDescription(): string | undefined {
+  const root = path.join(process.cwd(), 'reference');
+  const metadataPath = path.join(root, '_metadata.description.md');
+  
+  if (fs.existsSync(metadataPath)) {
+    return fs.readFileSync(metadataPath, 'utf8').trim();
+  }
+  
+  return undefined;
+}

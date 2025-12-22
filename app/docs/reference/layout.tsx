@@ -5,8 +5,8 @@ import { getReferencesGroupedByTypeAndCategory } from '../../services/referenceS
 import { getMetadata } from "../../services/metadataService";
 
 export const metadata: Metadata = getMetadata({
-  title: 'DocumentDB MQL Reference', 
-  description: 'MongoDB Query Language (MQL) reference for DocumentDB. DocumentDB is a powerful, scalable open-source database solution with MongoDB query compatibility.',
+  title: 'DocumentDB MQL Reference',
+  description: 'MongoDB Query Language (MQL) reference for DocumentDB.',
   extraKeywords: ['reference']
 });
 
