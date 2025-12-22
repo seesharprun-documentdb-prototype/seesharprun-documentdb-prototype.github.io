@@ -1,8 +1,8 @@
 {
   "sources": [
     {
-      "repository": "https://github.com/seesharprun/documentdb-docs",
-      "branch": "preview",
+      "repository": "https://github.com/documentdb/docs",
+      "branch": "main",
       "mappings": [
         {
           "source": "api-reference",
