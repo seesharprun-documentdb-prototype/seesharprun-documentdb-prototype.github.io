@@ -1,52 +1,124 @@
-# DocumentDB website and docs
+# DocumentDB Website
 
-A concise, modern website prototype for DocumentDB, built with [Next.js](https://nextjs.org/) and [Tailwind CSS](https://tailwindcss.com/). The site features a list of community blog posts and core documentation. Content is managed via YAML and Markdown files for easy editing and extensibility.
+A modern website for DocumentDB built with [Next.js](https://nextjs.org/) and [Tailwind CSS](https://tailwindcss.com/). The site features community blog posts and technical documentation, with content automatically pulled from the [documentdb/docs](https://github.com/documentdb/docs) repository during the build process.
 
-## Contributing a Blog Post
+## Prerequisites for Development
 
-1. Open `blogs/content.yml` in the repository.
+- **[Node.js](https://nodejs.org/)** (*20 or higher*)
 
-1. Add your blog post as a new entry, following the format of existing posts (title, author, date, summary, etc).
-  - The YAML file is validated against its schema for consistency and editor support.
+- **[Git](https://git-scm.com/)** (*for cloning documentation content*)
 
-1. Submit a pull request for review.
+You can develop locally on any machine with these prerequisites installed, or use [GitHub Codespaces](#develop-in-github-codespaces) for a pre-configured environment.
 
+## Getting Started
 
-## Contributing a Documentation Article
+Get started by cloning and running this repository locally.
 
-1. Navigate to the appropriate folder under `articles/` (e.g., `articles/quickstart/`, `articles/postgresql/`).
+1. Clone this repository
 
-1. Add your article as a Markdown file (`.md`).
-  - Update the corresponding `navigation.yml` to include your new article if needed.
-  - Ensure your content follows the structure and style of existing articles.
+1. Install dependencies:
 
-1. Submit a pull request for review.
+    ```bash
+    npm install
+    ```
 
-## Contributing Reference Content
+1. Start the development server:
 
-1. Open the relevant file in the `reference/` directory (e.g., `reference/content.yml`, or a command/operator YAML file).
+    ```bash
+    npm run dev
+    ```
 
-1. Add or update entries according to the schema and format used in existing files.
-  - Reference content is organized by command, operator, and type. Follow the folder structure for new additions.
-  - Use the schemas in the `schema/` directory for guidance and validation.
+1. Observe that the site will be available at http://localhost:3000
 
-1. Submit a pull request for review.
+The first time you run `npm run dev` or `npm run build`, documentation content will be automatically compiled from the [documentdb/docs](https://github.com/documentdb/docs) repository.
+
+## Contributing
+
+We welcome contributions to improve the DocumentDB website, whether it's blog posts, bug fixes, or enhancements to the site itself.
+
+### Contributing Blog Posts
+
+Blog posts are managed locally in this repository. Contribute directly through a pull request to this repository.
+
+1. Open [blogs/content.yml](blogs/content.yml)
+
+1. Add your blog post entry following the format of existing posts
+
+1. Submit a pull request for review
+
+### Contributing Documentation & Reference Content
+
+Documentation articles and API reference content are managed in a separate repository. For more information, see [documentdb/docs](https://github.com/documentdb/docs).
+
+> [!IMPORTANT]
+> Please refer to that repository for instructions on contributing:
+>
+> - Documentation articles (`getting-started/`, `postgres-api/`, `architecture/`, etc.)
+> - API reference content (`api-reference/`)
+>
+
+## Content Configuration
+
+Documentation content is automatically compiled during builds from external repositories. The mapping is configured in [content.config.json](content.config.json).
+
+```json
+{
+  "sources": [
+    {
+      "repository": "https://github.com/documentdb/docs",
+      "branch": "main",
+      "mappings": [
+        {
+          "source": "api-reference",
+          "target": "reference"
+        },
+        {
+          "source": "getting-started",
+          "target": "articles/getting-started"
+        }
+      ]
+    }
+  ],
+  "include": ["**/*.md", "**/*.yml"],
+  "exclude": ["**/{readme,README}.md"]
+}
+```
+
+### Configuration options
+
+The `content.config.json` file controls how documentation is compiled from external sources into this site.
+
+- **sources** - Array of repositories to clone content from. Each source includes:
+  - **repository** - Git repository URL
+  - **branch** - Git branch to clone from
+  - **mappings** - Array of source folder to target folder mappings
+- **include** - Array of glob patterns for files to include (opt-in filtering)
+- **exclude** - Array of glob patterns for files to exclude
+
+### Manual content operations
+
+While content is automatically compiled during builds, you can manually trigger these operations during development:
+
+```bash
+# Clean all target directories
+npm run clean:content
+```
+
+```bash
+# Compile content from sources
+npm run compile:content
+```
 
 ## Develop in GitHub Codespaces
 
-You can develop and preview the site in a fully configured environment using GitHub Codespaces:
+Launch a pre-configured development environment with all dependencies installed:
 
-- Launch a devcontainer with all dependencies pre-installed.
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/documentdb/documentdb.github.io)
 
-  [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/documentdb/documentdb.github.io)
+The Codespaces environment includes:
+- Node.js 20
+- Git
+- Visual Studio Code extensions for Markdown and YAML editing
+- All npm dependencies
 
-- The environment includes Node.js, Next.js, and Tailwind CSS setup for instant development and preview.
-
-- Install packages with `npm install`
-
-- Use `npm run dev` to start the local server and preview changes.
-
-- The environment also includes the required Visual Studio Code extensions to edit the Markdown and YAML files with full completion support.
-
-  > [!TIP]
-  > You can use these same steps if you opt to develop on your local machine. Ensure that you are using at least the latest LTS version of Node.js
+Simply run `npm run dev` after the container starts.
