@@ -8,9 +8,6 @@
     ],
     "./schema/articles.content.schema.json": [
       "articles/**/content.{yml,yaml}"
-    ],
-    "./schema/articles.navigation.schema.json": [
-      "articles/**/navigation.{yml,yaml}"
     ]
   },
   "editor.tabSize": 2,
