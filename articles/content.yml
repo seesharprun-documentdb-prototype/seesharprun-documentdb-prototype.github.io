@@ -7,7 +7,7 @@ landing:
     - title: API Reference
       link: /docs/reference
     - title: Postgres Extension API
-      link: /docs/postgresql-api
+      link: /docs/postgres-api
     - title: DocumentDB Local
       link: /docs/documentdb-local
     - title: Architecture under the hood
