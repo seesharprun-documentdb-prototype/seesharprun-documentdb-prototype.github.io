@@ -44,19 +44,6 @@ export default async function ReferencePage({ params }: { params: Promise<{ type
     <article>
       <Breadcrumb type={type} category={category} name={pageTitle} />
       
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-5xl font-bold text-white mb-4">
-          {pageTitle}
-        </h1>
-        <div className="w-24 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 rounded-full mb-6"></div>
-        {pageDescription && (
-          <p className="text-gray-300 text-lg leading-relaxed">
-            {pageDescription}
-          </p>
-        )}
-      </div>
-
       {/* Markdown Content */}
       <Markdown content={data.content} />
     </article>
