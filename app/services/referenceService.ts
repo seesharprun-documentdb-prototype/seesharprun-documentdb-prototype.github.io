@@ -1,9 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import yaml from 'js-yaml';
 import matter from 'gray-matter';
 import type { Page } from '../types/Page';
-import { Content } from '../types/Content';
 
 export type ReferencePage = Page & { type: string; category?: string };
 
@@ -20,11 +18,6 @@ export type ReferenceArticle = {
   category: string;
   name: string;
 };
-
-function getContentMetadata(): Content {
-  const contentPath = path.join(process.cwd(), 'reference', 'content.yml');
-  return yaml.load(fs.readFileSync(contentPath, 'utf8')) as Content;
-}
 
 function getAllReferences(): ReferencePage[] {
   const root = path.join(process.cwd(), 'reference');
@@ -167,15 +160,23 @@ export function getReferenceByPath(type: string, category: string, name: string)
 }
 
 export function getTypeDescription(type: string): string | undefined {
-  const content = getContentMetadata();
-  const typeEntry = content.find(entry => entry.type === type);
-  return typeEntry?.description;
+  const root = path.join(process.cwd(), 'reference');
+  const metadataPath = path.join(root, type, '_metadata.description.md');
+  
+  if (fs.existsSync(metadataPath)) {
+    return fs.readFileSync(metadataPath, 'utf8').trim();
+  }
+  
+  return undefined;
 }
 
 export function getCategoryDescription(type: string, category: string): string | undefined {
-  const content = getContentMetadata();
-  const typeEntry = content.find(entry => entry.type === type);
-  if (!typeEntry) return undefined;
-  const categoryEntry = typeEntry.categories.find(cat => cat.category === category);
-  return categoryEntry?.description;
+  const root = path.join(process.cwd(), 'reference');
+  const metadataPath = path.join(root, type, category, '_metadata.description.md');
+  
+  if (fs.existsSync(metadataPath)) {
+    return fs.readFileSync(metadataPath, 'utf8').trim();
+  }
+  
+  return undefined;
 }
