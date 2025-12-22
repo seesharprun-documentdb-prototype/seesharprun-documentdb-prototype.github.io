@@ -21,7 +21,36 @@ export function getArticleNavigation(section: string): Link[] {
   }
 
   const fileContents = fs.readFileSync(navPath, 'utf8');
-  return yaml.load(fileContents) as Link[];
+  const rawLinks = yaml.load(fileContents) as Link[];
+  
+  // Transform Markdown file links to published relative URIs
+  return rawLinks.map(link => {
+    // Convert .md file references to proper URIs
+    // e.g., "index.md" -> "/docs/section"
+    // e.g., "nodejs-setup.md" -> "/docs/section/nodejs-setup"
+    let transformedLink = link.link;
+    
+    if (transformedLink.endsWith('.md')) {
+      const filename = transformedLink.replace('.md', '');
+      if (filename === 'index') {
+        transformedLink = `/docs/${section}`;
+      } else {
+        transformedLink = `/docs/${section}/${filename}`;
+      }
+    }
+    
+    return {
+      ...link,
+      link: transformedLink,
+      // Recursively transform children if they exist
+      children: link.children?.map(child => ({
+        ...child,
+        link: child.link.endsWith('.md') 
+          ? `/docs/${section}/${child.link.replace('.md', '')}`
+          : child.link
+      }))
+    };
+  });
 }
 
 export function getMarkdownContent(section: string, file: string = 'index'): string {
