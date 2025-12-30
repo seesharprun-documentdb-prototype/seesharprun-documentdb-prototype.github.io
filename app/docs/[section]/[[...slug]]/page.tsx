@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from 'next/navigation';
+import { capitalCase } from 'change-case';
 import { getAllArticlePaths, getArticleByPath } from "../../../services/articleService";
 import ComingSoon from "../../../components/ComingSoon";
 import Markdown from "../../../components/Markdown";
@@ -92,8 +93,12 @@ export default async function ArticlePage({ params }: PageProps) {
                             </svg>
                             Back to Documentation
                         </Link>
-                        <h1 className="text-2xl font-bold text-white capitalize">
-                            {section}
+                        <h1 className="text-2xl font-bold text-white">
+                            {
+                                capitalCase(section)
+                                    .replace(/documentdb/i, 'DocumentDB')
+                                    .replace(/api/i, 'API')
+                            }
                         </h1>
                     </div>
 
