@@ -1,5 +1,5 @@
 # Workflow for validating content structure and build integrity
-name: Validate structured content
+name: Validate site and content
 on:
   # Runs on pushes targeting the default branch
   push:
