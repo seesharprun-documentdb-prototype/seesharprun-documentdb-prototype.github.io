@@ -5,8 +5,8 @@ import { getReferencesGroupedByTypeAndCategory } from '../../services/referenceS
 import { getMetadata } from "../../services/metadataService";
 
 export const metadata: Metadata = getMetadata({
-  title: 'DocumentDB MQL Reference', 
-  description: 'MongoDB Query Language (MQL) reference for DocumentDB. DocumentDB is a powerful, scalable open-source database solution with MongoDB query compatibility.',
+  title: 'DocumentDB MQL Reference',
+  description: 'MongoDB Query Language (MQL) reference for DocumentDB.',
   extraKeywords: ['reference']
 });
 
@@ -18,7 +18,7 @@ export default function ReferenceLayout({
   const groupedReferences = getReferencesGroupedByTypeAndCategory();
 
   return (
-    <div className="min-h-screen bg-neutral-900 relative overflow-hidden">
+    <div className="min-h-screen bg-neutral-900 relative overflow-hidden max-h-screen">
       {/* Background elements */}
       <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-neutral-800 to-black"></div>
       <div className="absolute inset-0 opacity-5">
@@ -28,9 +28,9 @@ export default function ReferenceLayout({
           style={{ animationDelay: "1.5s" }}
         ></div>
       </div>
-      <div className="relative flex min-h-screen">
-        <div className="w-80 bg-neutral-800/50 backdrop-blur-sm border-r border-neutral-700/50 flex flex-col">
-          <div className="p-6 border-b border-neutral-700/50">
+      <div className="relative flex h-screen">
+        <div className="w-80 bg-neutral-800/50 backdrop-blur-sm border-r border-neutral-700/50 flex flex-col h-full">
+          <div className="p-6 border-b border-neutral-700/50 flex-shrink-0">
             <Link href="/docs" className="text-blue-400 hover:text-blue-300 text-sm mb-4 flex items-center transition-colors">
               <svg
                 className="w-4 h-4 mr-2"
@@ -51,7 +51,7 @@ export default function ReferenceLayout({
           </div>
           <Index groupedReferences={groupedReferences} />
         </div>
-        <article className="flex-1 p-8">
+        <article className="flex-1 p-8 overflow-y-auto h-full">
           <div className="max-w-4xl">
             {children}
           </div>

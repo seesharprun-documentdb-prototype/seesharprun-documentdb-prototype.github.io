@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from 'next/navigation';
+import { capitalCase } from 'change-case';
 import { getAllArticlePaths, getArticleByPath } from "../../../services/articleService";
 import ComingSoon from "../../../components/ComingSoon";
 import Markdown from "../../../components/Markdown";
@@ -23,7 +24,7 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps) {
     const { section, slug = [] } = await params;
     const articleData = getArticleByPath(section, slug);
-    
+
     if (!articleData) {
         return {
             title: 'Documentation - DocumentDB',
@@ -33,7 +34,7 @@ export async function generateMetadata({ params }: PageProps) {
     const { frontmatter, navigation, file } = articleData;
     const selectedNavItem = navigation.find((item) => item.link.includes(file));
     const pageTitle = frontmatter.title || selectedNavItem?.title || section;
-    
+
     return {
         title: `${pageTitle} - DocumentDB Documentation`,
         description: frontmatter.description || undefined,
@@ -92,8 +93,12 @@ export default async function ArticlePage({ params }: PageProps) {
                             </svg>
                             Back to Documentation
                         </Link>
-                        <h1 className="text-2xl font-bold text-white capitalize">
-                            {section}
+                        <h1 className="text-2xl font-bold text-white">
+                            {
+                                capitalCase(section)
+                                    .replace(/documentdb/i, 'DocumentDB')
+                                    .replace(/api/i, 'API')
+                            }
                         </h1>
                     </div>
 
@@ -106,17 +111,17 @@ export default async function ArticlePage({ params }: PageProps) {
                                 // For other files, match the specific file name
                                 const itemPath = item.link.replace('/docs/', '');
                                 const currentPath = file === 'index' ? section : `${section}/${file}`;
-                                const isActive = itemPath === currentPath || 
-                                                (file === 'index' && itemPath === `${section}/index`) ||
-                                                (item.link.includes(file) && file !== 'index');
-                                
+                                const isActive = itemPath === currentPath ||
+                                    (file === 'index' && itemPath === `${section}/index`) ||
+                                    (item.link.includes(file) && file !== 'index');
+
                                 return (
                                     <Link
                                         key={item.link}
                                         href={item.link}
                                         className={`block w-full text-left px-4 py-3 rounded-lg text-sm transition-all duration-200 ${isActive
-                                                ? "bg-blue-500/20 text-blue-300 border border-blue-500/30"
-                                                : "text-gray-300 hover:text-white hover:bg-neutral-700/50"
+                                            ? "bg-blue-500/20 text-blue-300 border border-blue-500/30"
+                                            : "text-gray-300 hover:text-white hover:bg-neutral-700/50"
                                             }`}
                                     >
                                         {item.title}
@@ -130,13 +135,6 @@ export default async function ArticlePage({ params }: PageProps) {
                 {/* Main Content */}
                 <div className="flex-1 p-8 overflow-y-auto">
                     <div className="max-w-4xl">
-                        <div className="mb-8">
-                            <h2 className="text-4xl font-bold text-white mb-4">
-                                {pageTitle}
-                            </h2>
-                            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 rounded-full mb-6"></div>
-                        </div>
-
                         {/* Coming Soon Component for coming-soon layout */}
                         {frontmatter.layout === 'coming-soon' && <ComingSoon />}
 
