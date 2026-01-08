@@ -3,13 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npm run compile && npm run generate && next dev --turbopack",
-    "build": "npm run compile && npm run generate && next build --turbopack",
-    "compile": "npm run compile:clean && npm run compile:content",
+    "dev": "npm run compile && next dev --turbopack",
+    "build": "npm run compile && next build --turbopack",
+    "compile": "npm run compile:clean && npm run compile:content && npm run compile:media",
     "compile:content": "tsx scripts/compile-content.tsx",
+    "compile:media": "tsx scripts/compile-media.tsx",
     "compile:clean": "tsx scripts/compile-clean.tsx",
-    "generate": "npm run generate:media",
-    "generate:media": "tsx scripts/copy-article-media.tsx",
     "start": "npx serve out",
     "lint": "eslint"
   },
