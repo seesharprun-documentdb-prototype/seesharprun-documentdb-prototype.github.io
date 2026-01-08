@@ -16,7 +16,7 @@ export default function Breadcrumb({ type, category, name }: {
                 <>
                     <span className="mx-2">/</span>
                     <Link href={`/docs/reference/${type}`} className="hover:text-blue-400 transition-colors capitalize">
-                        {capitalCase(pluralize(type))}
+                        {capitalCase(type)}
                     </Link>
                 </>
             )}
