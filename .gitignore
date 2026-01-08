@@ -1,6 +1,20 @@
 # Sourced from https://github.com/github/gitignore/blob/main/Nextjs.gitignore
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# Temporary content cloning directory
+_tmp/
+
+# Reference files
+api-reference/
+reference/
+
+# Documentation articles
+articles/*/
+articles/**/*.md
+articles/**/*.yml
+!articles/content.yml
+!articles/demo.yml
+
 # dependencies
 /node_modules
 /.pnp
