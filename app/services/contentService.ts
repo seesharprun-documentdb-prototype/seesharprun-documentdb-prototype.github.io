@@ -162,7 +162,7 @@ export function getAllContent(): Entity[] {
         url,
         slug,
         title: reference.name || param.name,
-        description: reference.description || `${param.name} - DocumentDB Reference`,
+        description: reference.frontmatter.description || `${param.name} - DocumentDB Reference`,
         section: 'reference',
         type: 'reference',
         filePath: mdFilePath,
