@@ -2,8 +2,9 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import ReferenceTable from '../../../../components/Grid';
 import Breadcrumb from '../../../../components/Breadcrumb';
+import Markdown from '../../../../components/Markdown';
 import { getReferencesByTypeGroupedByCategory, getAllTypeCategoryCombinations, isValidTypeCategoryCombination, getCategoryDescription } from '../../../../services/referenceService';
-import { getMetadata } from "../../../../services/metadataService";
+import { getMetadata, sanitizeMarkdown } from "../../../../services/metadataService";
 import pluralize from 'pluralize';
 import { capitalCase } from 'change-case';
 
@@ -17,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ type: str
   const description = getCategoryDescription(type, category);
   return getMetadata({
     title: `${title} - DocumentDB MQL Reference`, 
-    description: description || '',
+    description: await sanitizeMarkdown(description),
     extraKeywords: ['reference', type, category]
   });
 }
@@ -42,9 +43,9 @@ export default async function CommandReferencePage({ params }: { params: Promise
         </h2>
         <div className="w-24 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 rounded-full mb-6"></div>
         {description && (
-          <p className="text-gray-400 text-lg mb-6">
-            {description}
-          </p>
+          <div className="text-gray-400 text-lg mb-6">
+            <Markdown content={description} />
+          </div>
         )}
       </div>
       <section className="mb-6">

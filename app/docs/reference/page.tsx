@@ -1,12 +1,24 @@
 import Link from 'next/link';
 import ReferenceTable from '../../components/Grid';
 import Breadcrumb from '../../components/Breadcrumb';
-import { getReferencesGroupedByTypeAndCategory } from '../../services/referenceService';
+import Markdown from '../../components/Markdown';
+import { getReferencesGroupedByTypeAndCategory, getReferenceDescription } from '../../services/referenceService';
+import { getMetadata, sanitizeMarkdown } from '../../services/metadataService';
 import pluralize from 'pluralize';
 import { capitalCase } from 'change-case';
 
+export async function generateMetadata() {
+  const description = getReferenceDescription();
+  return getMetadata({
+    title: 'DocumentDB MQL Reference',
+    description: await sanitizeMarkdown(description),
+    extraKeywords: ['reference']
+  });
+}
+
 export default function Home() {
   const grouped = getReferencesGroupedByTypeAndCategory();
+  const description = getReferenceDescription();
   return (
     <article>
       <Breadcrumb />
@@ -15,9 +27,11 @@ export default function Home() {
           MongoDB Query Language (MQL)
         </h2>
         <div className="w-24 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 rounded-full mb-6"></div>
-        <p className="text-gray-400 text-lg">
-          Explore the essential MongoDB Query Language (MQL) operators and commands available in this reference. Each entry includes a brief description and usage details to help you build effective queries and manage your database.
-        </p>
+        {description && (
+          <div className="text-gray-400 text-lg mb-6">
+            <Markdown content={description} />
+          </div>
+        )}
       </div>
       {Object.entries(grouped).map(([type, categories]) => {
         return (

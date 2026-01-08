@@ -1,4 +1,20 @@
 import { Metadata } from "next";
+import { remark } from "remark";
+import strip from "strip-markdown";
+
+/**
+ * Sanitizes Markdown content to plain text for SEO purposes
+ * Removes Markdown formatting, code blocks, and special characters
+ */
+export const sanitizeMarkdown = async (markdown: string | undefined): Promise<string> => {
+  if (!markdown) return '';
+  
+  let processor = remark().use(strip).process(markdown);
+  
+  let output: string = String(await processor);
+  
+  return output.trim();
+};
 
 export const getMetadata = ({ title, description, extraKeywords = [] }: { title: string, description: string, extraKeywords?: string[] }): Metadata => ({
   keywords: [...getBaseKeywords(), ...extraKeywords],

@@ -1,0 +1,37 @@
+{
+  "sources": [
+    {
+      "repository": "https://github.com/documentdb/docs",
+      "branch": "main",
+      "mappings": [
+        {
+          "source": "api-reference",
+          "target": "reference"
+        },
+        {
+          "source": "getting-started",
+          "target": "articles/getting-started"
+        },
+        {
+          "source": "postgres-api",
+          "target": "articles/postgres-api"
+        },
+        {
+          "source": "architecture",
+          "target": "articles/architecture"
+        },
+        {
+          "source": "documentdb-local",
+          "target": "articles/documentdb-local"
+        }
+      ]
+    }
+  ],
+  "include": [
+    "**/*.md",
+    "**/*.yml"
+  ],
+  "exclude": [
+    "**/{readme,README}.md"
+  ]
+}
